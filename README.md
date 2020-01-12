@@ -1,10 +1,10 @@
-# SimSpin-Julia
+# SimSpin.jl
+
+[![Build Status](https://travis-ci.com/kateharborne/SimSpin-Julia.svg?branch=master)](https://travis-ci.com/kateharborne/SimSpin-Julia)
 
 This is repository for the pure Julia implementation of [Katherine Harborne's](https://github.com/kateharborne) astronomy package, SimSpin.
 
 To see the original R implementation see Kate's GitHub repo [here](https://github.com/kateharborne/SimSpin).
-
-[![Build Status](https://travis-ci.com/kateharborne/SimSpin-Julia.svg?branch=master)](https://travis-ci.com/kateharborne/SimSpin-Julia)
 
 ## Installation
 
@@ -29,13 +29,13 @@ SimSpin - A package for the kinematic analysis of galaxy simulations
 
 The purpose of the Simspin package is to take a galaxy simulation and measure an the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package; from this cube, "observables" can be measured. Specifically, the observable spin parameter, ``\lambda_r``. This package, once installed, is fully documented and tested.
 
-Simulation data needs to be laid out in HDF5 format for processing with SimSpin. If using a Gadget binary or HDF5 simulation output, see [create_SimSpinFile](https://github.com/kateharborne/create_SimSpinFile) for automatic generation of SimSpin compatible files.  If you would rather generate the SimSpin file independently, the expected format is outlined below. This SimSpin file can then be read into SimSpin using the function:
+Simulation data needs to be laid out in HDF5 format for processing with SimSpin. If using a Gadget binary or HDF5 simulation output, see [create_SimSpinFile](https://github.com/kateharborne/create_SimSpinFile) for automatic generation of SimSpin compatible files.  If you would rather generate the SimSpin file independently, the expected format is outlined in the documentation. The generated SimSpin file can then be read into SimSpin using the function:
 
 ```
-galaxy_data = SimSpin::sim_data(filename = SimSpin_example.hdf5)
+> sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
 ```
 
-This function produces a list that can be accessed by each of the basic SimSpin analysis functions listed below. While it is possible to use each function in the package in order and examine the output at each stage, there are three basic analysis functions designed to give the data in a user friendly format. We suggest first using these functions:
+This function produces an array of particles that can be accessed by each of the basic SimSpin analysis functions listed below. While it is possible to use each function in the package in order and examine the output at each stage, there are three basic analysis functions designed to give the data in a user friendly format. We suggest first using these functions:
 
 1. `sim_analysis()` - This function is designed to output the kinematic properties of the galaxy model to be observed. This provides the comparison to the kinematic observables produced in the following functions.
 
@@ -45,13 +45,9 @@ This function produces a list that can be accessed by each of the basic SimSpin 
 
 All user-exported functions are explained in greater detail below.
 
-By varying the effects of observational seeing, the measurement radius, projected inclination and distance, and the telescope parameters within the `find_lambda()` function, we can begin to understand how inherent limitations of observing galaxies can effect the measurement of ``\lambda_r`` by comparing to the true spin parameter than is measured in the sim_analysis() function.
+By varying the effects of observational seeing, the measurement radius, projected inclination, projected distance and other telescope parameters within the `find_kinematics()` function and comparing to the true spin parameter that is measured in the sim_analysis() function, we can begin to understand some of the inherent effects and limitations of real-world galaxy observations.
 
 ## Documentation
 
 - [**STABLE**](https://kateharborne.github.io/SimSpin-Julia/stable) &mdash; **documentation in progress.**
 - [**DEVEL**](https://kateharborne.github.io/SimSpin-Julia/dev) &mdash; **Development doumentation.**
-
-### References
-
-A. Pontzen, R Roskar, G. Stinson and R. Woods, (2013), "pynbody: N-Body/SPH analysis for python",  Astrophysics Source Code Library, record ascl:1305.002
