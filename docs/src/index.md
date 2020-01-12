@@ -2,7 +2,7 @@
 
 ## Usage
 
-For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin-Julia/tree/master/README.md).
+For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin-Julia).
 
 Once installed, a kinematic datacube for the example galaxy observed from redshift 0.05 and inclined at 30 degrees from face on can be built using the following procedure:
 
