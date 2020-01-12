@@ -1,6 +1,6 @@
 # SimSpin-Julia
 
-This is repository for the pure Julia implementation of Katherine Harborne's astronomy package, SimSpin.
+This is repository for the pure Julia implementation of [Katherine Harborne's](https://github.com/kateharborne) astronomy package, SimSpin.
 
 To see the original R implementation see Kate's GitHub repo [here](https://github.com/kateharborne/SimSpin).
 
