@@ -47,8 +47,8 @@ By varying the effects of observational seeing, the measurement radius, projecte
 
 ## Documentation
 
-- [**STABLE**](https://gerrygralton.github.io/SimSpin-Julia/stable) &mdash; **documentation in progress.**
-- [**DEVEL**](https://gerrygralton.github.io/SimSpin-Julia/dev) &mdash; **Development doumentation.**
+- [**STABLE**](https://kateharborne.github.io/SimSpin-Julia/stable) &mdash; **documentation in progress.**
+- [**DEVEL**](https://kateharborne.github.io/SimSpin-Julia/dev) &mdash; **Development doumentation.**
 
 ### References
 
