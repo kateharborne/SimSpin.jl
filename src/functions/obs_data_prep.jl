@@ -103,7 +103,6 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
     bins = searchsortedlast.(Ref(sseq), x) + sbin .* searchsortedlast.(Ref(sseq), z_obs) +
             sbin^2 .* searchsortedlast.(Ref(vseq), vy_obs) .- (sbin^2 + sbin)
 
-    println(bins)
     parts_in_cell = [Galaxy_particle[] for i = 1:sbin*sbin*vbin]
 
     for cell in 1:length(parts_in_cell)
@@ -115,7 +114,9 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
             parts_in_cell,
             ap_region,
             sbin,
-            vbin
+            vbin,
+            vseq,
+            lsf_size
 end
 
 function obs_data_prep(sim_data::Array{Sim_particle, 1};

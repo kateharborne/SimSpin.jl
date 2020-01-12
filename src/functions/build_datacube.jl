@@ -45,25 +45,21 @@ function build_datacube(galaxy_data::Array{Galaxy_particle, 1};
                         filter::String="r",
                         blur=nothing)
 
-    if(isnothing(blur))     #Without spatial blurring
-        galaxy_data, parts_in_cell, ap_region, sbin, vbin = obs_data_prep(
-                                                            galaxy_data, r200=r200, z=z, fov=fov,
-                                                            ap_shape=ap_shape, central_wvl=central_wvl,
-                                                            lsf_fwhm=lsf_fwhm, pixel_sscale=pixel_sscale,
-                                                            pixel_vscale=pixel_vscale, inc_deg=inc_deg)
+    galaxy_data,
+    parts_in_cell,
+    ap_region, sbin,
+    vbin, vseq, lsf_size = obs_data_prep(galaxy_data, r200=r200, z=z, fov=fov,
+                                    ap_shape=ap_shape, central_wvl=central_wvl,
+                                    lsf_fwhm=lsf_fwhm, pixel_sscale=pixel_sscale,
+                                    pixel_vscale=pixel_vscale, inc_deg=inc_deg)
 
-        fluxes = flux_grid(parts_in_cell, ap_region, sbin, vbin, z, filter)
-        return fluxes
-        #ifu_imgs = ifu_cube(galaxy_data, fluxes)
+    fluxes = flux_grid(parts_in_cell, ap_region, sbin, vbin, z, filter)
+    ifu_imgs = ifu_cube(fluxes, parts_in_cell, sbin, vbin, vseq, lsf_size)
 
-        #return ifu_imgs
-    else()                  #With spatial blurring
-        observe_data = obs_data_prep(galaxy_data, r200, z, fov, ap_shape, central_wvl,
-                                        lsf_fwhm, pixel_sscale, pixel_vscale, inc_deg)
-
-        fluxes = flux_grid(observe_data, filter)
-
-        ifu_imgs = ifu_cube(observe_data, fluxes)
+    if(isnothing(blur)) #No spatial blurring
+        return ifu_imgs
+    else()
+        error("Image blur is not currently supported.")
         blur_imgs = blur_cube(observe_data, ifu_imgs, blur.psf, blur.fwhm)
 
         return blur_imgs
