@@ -4,7 +4,12 @@
 
 module SimSpin
 
-    export sim_data, sim_analysis, obs_data_prep, build_datacube, flux_grid
+    export sim_data,
+            sim_analysis,
+            obs_data_prep,
+            build_datacube,
+            flux_grid,
+            ifu_cube
 
     include("io/sim_data.jl")
 
@@ -26,6 +31,7 @@ module SimSpin
 
     include("functions/build_datacube.jl")
     include("functions/flux_grid.jl")
+    include("functions/ifu_cube.jl")
     include("functions/obs_data_prep.jl")
     include("functions/sim_analysis.jl")
 
