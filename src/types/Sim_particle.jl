@@ -2,6 +2,12 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
+"""
+    Sim_dark
+
+A Sim_particle type with no luminosity.
+Can be gas (PartType0) or dark matter (PartType1).
+"""
 struct Sim_dark <: Sim_particle
     id::Int64
     type::String
@@ -25,6 +31,12 @@ struct Sim_dark <: Sim_particle
     end
 end
 
+"""
+    Sim_lum
+
+    A Sim_particle type with luminosity but no associated spectra.
+    Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
+"""
 struct Sim_lum <: Sim_particle #possibly not necessary lum assigned at cell stage
     id::Int64
     type::String
@@ -48,6 +60,12 @@ struct Sim_lum <: Sim_particle #possibly not necessary lum assigned at cell stag
     end
 end
 
+"""
+    Sim_ssp
+
+    A Sim_particle type with luminosity and associated spectra.
+    Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
+"""
 struct Sim_ssp <: Sim_particle
     id::Int64
     type::String

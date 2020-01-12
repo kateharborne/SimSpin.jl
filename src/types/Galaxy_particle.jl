@@ -8,6 +8,12 @@ mutable struct Observable
     vy_obs::Float64
 end
 
+"""
+    Galaxy_dark
+
+A Galaxy_particle type with no luminosity.
+Can be gas (PartType0) or dark matter (PartType1).
+"""
 struct Galaxy_dark <: Galaxy_particle
     id::Int64
     type::String
@@ -53,6 +59,12 @@ struct Galaxy_dark <: Galaxy_particle
         end
 end
 
+"""
+    Galaxy_lum
+
+    A Galaxy_particle type with luminosity but no associated spectra.
+    Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
+"""
 struct Galaxy_lum <: Galaxy_particle
     id::Int64
     type::String
@@ -98,6 +110,12 @@ struct Galaxy_lum <: Galaxy_particle
     end
 end
 
+"""
+    Galaxy_ssp
+
+    A Galaxy_particle type with luminosity and associated spectra.
+    Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
+"""
 struct Galaxy_ssp <: Galaxy_particle
     id::Int64
     type::String
@@ -151,8 +169,10 @@ end
 """
 function galaxy_particle(particle, centre, rot_mat)
 
-    Converts a given Sim_particle with values from the simulation reference frame
+    Converts a singular Sim_particle in the simulation reference frame
     to a Galaxy_particle in the galaxy reference frame. Some kinematic properties also calculated.
+
+    Galaxy reference frame is assumed to be the median spatial and velocity values, considering all particles in the galaxy.
 """
 function galaxy_particle(particle::Sim_particle, centre::Array{Float64, 1}, rot_mat::Array{Float64, 2})
     id = particle.id
@@ -213,6 +233,12 @@ function galaxy_particle(particle::Sim_particle, centre::Array{Float64, 1}, rot_
     end
 end
 
+"""
+    set_observables(particle, inc_deg)
+
+Sets apparent constants for an observation taken of a single particle at a given degree of inclination
+wrt a face-on galaxy rotated around the semi-major x axis.
+"""
 function set_observables!(particle::Galaxy_particle, inc_deg::Int64)
     particle.obs.z_obs = sind(inc_deg) * particle.z + cosd(inc_deg) * particle.y
     particle.obs.vy_obs = cosd(inc_deg) * particle.vz - sind(inc_deg) * particle.vy

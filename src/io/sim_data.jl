@@ -4,6 +4,19 @@
 
 using HDF5
 
+"""
+    sim_data(filename;
+            pytpe = [],
+            ssp = false)
+
+Reads in a [SimSpin format](https://github.com/kateharborne/create_SimSpinFile) HDF5 file at location, `filename`.
+Returns array of Sim_particles.
+
+Keyword arguments (optional):\n
+    ptype       A vector of the particles types to be read in e.g. ptype = [1,3].
+                If omitted all particles types will be read.
+    ssp         Boolean value to use ssp particle information.
+"""
 function sim_data(filename::String;
                     ptype::Vector{} = [],
                     ssp::Bool = false)

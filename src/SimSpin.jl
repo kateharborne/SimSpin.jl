@@ -4,7 +4,7 @@
 
 module SimSpin
 
-    export sim_data, sim_analysis, obs_data_prep, build_datacube
+    export sim_data, sim_analysis, obs_data_prep, build_datacube, flux_grid
 
     include("io/sim_data.jl")
 
@@ -36,4 +36,4 @@ module SimSpin
     include("utilities/particle_kinematics.jl")
     include("utilities/r_functions.jl")
     include("utilities/sim_to_galaxy.jl")
-end # module
+end
