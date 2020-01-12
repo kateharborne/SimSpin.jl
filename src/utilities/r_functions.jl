@@ -10,8 +10,8 @@ function sftToAge(sft)
     Returns particle age from stellar formation time input.
     Uses R package, celestial.
 """
-function sftToAge(sft::Array{Float64,1})
-    ages = cosdistTravelTime(sft)
+function sftToAge(sft::Float64)
+    ages = cosdistTravelTime((1 /sft) - 1)
 
     return ages
 end
