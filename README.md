@@ -45,7 +45,7 @@ This function produces an array of particles that can be accessed by each of the
 
 All user-exported functions are explained in greater detail below.
 
-By varying the effects of observational seeing, the measurement radius, projected inclination, projected distance and other telescope parameters within the `find_kinematics()` function and comparing to the true spin parameter that is measured in the sim_analysis() function, we can begin to understand some of the inherent effects and limitations of real-world galaxy observations.
+By varying the effects of observational seeing, the measurement radius, projected inclination, projected distance and other telescope parameters within the `find_kinematics()` function and comparing to the true spin parameter that is measured in the `sim_analysis()` function, we can begin to understand some of the inherent effects and limitations of real-world galaxy observations.
 
 ## Documentation
 
