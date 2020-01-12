@@ -2,10 +2,7 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
-using RCall
 using StaticArrays
-using CodecXz
-using RData
 
 """
 function sftToAge(sft)
@@ -14,9 +11,7 @@ function sftToAge(sft)
     Uses R package, celestial.
 """
 function sftToAge(sft::Array{Float64,1})
-    R"library(celestial)"
-    r_ages = R"cosdistTravelTime($sft)"
-    ages = rcopy(r_ages)
+    ages = cosdistTravelTime(sft)
 
     return ages
 end
