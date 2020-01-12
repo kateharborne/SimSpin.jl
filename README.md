@@ -4,7 +4,7 @@ This is repository for the pure Julia implementation of Katherine Harborne's ast
 
 To see the original R implementation see Kate's GitHub repo [here](https://github.com/kateharborne/SimSpin).
 
-[![Build Status](https://travis-ci.com/kateharborne/SimSpin-Julia.svg?branch=master)](https://travis-ci.com/kateharborne/SimSpin-Julia) |
+[![Build Status](https://travis-ci.com/kateharborne/SimSpin-Julia.svg?branch=master)](https://travis-ci.com/kateharborne/SimSpin-Julia)
 
 ## Installation
 
