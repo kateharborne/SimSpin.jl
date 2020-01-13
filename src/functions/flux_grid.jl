@@ -20,7 +20,7 @@ the flux at each cell position due to contributions from the particles. If ssd p
 an SED is generated in each cell using ProSpect. Else, the luminosity in each cell is converted to flux.
 
 Parameters:\n
-    parts_in_cell       3D array of the particles corresponding to each element in the IFU data-cube.
+    parts_in_cell       1D array of the particles corresponding to each element in the IFU data-cube.
     ap_region           The aperture region mask used to remove flux outside of the specified aperture.
     sbin                The number of spatial bins in the aperture.
     vbin                The number of velocity bins in the flux grid.

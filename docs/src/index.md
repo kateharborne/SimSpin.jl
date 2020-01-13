@@ -13,10 +13,11 @@ Once installed, a kinematic datacube for the example galaxy observed from redshi
 
 ## Functions
 ```@docs
-sim_data
-obs_data_prep
 build_datacube
 flux_grid
+ifu_cube
+obs_data_prep
+sim_data
 ```
 
 ## Data Input Format

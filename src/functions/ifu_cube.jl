@@ -1,5 +1,24 @@
 using Distributions
+"""
+    ifu_cube(flux_grid,
+                parts_in_cell,
+                sbin,
+                vbin,
+                vseq,
+                lsf_size)
 
+The purpose of this function is to construct an IFU data cube. It accepts the flux_grid
+output by `flux_grid()` and returns a similar, IFU like, 3D array where each particle's flux has been
+attributed as a Gaussian distribution .
+
+Parameters:\n
+    flux_grid       Flux grid output by `flux_grid()`
+    parts_in_cell   1D array of the particles corresponding to each element in the IFU data-cube.
+    sbin            The number of spatial bins in the aperture.
+    vbin            The number of velocity bins in the flux grid.
+    vseq            The bounds of each velocity bin in the flux grid.
+    lsf_size        The Gaussian standard deviation of the line spread function in km/s.
+"""
 function ifu_cube(flux_grid::Array{Float64, 3},
                     parts_in_cell::Array{Array{SimSpin.Galaxy_particle,1},1},
                     sbin::Int64,
