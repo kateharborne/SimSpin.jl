@@ -116,7 +116,9 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
             sbin,
             vbin,
             vseq,
-            lsf_size
+            lsf_size,
+            ang_size,
+            sbinsize
 end
 
 function obs_data_prep(sim_data::Array{Sim_particle, 1};
