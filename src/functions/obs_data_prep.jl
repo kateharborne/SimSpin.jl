@@ -12,9 +12,7 @@
                     lsf_fwhm = 2.65,
                     pixel_sscale = 0.5,
                     pixel_vscale = 1.04,
-                    inc_deg = 70,
-                    filter = "r",
-                    blur = nothing)
+                    inc_deg = 70)
 
 This function prepares the particle data for a given observation.
 
@@ -24,6 +22,10 @@ Returns:\n
     ap_region           The aperture region mask used to remove flux outside of the specified aperture.
     sbin                The number of spatial bins in the aperture.
     vbin                The number of velocity bins in the flux grid.
+    vseq                The bounds of each velocity bin in the flux grid.
+    lsf_size            The Gaussian standard deviation of the line spread function in km/s.
+    ang_size            The angular size given redshift z in kpc
+    sbinsize            The spatial bin size in kpc per bin
 
 Keyword arguments (optional):\n
     r200            The virial radius specified in the simulation, kpc.
@@ -35,8 +37,6 @@ Keyword arguments (optional):\n
     pixel_sscale    The corresponding spatial pixel scale associated with a given telescope output in arcseconds.
     pixel_vscale    The corresponding velocity pixel scale associated with a given telescope filter output in angstroms.
     inc_deg         The inclination at which to observe the galaxy in degrees.
-    filter          If particles type is ssp, the filter within which the SED is generated. Options include "r" and "g"  for SDSS-r and SDSS-g bands respectively.
-    blur            Specified to apply observational seeing effects to the cube. A list of the form "psf" = "Moffat", "fwhm" = 0.5. "psf" specifies the shape of the PSF chosen and may be either "Moffat" or "Gaussian". "fwhm" is a numeric specifying the full-width half-maximum of the PSF given in units of arcseconds.
 """
 function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
                         r200::Int64 = 200,
@@ -47,8 +47,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
                         lsf_fwhm::Float64=2.65,
                         pixel_sscale::Float64=0.5,
                         pixel_vscale::Float64=1.04,
-                        inc_deg::Int64=70,
-                        align::Bool=true)
+                        inc_deg::Int64=70)
 
     ang_size    = angleSize(z)                      # angular size given z, kpc
     ap_size     = ang_size * fov                    # diameter size of the telescope, kpc
@@ -130,8 +129,7 @@ function obs_data_prep(sim_data::Array{Sim_particle, 1};
                         lsf_fwhm::Float64=2.65,
                         pixel_sscale::Float64=0.5,
                         pixel_vscale::Float64=1.04,
-                        inc_deg::Int64=70,
-                        align::Bool=true)
+                        inc_deg::Int64=70)
 
     galaxy_data = sim_to_galaxy(sim_data)
 
@@ -139,5 +137,5 @@ function obs_data_prep(sim_data::Array{Sim_particle, 1};
                             ap_shape=ap_shape, central_wvl=central_wvl,
                             lsf_fwhm=lsf_fwhm,
                             pixel_sscale=pixel_sscale, pixel_vscale=pixel_vscale,
-                            inc_deg=inc_deg, align=align)
+                            inc_deg=inc_deg)
 end
