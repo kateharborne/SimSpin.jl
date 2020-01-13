@@ -13,6 +13,7 @@ Once installed, a kinematic datacube for the example galaxy observed from redshi
 
 ## Functions
 ```@docs
+Blur
 build_datacube
 flux_grid
 ifu_cube

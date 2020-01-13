@@ -9,13 +9,15 @@ module SimSpin
             obs_data_prep,
             build_datacube,
             flux_grid,
-            ifu_cube
+            ifu_cube,
+            Blur
 
     include("io/sim_data.jl")
 
     include("types/particle_types.jl")
     include("types/Galaxy_particle.jl")
     include("types/Sim_particle.jl")
+    include("types/Blur.jl")
 
     include("celestial/cosdistAngScale.jl")
     include("celestial/cosdistLumDist.jl")
@@ -30,6 +32,7 @@ module SimSpin
     include("ProSpect/utilities.jl")
 
     include("functions/build_datacube.jl")
+    include("functions/blur_cube.jl")
     include("functions/flux_grid.jl")
     include("functions/ifu_cube.jl")
     include("functions/obs_data_prep.jl")
