@@ -43,9 +43,9 @@ function ifu_cube(flux_grid::Array{Float64, 3},
                 cell_mass = sum(getfield.(cell, :mass))
                 cell_flux = flux_grid[coord[1], coord[2], coord[3]] * particle.mass / cell_mass
 
-                distribution = Normal(particle.obs.vy_obs, lsf_size^2)
+                distribution = Normal(particle.obs.vy_obs, lsf_size^2)  #Normal distribution of particle's vy_obs
                 # adding the "gaussians" of each particle to the velocity bins
-                cube[coord[1], coord[2], :] += cell_flux .* cdf.(distribution, vseq)[2:end]
+                cube[coord[1], coord[2], :] += diff(cell_flux .* cdf.(distribution, vseq))
             end
         end
     end
