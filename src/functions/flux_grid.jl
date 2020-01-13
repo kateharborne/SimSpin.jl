@@ -48,9 +48,8 @@ function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
 
     flux_grid = reshape(flux, sbin, sbin, vbin)
 
-    outside_ap = findall(x->x==0, ap_region)
-    if(length(outside_ap) != 0)
-        flux_grid[outside_ap[1], outside_ap[2], :] .= 0
+    for bin = 1:vbin #Set all cells outside aperture to zero
+        flux_grid[:,:,bin] = flux_grid[:,:,bin] .* ap_region
     end
 
     return flux_grid

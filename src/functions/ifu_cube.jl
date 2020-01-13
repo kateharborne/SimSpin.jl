@@ -1,4 +1,9 @@
+# Date created: 12/01/2019
+# Julia Conversion: Gerry Gralton
+# Original author: Katherine Harborne
+
 using Distributions
+
 """
     ifu_cube(flux_grid,
                 parts_in_cell,
@@ -49,5 +54,6 @@ function ifu_cube(flux_grid::Array{Float64, 3},
             end
         end
     end
+    
     return cube
 end
