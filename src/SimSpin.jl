@@ -28,6 +28,7 @@ module SimSpin
 
     include("ProSpect/data/bc_data.jl")
     include("ProSpect/data/constants.jl")
+    include("ProSpect/data/get_filter.jl")
     include("ProSpect/Lum2FluxFactor.jl")
     include("ProSpect/photom_lum.jl")
     include("ProSpect/utilities.jl")
