@@ -9,27 +9,27 @@ function cosdistTravelTime(z::Float64;
                         omegaL::Float64=1-omegaM-omegaR,
                         w0::Float64 = -1.,
                         wprime::Float64 = 0.,
-                        ref::String = nothing)
+                        ref::String = "")
 
     if (!all(isfinite(z)))
         error("Redshift must be finite and numeric.")
     elseif (!all(z > -1))
         error("All z must be > -1")
     end
-)
+
     if (!all(isfinite(z)))
         error("Redshift must be finite and numeric.")
     elseif (!all(z > -1))
         error("All z must be > -1")
     end
 
-    if !isnothing(ref)
+    if ref != ""
         params = getcos(ref)
         H0 = params[2]
         omegaM = params[3]
         omegaL = params[4]
         if (!isnan(params[5])) omegaR = params[5] end
-  end
+    end
 
     omegaK = 1 - omegaM - omegaL - omegaR
 

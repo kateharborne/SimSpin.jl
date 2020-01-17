@@ -20,6 +20,7 @@ module SimSpin
     include("types/Blur.jl")
 
     include("celestial/cosdistAngScale.jl")
+    include("celestial/cosdistTravelTime.jl")
     include("celestial/cosdistLumDist.jl")
     include("celestial/cosgrowRhoDE.jl")
     include("celestial/e_inv.jl")
