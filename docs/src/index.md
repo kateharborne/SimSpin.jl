@@ -21,6 +21,16 @@ obs_data_prep
 sim_data
 ```
 
+## Multi-Threading
+
+The SimSpin package has multi-threading enabled in some critical functions.
+To use SimSpin with `x` threads (where x is the integer number of threads desired) you must call
+
+```
+export JULIA_NUM_THREADS=x
+```
+in a Terminal before the Julia REPL is started. This environment variable defaults to 1 if not set before the session has begun.
+
 ## Data Input Format
 
 Here we outline the expected file format accepted by SimSpin.  If you would like to generate this file automatically, a short Python function has been written that uses the [pynbody](https://github.com/pynbody/pynbody) package to read in various simulation data types and generate a SimSpin compatible HDF5 file. See [create_SimSpinFile](https://github.com/kateharborne/create_SimSpinFile).
