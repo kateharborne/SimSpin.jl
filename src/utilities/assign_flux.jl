@@ -4,6 +4,14 @@
 
 using DelimitedFiles
 
+"""
+    assign_flux(particle, filter, redshift)
+
+    Constructs a flux profile using a julia implementation of `ProSpect`
+    for a `Galaxy_ssp` particle when observed with specified filter and redshift.
+
+    Filter can be of type `g` or `r`
+"""
 function assign_flux(particle::Galaxy_ssp, filter::String, redshift::Float64)
 
     if(filter == "g")   tempfilt = readdlm(joinpath(@__DIR__, "../ProSpect/data/filt_g_SDSS.tab"), header=true)
@@ -19,13 +27,25 @@ function assign_flux(particle::Galaxy_ssp, filter::String, redshift::Float64)
     return flux
 end
 
-function assign_flux(particle::Galaxy_lum, filter, redshiftCoef::Float64)
+"""
+    assign_flux(particle, filter, redshift)
+
+    Constructs a flux profile using for a `Galaxy_lum` particle using a mass to flux conversion.
+
+    Filter can be of type `g` or `r`
+"""
+function assign_flux(particle::Galaxy_lum, filter::String, redshiftCoef::Float64)
 
     flux = mass_to_flux(particle, redshiftCoef)
     return flux
 end
 
-function assign_flux(particle::Galaxy_dark, filter, redshift::Float64)
+"""
+    assign_flux(particle, filter, redshift)
+
+    Assigns a flux profile of zero for a `Galaxy_dark` particle (ie dark matter or gas).
+"""
+function assign_flux(particle::Galaxy_dark, filter::String, redshift::Float64)
 
     flux = 0
     return flux
