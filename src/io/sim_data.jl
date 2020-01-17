@@ -45,13 +45,13 @@ function sim_data(filename::String;
 
         for type in ptype
 
-            x_arr = read(galaxy_file[string(type, "/x")])
-            y_arr = read(galaxy_file[string(type, "/y")])
-            z_arr = read(galaxy_file[string(type, "/z")])
-            vx_arr = read(galaxy_file[string(type, "/vx")])
-            vy_arr = read(galaxy_file[string(type, "/vy")])
-            vz_arr = read(galaxy_file[string(type, "/vz")])
-            mass_arr = read(galaxy_file[string(type, "/Mass")])
+            x_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/x")])
+            y_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/y")])
+            z_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/z")])
+            vx_arr::Array{Float64, 1}= read(galaxy_file[string(type, "/vx")])
+            vy_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/vy")])
+            vz_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/vz")])
+            mass_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Mass")])
 
             if(type == "PartType0" || type == "PartType1")
                 for i = 1:length(x_arr)
@@ -77,14 +77,14 @@ function sim_data(filename::String;
 
                 elseif(ssp && length(names(galaxy_file[type])) == 10)
                     if(any(isequal.(names(galaxy_file[type]), "Age")))
-                        age_arr = read(galaxy_file[string(type, "/Age")])
+                        age_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Age")])
                     else
-                        sft = read(galaxy_file[string(type, "/StellarFormationTime")])
-                        age_arr = sftToAge(sft)
+                        sft::Array{Float64, 1} = read(galaxy_file[string(type, "/StellarFormationTime")])
+                        age_arr = sftToAge.(sft)
                     end
 
-                    met_arr = read(galaxy_file[string(type, "/Metallicity")])
-                    init_mass_arr = read(galaxy_file[string(type, "/InitialMass")])
+                    met_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Metallicity")])
+                    init_mass_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/InitialMass")])
 
                     for i = 1:length(x_arr)
                         particle = Sim_ssp(

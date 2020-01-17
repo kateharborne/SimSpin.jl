@@ -6,8 +6,8 @@ using DelimitedFiles
 
 function assign_flux(particle::Galaxy_ssp, filter::String, redshift::Float64)
 
-    if(filter == "g")   tempfilt = readdlm(joinpath(@__DIR__, "data/filt_g_SDSS.tab"), header=true)
-    elseif(filter == "r")   tempfilt = readdlm(joinpath(@__DIR__, "data/filt_r_SDSS.tab"), header=true)
+    if(filter == "g")   tempfilt = readdlm(joinpath(@__DIR__, "../ProSpect/data/filt_g_SDSS.tab"), header=true)
+    elseif(filter == "r")   tempfilt = readdlm(joinpath(@__DIR__, "../ProSpect/data/filt_r_SDSS.tab"), header=true)
     else error("An unsupported filter type was specified.")
     end
 

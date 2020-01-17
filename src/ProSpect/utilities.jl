@@ -23,10 +23,11 @@ function interp_param(x::Array{Float64,1},
     x[max_index] .= maxp
 
     if(log && method=="linear")
-        itp = interpolate((log10(params),),
+        itp = interpolate((log10.(params),),
                         1:length(params),
                         Gridded(Linear()))
-        temp = itp.(log10(x))
+        temp = itp.(log10.(x))
+
     elseif(!log && method=="linear")
         itp = interpolate((params,),
                         1:length(params),
@@ -40,8 +41,8 @@ function interp_param(x::Array{Float64,1},
     ind_two = findall(x-> x == 2, temp)
     flag[intersect(ind_zero, ind_two)] .= 0
 
-    ID_lo = floor.(temp)
-    ID_hi = ceil.(temp)
+    ID_lo::Array{Int64, 1} = floor.(temp)
+    ID_hi::Array{Int64, 1} = ceil.(temp)
 
     param_lo = params[ID_lo]
     param_hi = params[ID_hi]

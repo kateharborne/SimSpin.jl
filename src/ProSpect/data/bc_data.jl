@@ -44,13 +44,13 @@ h5open(joinpath(@__DIR__, "BC03lr.h5"), "r") do galaxy_file
                                     "SMrem" => readmmap(data["Zevo"]["6"]["SMrem"]),
                                     "SMstar" => readmmap(data["Zevo"]["6"]["SMstar"]),
                                     "SMtot" => readmmap(data["Zevo"]["6"]["SMtot"]))),
-                    "Zspec" => Dict(
-                        "1" => readmmap(data["Zspec"]["1"]),
-                        "2" => readmmap(data["Zspec"]["2"]),
-                        "3" => readmmap(data["Zspec"]["3"]),
-                        "4" => readmmap(data["Zspec"]["4"]),
-                        "5" => readmmap(data["Zspec"]["5"]),
-                        "6" => readmmap(data["Zspec"]["6"])))
+                    "ZSpec" => Dict(
+                                    1 => readmmap(data["Zspec"]["1"]),
+                                    2 => readmmap(data["Zspec"]["2"]),
+                                    3 => readmmap(data["Zspec"]["3"]),
+                                    4 => readmmap(data["Zspec"]["4"]),
+                                    5 => readmmap(data["Zspec"]["5"]),
+                                    6 => readmmap(data["Zspec"]["6"])))
     return bcDict
     end
 end

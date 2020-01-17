@@ -76,22 +76,22 @@ function part_spectra(particle)
 function part_spectra(particle::Galaxy_ssp)
 
     metallicity = particle.metallicity
-    age = particle.age
-    mass = particle.mass
+    age = particle.age * 1e9
+    mass = particle.mass * 1e10
 
-    Z = interp_param(metallicity, BC03lr["Z"], log = true)
-    A = interp_param(age, BC03lr["Age"], log = true)
+    Z = interp_param([metallicity], BC03lr["Z"], log = true)
+    A = interp_param([age], BC03lr["Age"], log = true)
 
-    weights = Dict(     "hihi" => Z["weight_hi"] * A["weight_hi"],
-                        "hilo" => Z["weight_hi"] * A["weight_lo"],
-                        "lohi" => Z["weight_lo"] * A["weight_hi"],
-                        "lolo" => Z["weight_lo"] * A["weight_lo"])
+    weights = Dict(     "hihi" => Z["weight_hi"][1] * A["weight_hi"][1],
+                        "hilo" => Z["weight_hi"][1] * A["weight_lo"][1],
+                        "lohi" => Z["weight_lo"][1] * A["weight_hi"][1],
+                        "lolo" => Z["weight_lo"][1] * A["weight_lo"][1])
 
     part_spec = zeros(MVector{length(BC03lr["Wave"])})
-    part_spec = (   (BC03lr["ZSpec"][Z["ID_hi"]][A["ID_hi"],:] * weights["hihi"]) +
-                    (BC03lr["ZSpec"][Z["ID_hi"]][A["ID_lo"],:] * weights["hilo"]) +
-                    (BC03lr["ZSpec"][Z["ID_lo"]][A["ID_hi"],:] * weights["lohi"]) +
-                    (BC03lr["ZSpec"][Z["ID_lo"]][A["ID_lo"],:] * weights["lolo"])) * mass
+    part_spec = (   (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_hi"][1],:] * weights["hihi"]) +
+                    (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_lo"][1],:] * weights["hilo"]) +
+                    (BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_hi"][1],:] * weights["lohi"]) +
+                    (BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_lo"][1],:] * weights["lolo"])) * mass
 
     return part_spec
 end
