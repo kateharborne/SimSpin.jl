@@ -55,7 +55,9 @@ function photom_lum(spectra, filter, z)
 
     Calls julia implementation of ProSpect's photom_lum function
 """
-function photom_lum(spectra, filter, z::Float64)
+function photom_lum(spectra::Array{Float64,1}, 
+                    filter::Interpolations.FilledExtrapolation{},
+                    z::Float64)
 
     particle_flux = photom_lum(BC03lr["Wave"],
                                 spectra,

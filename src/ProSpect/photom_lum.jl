@@ -4,7 +4,9 @@
 
 using Interpolations
 
-function photom_lum(wave, lum, filter;
+function photom_lum(wave::Array{Float64,1},
+                    lum::Array{Float64,1},
+                    filter::Interpolations.FilledExtrapolation{};
                     outtype::String="mag",
                     z::Float64=0.1,
                     H0::Float64=67.8,
@@ -17,7 +19,9 @@ function photom_lum(wave, lum, filter;
     return photom
 end
 
-function jansky_calc(wave, flux; filter)
+function jansky_calc(wave::Array{Int64,1},
+                        flux::Array{Float64,1};
+                        filter::Interpolations.FilledExtrapolation{})
 
     fluxnu = convert_wave2freq(flux, wave)
     totlumnu = bandpass(wave, fluxnu, filter)
@@ -25,16 +29,12 @@ function jansky_calc(wave, flux; filter)
     return totlumnu * 1e23
 end
 
-function bandpass(wave, flux, filter; lum::Bool=true)
+function bandpass(wave::Array{Int64,1},
+                    flux::Array{Float64,1},
+                    filter::Interpolations.FilledExtrapolation{};
+                    lum::Bool=true)
 
-    filt_wave = filter[1][:,1]
-    filt_response = filter[1][:,2]
-
-    itp = interpolate((filt_wave,), #TODO: Check against ProSpect.R should be aprox_fun()
-                        abs.(filt_response),
-                        Gridded(Linear()))
-    extrap = extrapolate(itp, 0) #return zero for all of wave outside of filter bounds
-    tempremap = extrap.(wave)
+    tempremap = filter.(wave)
 
     if lum
         return (sum(tempremap .* wave .* flux) / sum(tempremap .* wave))
@@ -44,8 +44,8 @@ function bandpass(wave, flux, filter; lum::Bool=true)
 end
 
 
-function convert_wave2freq(wave,
-                            flux_wave;
+function convert_wave2freq(wave::Array{Float64,1},
+                            flux_wave::Array{Int64,1};
                             wavefac::Float64=1e-10)
 
     return (wavefac * flux_wave .* wave.^2) / c_to_mps
