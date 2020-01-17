@@ -8,7 +8,9 @@ To see the original R implementation see Kate's GitHub repo [here](https://githu
 
 ## Installation
 
-This package can be installed with the Julia package manager.
+If you are new to Julia please see the [Julia `Getting Started`](https://docs.julialang.org/en/v1/manual/getting-started/) page for instructions on how to install Julia.
+
+Once Julia is runnning successfully this package can be installed with the Julia package manager.
 From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
 
 ```
@@ -21,7 +23,7 @@ Once the package has been added leave the REPL's Pkg mode by pressing `backspace
 > using SimSpin
 ```
 
-All user exported functions should now be available in your Julia REPL.
+After pre-compilation all user exported functions should be available in your Julia REPL.
 
 ## SimSpin
 
