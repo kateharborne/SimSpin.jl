@@ -10,14 +10,17 @@ module SimSpin
             build_datacube,
             flux_grid,
             ifu_cube,
-            Blur
+            Blur,
+            Hernquist,
+            NFW
 
     include("io/sim_data.jl")
 
+    include("types/Blur.jl")
+    include("types/Dark_matter_types.jl")
     include("types/particle_types.jl")
     include("types/Galaxy_particle.jl")
     include("types/Sim_particle.jl")
-    include("types/Blur.jl")
 
     include("celestial/cosdistAngScale.jl")
     include("celestial/cosdistTravelTime.jl")
