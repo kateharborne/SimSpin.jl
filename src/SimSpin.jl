@@ -21,6 +21,7 @@ module SimSpin
     include("types/particle_types.jl")
     include("types/Galaxy_particle.jl")
     include("types/Sim_particle.jl")
+    include("types/shell_types.jl")
 
     include("celestial/cosdistAngScale.jl")
     include("celestial/cosdistTravelTime.jl")
