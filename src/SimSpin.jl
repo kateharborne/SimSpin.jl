@@ -17,7 +17,7 @@ module SimSpin
     include("io/sim_data.jl")
 
     include("types/Blur.jl")
-    include("types/Dark_matter_types.jl")
+    include("types/dark_matter_types.jl")
     include("types/particle_types.jl")
     include("types/Galaxy_particle.jl")
     include("types/Sim_particle.jl")
