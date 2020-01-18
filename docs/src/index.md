@@ -13,12 +13,18 @@ Once installed, a kinematic datacube for the example galaxy observed from redshi
 
 ## Functions
 ```@docs
-Blur
 build_datacube
 flux_grid
 ifu_cube
 obs_data_prep
 sim_data
+```
+
+## Type Constructors
+```@docs
+Blur
+Hernquist
+NFW
 ```
 
 ## Multi-Threading
