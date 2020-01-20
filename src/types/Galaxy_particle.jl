@@ -62,8 +62,8 @@ end
 """
     Galaxy_lum
 
-    A Galaxy_particle type with luminosity but no associated spectra.
-    Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
+A Galaxy_particle type with luminosity but no associated spectra.
+Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
 """
 struct Galaxy_lum <: Galaxy_particle
     id::Int64
@@ -113,8 +113,8 @@ end
 """
     Galaxy_ssp
 
-    A Galaxy_particle type with luminosity and associated spectra.
-    Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
+A Galaxy_particle type with luminosity and associated spectra.
+Can be of type bulge (PartType2), disc (PartType3) or star (PartType4).
 """
 struct Galaxy_ssp <: Galaxy_particle
     id::Int64
