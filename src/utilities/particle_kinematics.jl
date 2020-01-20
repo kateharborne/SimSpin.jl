@@ -56,11 +56,10 @@ function get_vphi(x, y, vx, vy, r, theta)
 end
 
 function get_j(x, y, z, vx, vy, vz, mass)
-    coef = mass * 3.086e16
 
-    jx = ((y * vz) - (z * vy)) * coef
-    jy = ((z * vx) - (x * vz)) * coef
-    jz = ((x * vy) - (y * vx)) * coef
+    jx = ((y * vz) - (z * vy)) * mass * pc_to_m
+    jy = ((z * vx) - (x * vz)) * mass * pc_to_m
+    jz = ((x * vy) - (y * vx)) * mass * pc_to_m
 
     return jx, jy, jz
 end
