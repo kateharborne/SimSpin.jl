@@ -11,7 +11,7 @@ struct Spherical_3d <: Shell
     J::Float64
     vr::Float64
     sigma_vr::Float64
-    simga_vt::Float64
+    sigma_vt::Float64
     sigma2_vx::Float64
     sigma2_vz::Float64
     b::Float64
@@ -28,7 +28,7 @@ struct Spherical_3d <: Shell
                             J::Float64,
                             vr::Float64,
                             sigma_vr::Float64,
-                            simga_vt::Float64,
+                            sigma_vt::Float64,
                             sigma2_vx::Float64,
                             sigma2_vz::Float64,
                             b::Float64,
@@ -38,7 +38,7 @@ struct Spherical_3d <: Shell
             Jx, Jy, Jz, J,
             vr, sigma_vr, sigma_vt,
             sigma2_vx, sigma2_vz,
-            b, vrot, lamda)
+            b, vrot, lambda)
     end
 end
 
