@@ -13,7 +13,7 @@ struct Hernquist <: Dark_matter
 
     function Hernquist(dm_mass::Float64 = 184.9,
                         dm_a::Float64 = 34.5)
-        new(dm_vm, dm_a)
+        new(dm_mass, dm_a)
     end
 end
 
@@ -44,7 +44,7 @@ function Dark_matter(profile::String;
                         dm_a::Float64=34.5,
                         dm_rhof::Float64=0.035)
     if lowercase(profile) == "hernquist"
-        return Hernquist(dm_vm, dm_a)
+        return Hernquist(dm_mass, dm_a)
     elseif lowercase(profile) == "nfw"
         return NFW(dm_vm, dm_a, dm_rhof)
     else
