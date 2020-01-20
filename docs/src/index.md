@@ -18,6 +18,7 @@ flux_grid
 ifu_cube
 obs_data_prep
 sim_data
+sim_analysis
 ```
 
 ## Type Constructors
