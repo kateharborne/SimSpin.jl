@@ -21,9 +21,7 @@ struct Blur
                     sigma::Float64=-1.,
                     fwhm::Float64=-1.)
 
-        if psf == "none"
-            new()
-        elseif (lowercase(psf) != "moffat" && lowercase(psf) != "gaussian")
+        if (lowercase(psf) != "moffat" && lowercase(psf) != "gaussian")
             error("Blur PSF type:", blur.psf, "is not supported.")
         elseif sigma < 0 && fwhm < 0
             error("Please specify either standard deviation, sigma, or full width half max, fwhm, as a positive float.")

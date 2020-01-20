@@ -43,7 +43,7 @@ function build_datacube(galaxy_data::Array{Galaxy_particle, 1};
                         pixel_vscale::Float64=1.04,
                         inc_deg::Int64=70,
                         filter::String="r",
-                        blur::Blur=Blur("none"))
+                        blur::Union{Blur, Nothing} = nothing)
 
     galaxy_data,
     parts_in_cell,
@@ -57,9 +57,9 @@ function build_datacube(galaxy_data::Array{Galaxy_particle, 1};
     fluxes = flux_grid(parts_in_cell, ap_region, sbin, vbin, z, filter)
     ifu = ifu_cube(fluxes, parts_in_cell, sbin, vbin, vseq, lsf_size)
 
-    if(!isdefined(blur, :psf)) #No spatial blurring
+    if isnothing(blur)  #No spatial blurring
         return ifu
-    else()  #Blur image
+    else                #Blur image
         blur_imgs = blur_cube(ifu, blur, ap_region, sbin, vbin, ang_size, sbin_size)
         return blur_imgs
     end
@@ -77,7 +77,7 @@ function build_datacube(sim_data::Array{Sim_particle, 1};
                         pixel_vscale::Float64=1.04,
                         inc_deg::Int64=0,
                         filter::String="r",
-                        blur::Blur=Blur("none"))
+                        blur::Union{Blur, Nothing} = nothing)
 
 galaxy_data = sim_to_galaxy(sim_data)
 
