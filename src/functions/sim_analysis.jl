@@ -40,9 +40,30 @@ function sim_analysis(galaxy_data::Array{Galaxy_particle, 1};
                       rbin::Int64=200,
                       dm_profile::Union{Dark_matter, Nothing} = nothing)
 
-    println(typeof(dm_profile))
     if(!any(getfield.(galaxy_data, :type) == "Dark Matter") && isnothing(dm_profile))
         error("No dark matter component is included in this analysis. Describe an analytic potential to calculate the total kinematic profile correctly.")
+    end
+
+    if bin_type == "r"
+        if !isnothing(dm_profile)
+            return r_shell(galaxy_data, rmax, rbin, dm_profile=dm_profile)
+        else
+            return r_shell(galaxy_data, rmax, rbin)
+        end
+    elseif bin_type == "cr"
+        if !isnothing(dm_profile)
+            return cr_shell(galaxy_data, rmax, rbin, dm_profile=dm_profile)
+        else
+            return cr_shell(galaxy_data, rmax, rbin)
+        end
+    elseif bin_type == "z"
+        if !isnothing(dm_profile)
+            return z_shell(galaxy_data, rmax, rbin, dm_profile=dm_profile)
+        else
+            return z_shell(galaxy_data, rmax, rbin)
+        end
+    else
+        error("The specified bin type: ", bin_type, "is not supported. Please use 'r', 'cr' or 'z'.")
     end
 end
 
@@ -50,7 +71,7 @@ function sim_analysis(sim_data::Array{Sim_particle, 1};
                       bin_type::String="r",
                       rmax::Int64=200,
                       rbin::Int64=200,
-                      dm_profile=nothing)
+                      dm_profile::Union{Dark_matter, Nothing} = nothing)
 
     galaxy_data = sim_to_galaxy(sim_data)
     sim_data = nothing
