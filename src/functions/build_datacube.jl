@@ -68,7 +68,7 @@ end
 
 function build_datacube(sim_data::Array{Sim_particle, 1};
                         r200::Int64 = 200,
-                        z::Float64=0.1,
+                        z::Float64=0.05,
                         fov::Float64=15.,
                         ap_shape::String="circular",
                         central_wvl::Int64=4800,
