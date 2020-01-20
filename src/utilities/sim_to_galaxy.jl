@@ -10,13 +10,13 @@ function sim_to_galaxy(sim_data)
 """
 function sim_to_galaxy(sim_data::Array{Sim_particle, 1})
 
-    galaxy_data = Galaxy_particle[]
+    galaxy_data = Array{Galaxy_particle, 1}(undef, length(sim_data))
     centre = galaxy_centre(sim_data)
     rot_mat = galaxy_orient(sim_data, centre)
 
-    for particle in sim_data
-        new = galaxy_particle(particle, centre, rot_mat)
-        push!(galaxy_data, new)
+    Threads.@threads for index in eachindex(sim_data)
+        new = galaxy_particle(sim_data[index], centre, rot_mat)
+        galaxy_data[index] = new
     end
     sim_data = nothing
 
