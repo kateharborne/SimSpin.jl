@@ -38,9 +38,10 @@ function sim_analysis(galaxy_data::Array{Galaxy_particle, 1};
                       bin_type::String="r",
                       rmax::Int64=200,
                       rbin::Int64=200,
-                      dm_profile=nothing)
+                      dm_profile::Union{Dark_matter, Nothing} = nothing)
 
-    if(!any(getfield.(sim_data, :type) == "Dark Matter") && isnothing(dm_profile))
+    println(typeof(dm_profile))
+    if(!any(getfield.(galaxy_data, :type) == "Dark Matter") && isnothing(dm_profile))
         error("No dark matter component is included in this analysis. Describe an analytic potential to calculate the total kinematic profile correctly.")
     end
 end
