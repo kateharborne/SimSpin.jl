@@ -22,12 +22,12 @@ function blur_cube(ifu_cube::Array{Float64, 3},
     else psf_dim = 25
     end
 
-    if lowercase(blur.psf) == "gaussian"
+    if typeof(blur) == Gaussian_blur
         psf_k = Kernel.gaussian([sd_scaled], [psf_dim])
-    #elseif lowercase(blur.psf) == "moffat"
-        #psf_k = profitCubaMoffat(fwhm = fwhm_scaled, mag = 1, con = 5, dim = [psf_dim,psf_dim])
+    #elseif typeof(blur) == Moffat_blur
+        #psf_k = Kernel.moffat(blur.α, blur.β, psf_dim)
     else
-        error("Blur PSF type:", blur.psf, "is not supported.")
+        error("Blur PSF type:", typeof(blur), "is not supported.")
     end
 
     kernel = kernelfactors((psf_k, psf_k))
