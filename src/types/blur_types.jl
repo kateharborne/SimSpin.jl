@@ -7,11 +7,11 @@ abstract type Blur end
 """
     Gaussian_blur(;sigma, fwhm)
 
-    Create a struct containing seeing information.
+Create a struct containing seeing information.
 
-    Keyword arguments (one must be specified, sigma is prioritised):\n
-        sigma       The standard deviation of the point spread function
-        fwhm        The full width half max of the point spread function
+Keyword arguments (at least one must be specified, sigma is prioritised):\n
+    sigma       The standard deviation of the point spread function
+    fwhm        The full width half max of the point spread function
 """
 struct Gaussian_blur <: Blur
     sigma::Float64
@@ -35,13 +35,13 @@ end
                 α,
                 fwhm)
 
-    Create a struct containing seeing information. β and either α or fwhm must be specified.
-    If both α and fwhm are specified, α is prioritised.
+Create a struct containing seeing information. β and either α or fwhm must be specified.
+If both α and fwhm are specified, α is prioritised.
 
-    Arguments:\n
-        β           The power component in the Moffat distribution
-        α           The core width of the Moffat distribution (optional)
-        fwhm        The full width half max of the Moffat distribution (optional)
+Arguments:\n
+    β           The power component in the Moffat distribution
+    α           The core width of the Moffat distribution (optional)
+    fwhm        The full width half max of the Moffat distribution (optional)
 """
 struct Moffat_blur <: Blur
     β::Float64

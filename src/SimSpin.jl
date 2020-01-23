@@ -10,7 +10,8 @@ module SimSpin
             build_datacube,
             flux_grid,
             ifu_cube,
-            Blur,
+            Gaussian_blur,
+            Moffat_blur,
             Hernquist,
             NFW
 
