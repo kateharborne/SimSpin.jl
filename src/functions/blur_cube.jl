@@ -13,8 +13,6 @@ function blur_cube(ifu_cube::Array{Float64, 3},
                     ang_size::Float64,
                     sbinsize::Float64)
 
-    sd_scaled = blur.sigma * ang_size / sbinsize # sd scaled to image pixel dimensions
-
     if (sbin < 25 && (sbin % 2) != 0)
         psf_dim = sbin
     elseif (sbin < 25 && (sbin % 2) == 0)
@@ -23,11 +21,13 @@ function blur_cube(ifu_cube::Array{Float64, 3},
     end
 
     if typeof(blur) == Gaussian_blur
+        sd_scaled = blur.sigma * ang_size / sbinsize # sd scaled to image pixel dimensions
         psf_k = Kernel.gaussian([sd_scaled], [psf_dim])
-    #elseif typeof(blur) == Moffat_blur
+    elseif typeof(blur) == Moffat_blur
+        error("Moffat blurring is coming soon!")
         #psf_k = Kernel.moffat(blur.α, blur.β, psf_dim)
     else
-        error("Blur PSF type:", typeof(blur), "is not supported.")
+        error("Blur type:", typeof(blur), "is not supported.")
     end
 
     kernel = kernelfactors((psf_k, psf_k))
