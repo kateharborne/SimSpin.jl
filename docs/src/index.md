@@ -23,7 +23,8 @@ sim_analysis
 
 ## Type Constructors
 ```@docs
-Blur
+Gaussian_blur
+Moffat_blur
 Hernquist
 NFW
 ```
