@@ -22,15 +22,14 @@ function blur_cube(ifu_cube::Array{Float64, 3},
 
     if typeof(blur) == Gaussian_blur
         sd_scaled = blur.sigma * ang_size / sbinsize # sd scaled to image pixel dimensions
-        psf_k = Kernel.gaussian([sd_scaled], [psf_dim])
+        kernel = Kernel.gaussian((sd_scaled, sd_scaled), (psf_dim, psf_dim))
     elseif typeof(blur) == Moffat_blur
-        error("Moffat blurring is coming soon!")
-        #psf_k = Kernel.moffat(blur.α, blur.β, psf_dim)
+        kernel = Kernel.moffat(blur.α, blur.β, psf_dim)
+        kernel = kernel .* moffat_scale(1., blur)
     else
         error("Blur type:", typeof(blur), "is not supported.")
     end
 
-    kernel = kernelfactors((psf_k, psf_k))
     blur_cube = zeros(Float64, (sbin, sbin, vbin))
 
     for bin in 1:vbin
@@ -39,4 +38,11 @@ function blur_cube(ifu_cube::Array{Float64, 3},
     end
 
     return blur_cube
+end
+
+function moffat_scale(mag::Float64, blur::Moffat_blur)  #This scale function is the same as the one used in ICRAR/ProFit repo.
+    lumtot = pi * blur.α^2/(blur.β - 1)
+    magtot = -2.5 * log10(lumtot)
+    scale = 1/(10^(0.4 * (mag - magtot)))
+    return scale
 end
