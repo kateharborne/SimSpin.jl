@@ -3,18 +3,9 @@
 # Original author: Katherine Harborne
 
 """
-    obs_data_prep(galaxy_data;
-                    r200 = 200,
-                    z = 0.05,
-                    fov = 15.,
-                    ap_shape = "circular",
-                    central_wvl = 4800,
-                    lsf_fwhm = 2.65,
-                    pixel_sscale = 0.5,
-                    pixel_vscale = 1.04,
-                    inc_deg = 70)
+    obs_data_prep(galaxy_data, observation, ifu)
 
-This function prepares the particle data for a given observation.
+This function prepares the particle data for a given observation with the given telescope.
 
 Returns:\n
     galaxy_data         Array of particle data formatted for the observation specified by the parameters.
@@ -27,42 +18,29 @@ Returns:\n
     ang_size            The angular size given redshift z in kpc
     sbinsize            The spatial bin size in kpc per bin
 
-Keyword arguments (optional):\n
-    r200            The virial radius specified in the simulation, kpc.
-    z               The projected redshift at which the observation is made.
-    fov             The field of view of the IFU, diameter in arcseconds.
-    ap_shape        The shape of the field of view, with options "circular", "square" or "hexagonal".
-    central_wvl     The central filter wavelength used for the observation, given in angstroms.
-    lsf_fwhm        The line spread function full-width half-max, given in angstroms.
-    pixel_sscale    The corresponding spatial pixel scale associated with a given telescope output in arcseconds.
-    pixel_vscale    The corresponding velocity pixel scale associated with a given telescope filter output in angstroms.
-    inc_deg         The inclination at which to observe the galaxy in degrees.
+Parameters:\n
+    galaxy_data         Array of `Particle` describing galaxy
+    observation         Struct of type `Observation` 
+    ifu                 Struct of type `Telescope`
 """
-function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
-                        r200::Int64 = 200,
-                        z::Float64 = 0.05,
-                        fov::Float64 = 15.,
-                        ap_shape::String = "circular",
-                        central_wvl::Int64=4800,
-                        lsf_fwhm::Float64=2.65,
-                        pixel_sscale::Float64=0.5,
-                        pixel_vscale::Float64=1.04,
-                        inc_deg::Int64=70)
+function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
+                        obs::Observation,
+                        ifu::Telescope)
 
-    ang_size    = angleSize(z)                      # angular size given z, kpc
-    ap_size     = ang_size * fov                    # diameter size of the telescope, kpc
-    sbin::Int64 = floor(fov / pixel_sscale)         # number of spatial bins
+    ang_size    = angleSize(obs.z)                      # angular size given z, kpc
+    ap_size     = ang_size * ifu.fov                    # diameter size of the telescope, kpc
+    sbin::Int64 = floor(ifu.fov / ifu.pixel_sscale)         # number of spatial bins
     sbinsize    = ap_size / sbin                    # spatial bin size (kpc per bin)
-    vbinsize    = (pixel_vscale / central_wvl) * (3e8 / 1e3)  # km/s per velocity bin
-    lsf_size    = ((lsf_fwhm / central_wvl) * (3e8 / 1e3)) / (2 * sqrt(2*log(2))) # velocity uncertainty (sd)
+    vbinsize    = (ifu.pixel_vscale / ifu.central_wvl) * (3e8 / 1e3)  # km/s per velocity bin
+    lsf_size    = ((ifu.lsf_fwhm / ifu.central_wvl) * (3e8 / 1e3)) / (2 * sqrt(2*log(2))) # velocity uncertainty (sd)
 
-    set_observables!.(galaxy_data, inc_deg)
+    set_observables!.(galaxy_data, obs.inc_deg)     #set each particles mutable struct `Observables` for the given observation inclination
 
-    if (ap_shape == "circular")       # circular apperture mask
+    if (ifu.ap_shape == "circular")       # circular apperture mask
       ap_region = circular_ap(sbin)
-    elseif (ap_shape == "square")     # square apperture mask
+    elseif (ifu.ap_shape == "square")     # square apperture mask
       ap_region = square_ap(sbin)
-    elseif (ap_shape == "hexagonal")  # hexagonal apperture mask
+    elseif (ifu.ap_shape == "hexagonal")  # hexagonal apperture mask
       ap_region = hexagonal_ap(sbin)
     else
        error("Unsupported aperture shape specified.")
@@ -73,15 +51,15 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
         error("There are no particles representing luminous matter in this simulation (i.e. no stars, bulge or disc particles).")
     end
 
-    deleteat!(galaxy_data, findall(part -> part.r >= r200, galaxy_data))  # remove particles beyond r200
+    deleteat!(galaxy_data, findall(part -> part.r >= obs.r200, galaxy_data))  # remove particles beyond r200
 
-    if (ap_shape == "circular")                    # remove particles outside aperture
+    if (ifu.ap_shape == "circular")                    # remove particles outside aperture
       galaxy_data  = circular_ap_cut(galaxy_data, ap_size)
 
-    elseif (ap_shape == "square")
+    elseif (ifu.ap_shape == "square")
       galaxy_data = square_ap_cut(galaxy_data, sbin, sbinsize)
 
-    elseif (ap_shape == "hexagonal")
+    elseif (ifu.ap_shape == "hexagonal")
       galaxy_data = hexagonal_ap_cut(galaxy_data, sbin, sbinsize)
     end
 
@@ -120,22 +98,11 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1};
             sbinsize
 end
 
-function obs_data_prep(sim_data::Array{Sim_particle, 1};
-                        r200::Int64 = 200,
-                        z::Float64 = 0.05,
-                        fov::Float64 = 15.,
-                        ap_shape::String = "circular",
-                        central_wvl::Int64=4800,
-                        lsf_fwhm::Float64=2.65,
-                        pixel_sscale::Float64=0.5,
-                        pixel_vscale::Float64=1.04,
-                        inc_deg::Int64=70)
+function obs_data_prep(sim_data::Array{Sim_particle, 1},
+                        obs::Observation,
+                        ifu::Telescope)
 
     galaxy_data = sim_to_galaxy(sim_data)
 
-    return obs_data_prep(galaxy_data, r200=r200, z=z, fov=fov,
-                            ap_shape=ap_shape, central_wvl=central_wvl,
-                            lsf_fwhm=lsf_fwhm,
-                            pixel_sscale=pixel_sscale, pixel_vscale=pixel_vscale,
-                            inc_deg=inc_deg)
+    return obs_data_prep(galaxy_data, obs, ifu)
 end
