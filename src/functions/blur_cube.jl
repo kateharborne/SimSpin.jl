@@ -25,7 +25,7 @@ function blur_cube(ifu_cube::Array{Float64, 3},
                     ang_size::Float64,
                     sbinsize::Float64)
 
-    @warn("Julia implementation of blur will not return the same results as those given in the SimSpin R package.")
+    @warn("SimSpin's Julia implementation will not return the same blurring results as those given in the SimSpin R package.")
 
     if (sbin < 25 && (sbin % 2) != 0)
         psf_dim = sbin
