@@ -13,7 +13,9 @@ module SimSpin
             Gaussian_blur,
             Moffat_blur,
             Hernquist,
-            NFW
+            NFW,
+            IFU,
+            Observation
 
     include("io/sim_data.jl")
 
@@ -21,8 +23,10 @@ module SimSpin
     include("types/dark_matter_types.jl")
     include("types/particle_types.jl")
     include("types/Galaxy_particle.jl")
+    include("types/observation_types.jl")
     include("types/Sim_particle.jl")
     include("types/shell_types.jl")
+    include("types/telescope_types.jl")
 
     include("celestial/cosdistAngScale.jl")
     include("celestial/cosdistTravelTime.jl")
