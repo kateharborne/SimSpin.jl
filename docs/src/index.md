@@ -4,12 +4,23 @@
 
 For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin-Julia).
 
-Once installed, a kinematic datacube for the example galaxy observed from redshift 0.05 and inclined at 30 degrees from face on can be built using the following procedure:
-
-```
-> sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
-> datacube = SimSpin.build_datacube(sim_data, z = 0.05, inc_deg = 30)
-```
+Once installed, a simple procedure of four steps is required to take an observation and generate a datacube:
+1.  Create a telescope. In this example we will use the default SAMI telescope constructor. The IFU() constructor can alternatively be used to create any generic IFU.
+    ```
+    > telescope = SimSpin.SAMI()
+    ```
+2.  Read in the simulation data
+    ```
+    > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
+    ```
+3.  Create an observation. This specifies the observational redshift, inclination and virial radius of the galaxy.
+    ```
+    > obs = SimSpin.Observation(0.05, 70, 200)
+    ```
+4.  Build the datacube using all the previous elements as follows.
+    ```
+    > datacube = SimSpin.build_datacube(sim_data, obs, telescope)
+    ```
 
 ## Functions
 ```@docs
