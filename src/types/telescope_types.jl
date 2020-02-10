@@ -21,7 +21,7 @@ Parameters:\n
 struct IFU <: Telescope
     fov::Float64
     ap_shape::String
-    central_wvl::Float64
+    central_wvl::Real
     lsf_fwhm::Float64
     pixel_sscale::Float64
     pixel_vscale::Float64
@@ -29,7 +29,7 @@ struct IFU <: Telescope
 
     function IFU(fov::Float64,
                         ap_shape::String,
-                        central_wvl::Int64,
+                        central_wvl::Real,
                         lsf_fwhm::Float64,
                         pixel_sscale::Float64,
                         pixel_vscale::Float64,
@@ -37,7 +37,7 @@ struct IFU <: Telescope
 
         if (ap_shape != "circular" && ap_shape != "square" & ap_shape != "hexagonal")
             error("Please specify ap_shape as either 'circular', 'square' or 'hexagonal'.")
-        else if filter != "r" && filter != "g" && !isnothing(filter)
+        elseif filter != "r" && filter != "g" && !isnothing(filter)
             error("Please specify filter as either 'r' or 'g' or do not use.")
         end
 
@@ -46,7 +46,7 @@ struct IFU <: Telescope
 
     function IFU(fov::Float64,
                     ap_shape::String,
-                    central_wvl::Int64,
+                    central_wvl::Real,
                     lsf_fwhm::Float64,
                     pixel_sscale::Float64,
                     pixel_vscale::Float64)

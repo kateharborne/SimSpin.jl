@@ -239,7 +239,7 @@ end
 Sets apparent constants for an observation taken of a single particle at a given degree of inclination
 wrt a face-on galaxy rotated around the semi-major x axis.
 """
-function set_observables!(particle::Galaxy_particle, inc_deg::Int64)
+function set_observables!(particle::Galaxy_particle, inc_deg::Real)
     particle.obs.z_obs = sind(inc_deg) * particle.z + cosd(inc_deg) * particle.y
     particle.obs.vy_obs = cosd(inc_deg) * particle.vz - sind(inc_deg) * particle.vy
     particle.obs.r_obs = sqrt(particle.x^2 + particle.obs.z_obs^2)

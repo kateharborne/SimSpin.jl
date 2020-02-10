@@ -15,12 +15,12 @@ Parameters:\n
 """
 struct Observation
     z::Float64
-    inc_deg::Float64
-    r200::Int64
+    inc_deg::Real
+    r200::Real
 
     function Observation(z::Float64,
-                        inc_deg::Float64,
-                        r200::Int64)
+                        inc_deg::Real,
+                        r200::Real)
         new(z, inc_deg, r200)
     end
 end

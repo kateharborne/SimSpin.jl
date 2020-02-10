@@ -33,12 +33,14 @@ function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
                     sbin::Int64,
                     vbin::Int64,
                     redshift::Float64,
-                    filter::String)
+                    filter::Union{String, Nothing})
 
     flux = zeros(Float64, length(parts_in_cell))
     redshiftCoef = Lum2FluxFactor(z = redshift)
 
-    filter = get_filter(filter)
+    if !isnothing(filter)
+        filter = get_filter(filter)
+    end
 
     Threads.@threads for index in axes(parts_in_cell, 1)
         cell_flux = 0

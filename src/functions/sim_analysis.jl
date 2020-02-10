@@ -26,13 +26,7 @@ radially in 3D spherical shells, `cr` bins radially in 2D circular rings, `z` bi
 in 1D off the plane of the galaxy.
         rmax        The maximum radial coordinate considered within the simulated galaxy in kpc.
         rbin        The number of radial bins considered.
-        dm_profile  If dark matter particles are not included in the analysis, this option allows
-you to use the DM profile for the mass distribution such that the circular velocity can be
-correctly determined. Options include nothing (default),
-`Dict("profile"=>"NFW", "dm_vm"=>186.9, "dm_a"=>34.5, "dm_rhof"=>0.035)` - where dm_vm is the virial mass, dm_a is the
-scale radius, and dm_rhof is the density evaluated at the flattening radius - and
-`Dict("profile"=>"Hernquist", "dm_mass"=>184.9, "dm_a"=>34.5)` - where dm_mass is the total mass of the dark
-matter component and dm_a is the scale radius of the halo.
+        dm_profile  Struct of type `Dark_matter`
 """
 function sim_analysis(galaxy_data::Array{Galaxy_particle, 1};
                       bin_type::String="r",
