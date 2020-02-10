@@ -15,6 +15,7 @@ Keyword arguments (at least one must be specified, sigma is prioritised):\n
 """
 struct Gaussian_blur <: Blur
     sigma::Float64
+    fwhm::Float64
 
     function Gaussian_blur(;sigma::Float64=-1.,
                             fwhm::Float64=-1.)
@@ -22,10 +23,11 @@ struct Gaussian_blur <: Blur
         if sigma < 0 && fwhm < 0
             error("Please specify standard deviation, sigma, or full width half max, fwhm, as a positive float.")
         elseif sigma > 0
-            new(sigma)
+            fwhm = sigma * 2.355
+            new(sigma, fwhm)
         else
             sigma = fwhm/2.355
-            new(sigma)
+            new(sigma, fwhm)
         end
     end
 end
@@ -46,15 +48,18 @@ Arguments:\n
 struct Moffat_blur <: Blur
     β::Float64
     α::Float64
+    fwhm::Float64
+
     function Moffat_blur(β::Float64;
                             α::Union{Float64, Nothing} = nothing,
                             fwhm::Union{Float64, Nothing} = nothing)
 
         if isnothing(α) && !isnothing(fwhm)
             α = fwhm / (2 * sqrt(2^(1/β) - 1))
-            new(β, α)
+            new(β, α, fwhm)
         elseif !isnothing(α)
-            new(β, α)
+            fwhm = a * 2 * sqrt(2^(1/β) - 1)
+            new(β, α, fwhm)
         else
             error("Please specify either core width, α, or full width half max, fwhm.")
         end
