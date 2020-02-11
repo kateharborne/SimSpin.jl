@@ -5,21 +5,28 @@
 For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin-Julia).
 
 Once installed, a simple procedure of four steps is required to take an observation and generate a datacube:
-1.  Create a telescope. In this example we will use the default SAMI telescope constructor. The IFU() constructor can alternatively be used to create any generic IFU.
+1.  Create a telescope object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default SAMI telescope constructor. Alternatively, the IFU() constructor can be used to create any generic IFU.
+
     ```
-    > telescope = SimSpin.SAMI()
+        > telescope = SimSpin.SAMI()
     ```
-2.  Read in the simulation data
+
+2.  Read in the simulation's particle data
+
     ```
-    > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
+        > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
     ```
-3.  Create an observation. This specifies the observational redshift, inclination and virial radius of the galaxy.
+
+3.  Create an observation object. This specifies the observational redshift, inclination and virial radius of the galaxy.
+
     ```
-    > obs = SimSpin.Observation(0.05, 70, 200)
+        > observation = SimSpin.Observation(0.05, 70, 200)
     ```
-4.  Build the datacube using all the previous elements as follows.
+
+4.  Build the datacube as a combination of a telescope, an observation and the galaxy particle data.
+
     ```
-    > datacube = SimSpin.build_datacube(sim_data, obs, telescope)
+        > datacube = SimSpin.build_datacube(sim_data, observation, telescope)
     ```
 
 ## Functions
@@ -29,13 +36,26 @@ flux_grid
 ifu_cube
 obs_data_prep
 sim_data
-sim_analysis
+```
+## Constructors
+### Telescope Constructors
+```@docs
+IFU
 ```
 
-## Type Constructors
+### Observation Constructor
+```@docs
+Observation
+```
+
+### Blur Constructors
 ```@docs
 Gaussian_blur
 Moffat_blur
+```
+
+### Dark Matter Constructors
+```@docs
 Hernquist
 NFW
 ```

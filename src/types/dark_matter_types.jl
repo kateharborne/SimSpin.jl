@@ -4,8 +4,8 @@ abstract type Dark_matter end
     Hernquist(;dm_mass = 186.9,
                 dm_a = 34.5)
 
-    Creates a Hernquist analytic dark matter mass potential.
-    Default values are shown above.
+Creates a Hernquist analytic dark matter mass potential.
+Default values are shown above.
 """
 struct Hernquist <: Dark_matter
     dm_mass::Float64
@@ -22,8 +22,8 @@ end
             dm_a = 34.5,
             dm_rhof = 0.035)
 
-    Creates an NFW analytic dark matter mass potential.
-    Default values are shown above.
+Creates an NFW analytic dark matter mass potential.
+Default values are shown above.
 """
 struct NFW <: Dark_matter
     dm_vm::Float64

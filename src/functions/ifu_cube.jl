@@ -12,8 +12,8 @@ using Distributions
                 vseq,
                 lsf_size)
 
-The purpose of this function is to construct an IFU data cube. It accepts the flux_grid
-output by the `flux_grid()` function and returns a similar, IFU-like, 3D array
+The purpose of this function is to construct an IFU data cube. It accepts a flux grid
+in the format output by the `flux_grid()` function and returns a similar, IFU-like, 3D array
 where each particle's flux contributes a Gaussian distribution in the velocity axis.
 
 Parameters:\n
@@ -54,6 +54,6 @@ function ifu_cube(flux_grid::Array{Float64, 3},
             end
         end
     end
-    
+
     return cube
 end

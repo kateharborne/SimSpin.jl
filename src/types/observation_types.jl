@@ -6,7 +6,7 @@
 """
     Observation(z, inc_deg, r200)
 
-Creates a 'struct' specifying the setup of a galaxy for observation. To be used in conjunction with a 'Telescope'.
+Creates a `struct` specifying the setup of a galaxy for observation. To be used in conjunction with a `Telescope`.
 
 Parameters:\n
     z               The projected redshift at which the observation is made.
