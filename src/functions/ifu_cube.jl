@@ -7,10 +7,7 @@ using Distributions
 """
     ifu_cube(flux_grid,
                 parts_in_cell,
-                sbin,
-                vbin,
-                vseq,
-                lsf_size)
+                observe)
 
 The purpose of this function is to construct an IFU data cube. It accepts a flux grid
 in the format output by the `flux_grid()` function and returns a similar, IFU-like, 3D array
@@ -19,26 +16,23 @@ where each particle's flux contributes a Gaussian distribution in the velocity a
 Parameters:\n
     flux_grid       Flux grid output by `flux_grid()`
     parts_in_cell   1D array of the particles corresponding to each element in the IFU data-cube.
-    sbin            The number of spatial bins in the aperture.
-    vbin            The number of velocity bins in the flux grid.
-    vseq            The bounds of each velocity bin in the flux grid.
-    lsf_size        The Gaussian standard deviation of the line spread function in km/s.
+    observe         Struct of type `Observation` containing all observation parameters.
 """
 function ifu_cube(flux_grid::Array{Float64, 3},
                     parts_in_cell::Array{Array{SimSpin.Galaxy_particle,1},1},
-                    sbin::Int64,
-                    vbin::Int64,
-                    vseq::StepRangeLen{Float64,Base.TwicePrecision{Float64},Base.TwicePrecision{Float64}},
-                    lsf_size::Float64)
+                    observe::Observation)
 
-    cube = zeros(Float64, (sbin, sbin, vbin))
+    cube = zeros(Float64, (observe.sbin, observe.sbin, observe.vbin))
+
+    sbin2 = observe.sbin^2
+    lsf_size2 = observe.lsf_size^2
 
     for (index, cell) in enumerate(parts_in_cell) # for each cell in cube
-        coord = [index % sbin, index % (sbin^2) ÷ sbin + 1, index ÷ (sbin^2) + 1]
-        if(index % sbin == 0 && index % (sbin^2) == 0 )
-            coord = [sbin, sbin, index ÷ (sbin^2)]
-        elseif(index % sbin == 0 && index % (sbin^2) != 0 )
-            coord = [sbin, index % (sbin^2) ÷ sbin, index ÷ (sbin^2) + 1]
+        coord = [index % observe.sbin, index % (sbin2) ÷ observe.sbin + 1, index ÷ (sbin2) + 1]
+        if(index % observe.sbin == 0 && index % (sbin2) == 0 )
+            coord = [observe.sbin, observe.sbin, index ÷ (sbin2)]
+        elseif(index % observe.sbin == 0 && index % (sbin2) != 0 )
+            coord = [observe.sbin, index % (sbin2) ÷ observe.sbin, index ÷ (sbin2) + 1]
         end
 
         num_of_parts = length(cell) # number of particles in that cell
@@ -48,9 +42,9 @@ function ifu_cube(flux_grid::Array{Float64, 3},
                 cell_mass = sum(getfield.(cell, :mass))
                 cell_flux = flux_grid[coord[1], coord[2], coord[3]] * particle.mass / cell_mass
 
-                distribution = Normal(particle.obs.vy_obs, lsf_size^2)  #Normal distribution of particle's vy_obs
+                distribution = Normal(particle.obs.vy_obs, lsf_size2)  #Normal distribution of particle's vy_obs
                 # adding the "gaussians" of each particle to the velocity bins
-                cube[coord[1], coord[2], :] += diff(cell_flux .* cdf.(distribution, vseq))
+                cube[coord[1], coord[2], :] += diff(cell_flux .* cdf.(distribution, observe.vseq))
             end
         end
     end

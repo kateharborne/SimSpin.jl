@@ -2,6 +2,8 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
+using StaticArrays
+
 abstract type Telescope end
 
 """
@@ -23,8 +25,12 @@ struct IFU <: Telescope
     ap_shape::String
     central_wvl::Real
     lsf_fwhm::Float64
+    lsf_size::Float64
     pixel_sscale::Float64
     pixel_vscale::Float64
+    vbinsize::Float64
+    sbin::Int64
+    ap_region::MMatrix
     filter::Union{String, Nothing}
 
     function IFU(fov::Float64,
@@ -35,13 +41,25 @@ struct IFU <: Telescope
                         pixel_vscale::Float64,
                         filter::Union{String, Nothing})
 
-        if (ap_shape != "circular" && ap_shape != "square" & ap_shape != "hexagonal")
-            error("Please specify ap_shape as either 'circular', 'square' or 'hexagonal'.")
-        elseif filter != "r" && filter != "g" && !isnothing(filter)
+        if filter != "r" && filter != "g" && !isnothing(filter)
             error("Please specify filter as either 'r' or 'g' or do not use.")
         end
 
-        new(fov, ap_shape, central_wvl, lsf_fwhm, pixel_sscale, pixel_vscale, filter)
+        vbinsize    = (pixel_vscale / central_wvl) * (3e8 / 1e3)                        # km/s per velocity bin
+        lsf_size    = ((lsf_fwhm / central_wvl) * (3e8 / 1e3)) / (2 * sqrt(2*log(2)))   # velocity uncertainty (sd)
+        sbin::Int64 = floor(fov / pixel_sscale)                                         # number of spatial bins
+
+        if (ap_shape == "circular")       # circular apperture mask
+          ap_region = circular_ap(sbin)
+        elseif (ap_shape == "square")     # square apperture mask
+          ap_region = square_ap(sbin)
+        elseif (ap_shape == "hexagonal")  # hexagonal apperture mask
+          ap_region = hexagonal_ap(sbin)
+        else
+           error("Unsupported aperture shape specified.")
+        end
+
+        new(fov, ap_shape, central_wvl, lsf_fwhm, lsf_size, pixel_sscale, pixel_vscale, vbinsize, sbin, ap_region, filter)
     end
 
     function IFU(fov::Float64,

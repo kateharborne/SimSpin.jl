@@ -19,23 +19,19 @@ using StaticArrays
 """
 function blur_cube(ifu_cube::Array{Float64, 3},
                     blur::Blur,
-                    ap_region::MArray,
-                    sbin::Int64,
-                    vbin::Int64,
-                    ang_size::Float64,
-                    sbinsize::Float64)
+                    observe::Observation)
 
     @warn("SimSpin's Julia implementation will not return the same blurring results as those given in the SimSpin R package.")
 
-    if (sbin < 25 && (sbin % 2) != 0)
-        psf_dim = sbin
-    elseif (sbin < 25 && (sbin % 2) == 0)
-        psf_dim = sbin-1
+    if (observe.sbin < 25 && (observe.sbin % 2) != 0)
+        psf_dim = observe.sbin
+    elseif (observe.sbin < 25 && (observe.sbin % 2) == 0)
+        psf_dim = observe.sbin-1
     else psf_dim = 25
     end
 
     if typeof(blur) == Gaussian_blur
-        sd_scaled = blur.sigma * ang_size / sbinsize # sd scaled to image pixel dimensions
+        sd_scaled = blur.sigma * observe.ang_size / observe.sbinsize # sd scaled to image pixel dimensions
         kernel = Kernel.gaussian((sd_scaled, sd_scaled), (psf_dim, psf_dim))
     elseif typeof(blur) == Moffat_blur
         kernel = Kernel.moffat(blur.α, blur.β, psf_dim)
@@ -44,11 +40,11 @@ function blur_cube(ifu_cube::Array{Float64, 3},
         error("Blur type:", typeof(blur), "is not supported.")
     end
 
-    blur_cube = zeros(Float64, (sbin, sbin, vbin))
+    blur_cube = zeros(Float64, (observe.sbin, observe.sbin, observe.vbin))
 
-    for bin in 1:vbin
+    for bin in 1:observe.vbin
         blur_cube[:,:,bin] = imfilter(ifu_cube[:,:,bin], kernel)
-        blur_cube[:,:,bin] = blur_cube[:,:,bin] .* ap_region #Set all cells outside aperture to zero
+        blur_cube[:,:,bin] = blur_cube[:,:,bin] .* observe.ap_region #Set all cells outside aperture to zero
     end
 
     return blur_cube

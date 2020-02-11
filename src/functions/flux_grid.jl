@@ -6,10 +6,7 @@ using StaticArrays
 
 """
     flux_grid(parts_in_cell,
-                ap_region,
-                sbin,
-                vbin,
-                redshift,
+                observe,
                 filter)
 
 Computes the fluxes for each element of the IFU data-cube.
@@ -21,22 +18,16 @@ an SED is generated in each cell using ProSpect. Else, the luminosity in each ce
 
 Parameters:\n
     parts_in_cell       1D array of the particles corresponding to each element in the IFU data-cube.
-    ap_region           The aperture region mask used to remove flux outside of the specified aperture.
-    sbin                The number of spatial bins in the aperture.
-    vbin                The number of velocity bins in the flux grid.
-    redshift            The projected redshift at which the observation is made.
+    observe             Struct of type `Observation` containing all observation parameters.
     filter              If ssp particles are supplied, the filter within which the SED is generated.
                         Options include "r" and "g"  for SDSS-r and SDSS-g bands respectively.
 """
 function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
-                    ap_region::MArray,
-                    sbin::Int64,
-                    vbin::Int64,
-                    redshift::Float64,
+                    observe::Observation,
                     filter::Union{String, Nothing})
 
     flux = zeros(Float64, length(parts_in_cell))
-    redshiftCoef = Lum2FluxFactor(z = redshift)
+    redshiftCoef = Lum2FluxFactor(z=observe.z)
 
     if !isnothing(filter)
         filter = get_filter(filter)
@@ -50,10 +41,10 @@ function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
         flux[index] = cell_flux
     end
 
-    flux_grid = reshape(flux, sbin, sbin, vbin)
+    flux_grid = reshape(flux, observe.sbin, observe.sbin, observe.vbin)
 
-    for bin = 1:vbin #Set all cells outside aperture to zero
-        flux_grid[:,:,bin] = flux_grid[:,:,bin] .* ap_region
+    for bin = 1:observe.vbin #Set all cells outside aperture to zero
+        flux_grid[:,:,bin] = flux_grid[:,:,bin] .* observe.ap_region
     end
 
     return flux_grid
