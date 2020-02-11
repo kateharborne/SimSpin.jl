@@ -74,57 +74,65 @@ end
 
 
 """
-    SAMI()
+    SAMI(;filter)
 
 Creates an IFU using parameters of the SAMI survey.
+Optional filters "r" or "g" can also be specified.
 """
-function SAMI()
-    return IFU(15.,
+function SAMI(;filter::Union{String, Nothing} = nothing)
+    return IFU(15,
                 "circular",
                 4800,
                 2.65,
                 0.5,
-                1.04)
+                1.04,
+                filter)
 end
 
 """
     MaNGA()
 
 Creates an IFU using parameters of the MaNGA survey.
+Optional filters "r" or "g" can also be specified.
 """
-function MaNGA()
+function MaNGA(;filter::Union{String, Nothing} = nothing)
     return IFU(22,
                 "hexagonal",
                 4950,
                 2.8,
                 0.25,
-                1.2)
+                1.2,
+                filter)
 end
 
 """
     CALIFA()
 
 Creates an IFU using parameters of the CALIFA survey.
+Optional filters "r" or "g" can also be specified.
 """
-function CALIFA()
+function CALIFA(;filter::Union{String, Nothing} = nothing)
     return IFU(30,
                 "hexagonal",
                 4200,
                 5.65,
                 1.,
-                2.)
+                2.,
+                filter)
 end
 
 """
     Hector()
 
 Creates an IFU using parameters of the CALIFA survey.
+Optional filters "r" or "g" can also be specified.
 """
-function Hector()
+function Hector(;filter::Union{String, Nothing} = nothing)
     return IFU(30,
                 "hexagonal",
                 4800,
                 1.3,
                 1.6,
-                0.05)
+                0.05,
+                filter)
 end
