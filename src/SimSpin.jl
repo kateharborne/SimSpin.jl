@@ -14,7 +14,11 @@ module SimSpin
             Moffat_blur,
             Hernquist,
             NFW,
-            IFU
+            IFU,
+            SAMI,
+            MaNGA,
+            CALIFA,
+            Hector
 
     include("types/blur_types.jl")
     include("types/dark_matter_types.jl")

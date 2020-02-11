@@ -5,7 +5,7 @@
 For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin-Julia).
 
 Once installed, a simple procedure of three steps is required to take an observation and generate a datacube:
-1.  Create a telescope object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default SAMI telescope constructor. Alternatively, the IFU() constructor can be used to create any generic IFU.
+1.  Create a telescope object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [SAMI](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
 
     ```
         > telescope = SimSpin.SAMI()
@@ -33,8 +33,17 @@ sim_data
 ```
 ## Constructors
 ### Telescope Constructors
+
+An `IFU` object denotes all the parameters required to make a mock observation.
+Any generic IFU can be made using the `IFU()` function.
+Default constructors can also be used to emulate famous IFU survey instruments.
+Currently `SAMI`, `MaNGA`, `CALIFA` and `Hector` are supported.
 ```@docs
 IFU
+SAMI
+MaNGA
+CALIFA
+Hector
 ```
 
 ### Blur Constructors

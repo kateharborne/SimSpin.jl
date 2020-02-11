@@ -9,7 +9,7 @@ abstract type Telescope end
 """
     IFU(fov, ap_shape, pixel_sscale, pixel_vscale, central_wvl, lsf_fwhm, filter)
 
-Creates a mock IFU telescope which can be used to "observe" simulations.
+Creates a customisable, mock IFU telescope which can be used to "observe" simulations.
 
 Parameters:\n
     fov             The field of view of the IFU, diameter in arcseconds.
@@ -73,7 +73,58 @@ struct IFU <: Telescope
 end
 
 
+"""
+    SAMI()
 
-#function SAMI()
-#    return IFU()
-#end
+Creates an IFU using parameters of the SAMI survey.
+"""
+function SAMI()
+    return IFU(15.,
+                "circular",
+                4800,
+                2.65,
+                0.5,
+                1.04)
+end
+
+"""
+    MaNGA()
+
+Creates an IFU using parameters of the MaNGA survey.
+"""
+function MaNGA()
+    return IFU(22,
+                "hexagonal",
+                4950,
+                2.8,
+                0.25,
+                1.2)
+end
+
+"""
+    CALIFA()
+
+Creates an IFU using parameters of the CALIFA survey.
+"""
+function CALIFA()
+    return IFU(30,
+                "hexagonal",
+                4200,
+                5.65,
+                1.,
+                2.)
+end
+
+"""
+    Hector()
+
+Creates an IFU using parameters of the CALIFA survey.
+"""
+function Hector()
+    return IFU(30,
+                "hexagonal",
+                4800,
+                1.3,
+                1.6,
+                0.05)
+end
