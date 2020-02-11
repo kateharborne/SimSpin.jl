@@ -58,7 +58,7 @@ struct Moffat_blur <: Blur
             α = fwhm / (2 * sqrt(2^(1/β) - 1))
             new(β, α, fwhm)
         elseif !isnothing(α)
-            fwhm = a * 2 * sqrt(2^(1/β) - 1)
+            fwhm = α * 2 * sqrt(2^(1/β) - 1)
             new(β, α, fwhm)
         else
             error("Please specify either core width, α, or full width half max, fwhm.")
