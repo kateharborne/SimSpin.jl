@@ -3,14 +3,9 @@
 # Original author: Katherine Harborne
 
 """
-    obs_data_prep(galaxy_data, observation, ifu)
+    obs_data_prep(galaxy_data, ifu, z, inc_deg, r200)
 
 This function prepares the particle data for a given observation with the given telescope.
-
-Returns:\n
-    galaxy_data         Array of particle data formatted for the observation specified by the parameters.
-    parts_in_cell       3D array of the particles corresponding to each element in the IFU data-cube.
-    observed            Struct of type `Observation` containing all observation parameters.
 
 Parameters:\n
     galaxy_data         Array of `Particle` describing galaxy
@@ -18,6 +13,11 @@ Parameters:\n
     z                   The projected redshift at which the observation is made.
     inc_deg             The inclination at which to observe the galaxy in degrees.
     r200                The virial radius specified in the simulation, kpc.
+    
+Returns:\n
+    galaxy_data         Array of particle data formatted for the observation specified by the parameters.
+    parts_in_cell       3D array of the particles corresponding to each element in the IFU data-cube.
+    observed            Struct of type `Observation` containing all observation parameters.
 """
 function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,

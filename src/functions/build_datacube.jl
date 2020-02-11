@@ -3,7 +3,7 @@
 # Original author: Katherine Harborne
 
 """
-    build_datacube(galaxy_data, observation, ifu, blur)
+    build_datacube(galaxy_data, ifu, z, inc_deg, r200, blur)
 
 Returns a simulated ifu datacube for input, `galaxy_data`, an array of `Particle`.
 Observational variables used are as specified in `Observation` and `IFU` types. Blurring can be added if desired using `Blur` type.
