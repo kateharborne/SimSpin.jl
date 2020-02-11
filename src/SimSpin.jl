@@ -14,9 +14,7 @@ module SimSpin
             Moffat_blur,
             Hernquist,
             NFW,
-            IFU,
-
-    include("io/sim_data.jl")
+            IFU
 
     include("types/blur_types.jl")
     include("types/dark_matter_types.jl")
@@ -26,6 +24,8 @@ module SimSpin
     include("types/Sim_particle.jl")
     include("types/shell_types.jl")
     include("types/telescope_types.jl")
+
+    include("io/sim_data.jl")
 
     include("celestial/cosdistAngScale.jl")
     include("celestial/cosdistTravelTime.jl")
