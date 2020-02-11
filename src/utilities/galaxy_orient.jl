@@ -5,10 +5,10 @@
 using LinearAlgebra
 
 """
-function galaxy_orient(sim_data, centre)
+    galaxy_orient(sim_data, centre)
 
-    Returns rotation matrix to convert from simluation reference frame to
-    the galaxy reference frame where x is aligned with the semi-major axis.
+Returns rotation matrix to convert from simluation reference frame to
+the galaxy reference frame where x is aligned with the semi-major axis.
 """
 function galaxy_orient(sim_data::Array{Sim_particle, 1}, centre::Array{Float64, 1})
 

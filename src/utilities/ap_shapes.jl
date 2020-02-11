@@ -5,11 +5,11 @@
 using LinearAlgebra
 
 """
-function circular_ap(sbin)
+    circular_ap(sbin)
 
-    Returns Array of size sbin * sbin
-    Array is populated with ones denoting aperture pixels
-    in circular arrangement and zeros denoting no pixel.
+Returns Array of size sbin * sbin
+Array is populated with ones denoting aperture pixels
+in circular arrangement and zeros denoting no pixel.
 """
 function circular_ap(sbin::Int64)
 
@@ -26,9 +26,9 @@ function circular_ap(sbin::Int64)
 end
 
 """
-function circular_ap_cut(galaxy_data, ap_size)
+    circular_ap_cut(galaxy_data, ap_size)
 
-    Returns all particles that are within circular aperature of radius ap_size.
+Returns all particles that are within circular aperature of radius ap_size.
 """
 function circular_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, ap_size::Float64)
 
@@ -37,11 +37,11 @@ function circular_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, ap_size::Float6
 end
 
 """
-function square_ap(sbin)
+    square_ap(sbin)
 
-    Returns Array of size sbin * sbin
-    Array is populated with ones denoting aperture pixels
-    in square arrangement.
+Returns Array of size sbin * sbin
+Array is populated with ones denoting aperture pixels
+in square arrangement.
 """
 function square_ap(sbin::Int64)
 
@@ -50,9 +50,9 @@ function square_ap(sbin::Int64)
 end
 
 """
-function square_ap_cut(galaxy_data, sbin, sbinsize)
+    square_ap_cut(galaxy_data, sbin, sbinsize)
 
-    Returns all particles that are within square aperature
+Returns all particles that are within square aperature
 """
 function square_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
     threshold = sbin * sbinsize / 2
@@ -65,11 +65,11 @@ end
 
 
 """
-function hexagonal_ap(sbin)
+    hexagonal_ap(sbin)
 
-    Returns Array of size sbin * sbin
-    Array is populated with ones denoting aperture pixels
-    in hexagonal arrangement and zeros denoting no pixel.
+Returns Array of size sbin * sbin
+Array is populated with ones denoting aperture pixels
+in hexagonal arrangement and zeros denoting no pixel.
 """
 function hexagonal_ap(sbin::Int64)
 
@@ -95,9 +95,9 @@ function hexagonal_ap(sbin::Int64)
 end
 
 """
-function hexagonal_ap_cut(galaxy_data, sbin, sbinsize)
+    hexagonal_ap_cut(galaxy_data, sbin, sbinsize)
 
-    Returns all particles that are within hexagonal aperature
+Returns all particles that are within hexagonal aperature
 """
 function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
     threshold = sbin * sbinsize
