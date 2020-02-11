@@ -2,8 +2,6 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
-using StaticArrays
-
 abstract type Telescope end
 
 """
@@ -30,7 +28,7 @@ struct IFU <: Telescope
     pixel_vscale::Float64
     vbinsize::Float64
     sbin::Int64
-    ap_region::MMatrix
+    ap_region::Array{Float64, 2}
     filter::Union{String, Nothing}
 
     function IFU(fov::Real,

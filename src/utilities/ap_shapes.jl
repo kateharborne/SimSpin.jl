@@ -2,24 +2,23 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
-using StaticArrays
 using LinearAlgebra
 
 """
 function circular_ap(sbin)
 
-    Returns MMatrix of size sbin * sbin
-    Matrix is populated with ones denoting aperture pixels
+    Returns Array of size sbin * sbin
+    Array is populated with ones denoting aperture pixels
     in circular arrangement and zeros denoting no pixel.
 """
 function circular_ap(sbin::Int64)
 
     max_rad = (sbin / 2) - 0.5
 
-    x = MVector{sbin}(abs.(-max_rad:max_rad))
+    x = abs.(-max_rad:max_rad)
     y = x'
 
-    ap_region = MMatrix(y.*x)
+    ap_region = y.*x
     ap_region[ap_region .<= max_rad] .= 1
     ap_region[ap_region .> max_rad] .= 0
 
@@ -40,13 +39,13 @@ end
 """
 function square_ap(sbin)
 
-    Returns MMatrix of size sbin * sbin
-    Matrix is populated with ones denoting aperture pixels
+    Returns Array of size sbin * sbin
+    Array is populated with ones denoting aperture pixels
     in square arrangement.
 """
 function square_ap(sbin::Int64)
 
-    ap_region = MMatrix{sbin, sbin}(1)
+    ap_region = ones(sbin, sbin)
     return ap_region
 end
 
@@ -68,8 +67,8 @@ end
 """
 function hexagonal_ap(sbin)
 
-    Returns MMatrix of size sbin * sbin
-    Matrix is populated with ones denoting aperture pixels
+    Returns Array of size sbin * sbin
+    Array is populated with ones denoting aperture pixels
     in hexagonal arrangement and zeros denoting no pixel.
 """
 function hexagonal_ap(sbin::Int64)
@@ -86,7 +85,7 @@ function hexagonal_ap(sbin::Int64)
     y_check = zeros(len)
     y_check[y .< sbin * sqrt(3) / 4] .= 1
 
-    ap_region::MMatrix{len, len} = zeros(len, len)
+    ap_region = zeros(len, len)
     rr = ((2 * (sbin / 4) * (sbin * sqrt(3) / 4)) .- (sbin / 4) * y .- (sbin * sqrt(3) / 4) * x)'
 
     ap_region[rr .>= 0] .= 1

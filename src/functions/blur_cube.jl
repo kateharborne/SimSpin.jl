@@ -3,7 +3,6 @@
 # Original author: Katherine Harborne
 
 using ImageFiltering
-using StaticArrays
 
 """
     blur_cube(ifu_cube,

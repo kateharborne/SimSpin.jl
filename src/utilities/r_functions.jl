@@ -2,8 +2,6 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
-using StaticArrays
-
 """
 function sftToAge(sft)
 
@@ -55,7 +53,7 @@ function photom_lum(spectra, filter, z)
 
     Calls julia implementation of ProSpect's photom_lum function
 """
-function photom_lum(spectra::Array{Float64,1}, 
+function photom_lum(spectra::Array{Float64,1},
                     filter::Interpolations.FilledExtrapolation{},
                     z::Float64)
 
@@ -89,7 +87,7 @@ function part_spectra(particle::Galaxy_ssp)
                         "lohi" => Z["weight_lo"][1] * A["weight_hi"][1],
                         "lolo" => Z["weight_lo"][1] * A["weight_lo"][1])
 
-    part_spec = zeros(MVector{length(BC03lr["Wave"])})
+    part_spec = zeros(length(BC03lr["Wave"]))
     part_spec = (   (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_hi"][1],:] * weights["hihi"]) +
                     (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_lo"][1],:] * weights["hilo"]) +
                     (BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_hi"][1],:] * weights["lohi"]) +

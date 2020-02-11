@@ -2,8 +2,6 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
-using StaticArrays
-
 """
     Observation(z, inc_deg, r200, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize)
 
@@ -25,7 +23,7 @@ struct Observation
     z::Float64
     inc_deg::Real
     r200::Real
-    ap_region::MMatrix
+    ap_region::Array{Float64}
     sbin::Int64
     vbin::Int64
     vseq::StepRangeLen
@@ -36,7 +34,7 @@ struct Observation
     function Observation(z::Float64,
                         inc_deg::Real,
                         r200::Real,
-                        ap_region::MMatrix,
+                        ap_region::Array{Float64, 2},
                         sbin::Int64,
                         vbin::Int64,
                         vseq::StepRangeLen,

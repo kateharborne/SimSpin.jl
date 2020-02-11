@@ -2,8 +2,6 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
-using StaticArrays
-
 """
     flux_grid(parts_in_cell,
                 observe,
