@@ -43,11 +43,6 @@ sim_data
 IFU
 ```
 
-### Observation Constructor
-```@docs
-Observation
-```
-
 ### Blur Constructors
 ```@docs
 Gaussian_blur

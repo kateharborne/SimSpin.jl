@@ -15,7 +15,6 @@ module SimSpin
             Hernquist,
             NFW,
             IFU,
-            Observation
 
     include("io/sim_data.jl")
 
