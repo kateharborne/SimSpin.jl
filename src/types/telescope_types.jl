@@ -21,7 +21,7 @@ Parameters:\n
     filter          Optional. If particles type is ssp, the filter within which the SED is generated. Options include "r" and "g"  for SDSS-r and SDSS-g bands respectively.
 """
 struct IFU <: Telescope
-    fov::Float64
+    fov::Real
     ap_shape::String
     central_wvl::Real
     lsf_fwhm::Float64
