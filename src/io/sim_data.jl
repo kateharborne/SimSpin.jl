@@ -108,5 +108,5 @@ function sim_data(filename::String;
         end
     end
 
-    return(sim_data)
+    return sim_data
 end
