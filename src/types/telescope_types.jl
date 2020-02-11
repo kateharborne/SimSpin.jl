@@ -33,13 +33,13 @@ struct IFU <: Telescope
     ap_region::MMatrix
     filter::Union{String, Nothing}
 
-    function IFU(fov::Float64,
-                        ap_shape::String,
-                        central_wvl::Real,
-                        lsf_fwhm::Float64,
-                        pixel_sscale::Float64,
-                        pixel_vscale::Float64,
-                        filter::Union{String, Nothing})
+    function IFU(fov::Real,
+                    ap_shape::String,
+                    central_wvl::Real,
+                    lsf_fwhm::Float64,
+                    pixel_sscale::Float64,
+                    pixel_vscale::Float64,
+                    filter::Union{String, Nothing})
 
         if filter != "r" && filter != "g" && !isnothing(filter)
             error("Please specify filter as either 'r' or 'g' or do not use.")
@@ -62,7 +62,7 @@ struct IFU <: Telescope
         new(fov, ap_shape, central_wvl, lsf_fwhm, lsf_size, pixel_sscale, pixel_vscale, vbinsize, sbin, ap_region, filter)
     end
 
-    function IFU(fov::Float64,
+    function IFU(fov::Real,
                     ap_shape::String,
                     central_wvl::Real,
                     lsf_fwhm::Float64,
