@@ -5,7 +5,7 @@
 For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin-Julia).
 
 Once installed, a simple procedure of three steps is required to take an observation and generate a datacube:
-1.  Create a telescope object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [SAMI](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
+1.  Create a telescope object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [`SAMI`](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
 
     ```
         > telescope = SimSpin.SAMI()
