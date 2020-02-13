@@ -36,7 +36,7 @@ function sim_FITS(out_data::Array{Float64,3},
     keywords::Array{String,1} = headers[:, 1]
     comments::Array{String,1} = headers[:, 3]
 
-    file = FITS(out_file, "r+")
+    file = FITS(out_file, "w")
 
     head_sim = FITSHeader(keywords, headers[:, 2], comments)
 
