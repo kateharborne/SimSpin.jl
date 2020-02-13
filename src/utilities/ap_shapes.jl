@@ -76,21 +76,24 @@ function hexagonal_ap(sbin::Int64)
 
     max_rad = (sbin / 2) - 0.5
 
-    x = Vector{Float64}(abs.(-max_rad:max_rad))'    #row
+    quart = sbin / 4
+    qsqrt3 = quart * sqrt(3)
+
+    x = Vector{Float64}(abs.(-max_rad:max_rad))     #row
     y = x'                                          #column
 
     len = length(x)
 
-    x_check = zeros(len)'                           #
+    x_check = zeros(len)
     x_check[x .< sbin/2] .= 1
-    y_check = zeros(len)
-    y_check[y .< sbin * sqrt(3) / 4] .= 1
+    y_check = zeros(len)'
+    y_check[y .< qsqrt3] .= 1
 
     ap_region = zeros(len, len)
-    rr = ((2 * (sbin / 4) * (sbin * sqrt(3) / 4)) .- (sbin / 4) * y .- (sbin * sqrt(3) / 4) * x)'
+    rr = @. (2 * quart * qsqrt3) - (quart * y) - (qsqrt3 * x)
 
     ap_region[rr .>= 0] .= 1
-    ap_region = ap_region .* (y_check * x_check)
+    ap_region = ap_region .* (x_check * y_check)
 
     return ap_region
 end
