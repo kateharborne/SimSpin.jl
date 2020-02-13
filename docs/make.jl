@@ -5,5 +5,5 @@ using Documenter, SimSpin
 makedocs(sitename="My Documentation")
 
 deploydocs(
-    repo = "github.com/kateharborne/SimSpin-Julia.git"
+    repo = "github.com/kateharborne/SimSpin.jl.git"
 )
