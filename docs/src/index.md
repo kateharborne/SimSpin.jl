@@ -35,6 +35,7 @@ This specifies the redshift of the galaxy, its inclination, the virial radius an
         ```
             > SimSpin.sim_FITS(data_cube, observe, "SimSpin_Example_Observation.fits")
         ```
+        
 ## Functions
 ```@docs
 build_datacube
