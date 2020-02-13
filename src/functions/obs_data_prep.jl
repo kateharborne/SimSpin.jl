@@ -3,40 +3,36 @@
 # Original author: Katherine Harborne
 
 """
-    obs_data_prep(galaxy_data, ifu, z, inc_deg, r200)
+    obs_data_prep(galaxy_data, ifu, envir)
 
 This function prepares the particle data for a given observation with the given telescope.
 
 Parameters:\n
     galaxy_data         Array of `Particle` describing galaxy
     ifu                 Struct of type `Telescope`
-    z                   The projected redshift at which the observation is made.
-    inc_deg             The inclination at which to observe the galaxy in degrees.
-    r200                The virial radius specified in the simulation, kpc.
-    
+    envir               Struct of type `Environment`
+
 Returns:\n
     galaxy_data         Array of particle data formatted for the observation specified by the parameters.
     parts_in_cell       3D array of the particles corresponding to each element in the IFU data-cube.
-    observed            Struct of type `Observation` containing all observation parameters.
+    observe             Struct of type `Observation` containing all observation parameters.
 """
 function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,
-                        z::Float64,
-                        inc_deg::Real,
-                        r200::Real)
+                        envir::Environment)
 
-    ang_size    = angleSize(z)                      # angular size given z, kpc
+    ang_size    = angleSize(envir.z)                      # angular size given z, kpc
     ap_size     = ang_size * ifu.fov                # diameter size of the telescope, kpc
     sbinsize    = ap_size / ifu.sbin                # spatial bin size (kpc per bin)
 
-    set_observables!.(galaxy_data, inc_deg)     #set each particles mutable struct `Observables` for the given observation inclination
+    set_observables!.(galaxy_data, envir.inc_deg)     #set each particles mutable struct `Observables` for the given observation inclination
 
     deleteat!(galaxy_data, findall(part -> typeof(part) == Galaxy_dark, galaxy_data)) #remove all non-luminous/dark particles
     if(length(galaxy_data) == 0)
         error("There are no particles representing luminous matter in this simulation (i.e. no stars, bulge or disc particles).")
     end
 
-    deleteat!(galaxy_data, findall(part -> part.r >= r200, galaxy_data))  # remove particles beyond r200
+    deleteat!(galaxy_data, findall(part -> part.r >= envir.r200, galaxy_data))  # remove particles beyond r200
 
     if (ifu.ap_shape == "circular")                    # remove particles outside aperture
       galaxy_data  = circular_ap_cut(galaxy_data, ap_size)
@@ -72,18 +68,16 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
         parts_in_cell[cell] = this
     end
 
-    observe = Observation(z, inc_deg, r200, ifu.ap_region, ifu.sbin, vbin, vseq, ifu.lsf_size, ang_size, sbinsize)
+    observe = Observation(envir.z, envir.inc_deg, envir.r200, envir.blur, ifu.ap_region, ifu.sbin, vbin, vseq, ifu.lsf_size, ang_size, sbinsize)
 
     return  galaxy_data, parts_in_cell, observe
 end
 
 function obs_data_prep(sim_data::Array{Sim_particle, 1},
                         ifu::Telescope,
-                        z::Float64,
-                        inc_deg::Real,
-                        r200::Real)
+                        envir::Environment)
 
     galaxy_data = sim_to_galaxy(sim_data)
 
-    return obs_data_prep(galaxy_data, ifu, z, inc_deg, r200)
+    return obs_data_prep(galaxy_data, ifu, envir)
 end

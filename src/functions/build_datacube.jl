@@ -3,55 +3,38 @@
 # Original author: Katherine Harborne
 
 """
-    build_datacube(galaxy_data, ifu, z, inc_deg, r200, blur)
+    build_datacube(galaxy_data, ifu, envir)
 
 Returns a simulated ifu datacube for input, `galaxy_data`, an array of `Particle`.
-Observational variables used are as specified in `Observation` and `IFU` types. Blurring can be added if desired using `Blur` type.
+The instrument to be used for observation is given in the `Telescope` class parameter
+and the environmental variables (redshift, inclination, seeing, etc) are given by the `Environment` class parameter.
 
 Parameters:\n
     galaxy_data         Array of `Particle` describing galaxy
     ifu                 Struct of type `Telescope`
-    z                   The projected redshift at which the observation is made.
-    inc_deg             The inclination at which to observe the galaxy in degrees.
-    r200                The virial radius specified in the simulation, kpc.
-    blur                Optional. Struct of type `Blur`. If omitted no blurring occurs.
+    envir               Struct of type `Environment`
 """
 function build_datacube(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,
-                        z::Float64,
-                        inc_deg::Real,
-                        r200::Real,
-                        blur::Union{Blur, Nothing})
+                        envir::Environment)
 
-    galaxy_data, parts_in_cell, observe = obs_data_prep(galaxy_data, ifu, z, inc_deg, r200)
+    galaxy_data, parts_in_cell, observe = obs_data_prep(galaxy_data, ifu, envir)
 
     fluxes = flux_grid(parts_in_cell, observe, ifu.filter)
     data_cube = ifu_cube(fluxes, parts_in_cell, observe)
 
-    if isnothing(blur)  #No spatial blurring
-        return data_cube
-    else                #Blur image
-        blur_imgs = blur_cube(data_cube, blur, observe)
-        return blur_imgs
+    if isnothing(observe.blur)    #No spatial blurring
+        return data_cube, observe
+    else                        #Blur image
+        blur_imgs = blur_cube(data_cube, observe)
+        return blur_imgs, observe
     end
 end
 
 function build_datacube(sim_data::Array{Sim_particle, 1},
                         ifu::Telescope,
-                        z::Float64,
-                        inc_deg::Real,
-                        r200::Real,
-                        blur::Union{Blur, Nothing})
+                        envir::Environment)
 
     galaxy_data = sim_to_galaxy(sim_data)
-    return build_datacube(galaxy_data, ifu, z, inc_deg, r200, blur)
-end
-
-function build_datacube(galaxy_data::Array{<:Particle, 1},
-                        ifu::Telescope,
-                        z::Float64,
-                        inc_deg::Real,
-                        r200::Real)
-    blur = nothing
-    return build_datacube(galaxy_data, ifu, z, inc_deg, r200, blur)
+    return build_datacube(galaxy_data, ifu, envir)
 end
