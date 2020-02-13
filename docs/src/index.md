@@ -4,8 +4,8 @@
 
 For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin-Julia).
 
-Once installed, a simple procedure of three steps is required to take an observation and generate a datacube:
-1.  Create a telescope object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [`SAMI`](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
+Once installed, a simple procedure of four steps is required to take an observation and generate a datacube:
+1.  Construct a `Telescope` object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [`SAMI`](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
 
     ```
         > telescope = SimSpin.SAMI()
@@ -17,12 +17,18 @@ Once installed, a simple procedure of three steps is required to take an observa
         > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
     ```
 
-3.  Build the datacube as a combination of a telescope, the galaxy particle data and some observation parameters (galaxy redshift, inclination and virial radius).
+3.  Construct an environment in which the observation is taken.
+This specifies the redshift of the galaxy, its inclination, the virial radius and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
 
     ```
-        > datacube = SimSpin.build_datacube(sim_data, telescope, 0.05, 70, 200)
+        > environment = SimSpin.Environment(0.05, 70, 200)
     ```
 
+4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment.
+
+    ```
+        > datacube = SimSpin.build_datacube(sim_data, telescope, environment)
+    ```
 ## Functions
 ```@docs
 build_datacube
@@ -44,6 +50,11 @@ SAMI
 MaNGA
 CALIFA
 Hector
+```
+
+### Environment Constructor
+```@docs
+Environment
 ```
 
 ### Blur Constructors

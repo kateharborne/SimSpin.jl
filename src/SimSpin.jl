@@ -18,10 +18,12 @@ module SimSpin
             SAMI,
             MaNGA,
             CALIFA,
-            Hector
+            Hector,
+            Environment
 
     include("types/blur_types.jl")
     include("types/dark_matter_types.jl")
+    include("types/environment_type.jl")
     include("types/particle_types.jl")
     include("types/Galaxy_particle.jl")
     include("types/observation_types.jl")
