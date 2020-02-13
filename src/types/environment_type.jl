@@ -9,7 +9,7 @@ Creates a `struct` containing environmental parameters required for a mock obser
 
 Parameters:\n
     z               The projected redshift at which the observation is made.
-    inc_deg         The inclination at which to observe the galaxy in degrees.
+    inc_deg         The inclination at which to observe the galaxy in degrees. Relative to face on, rotated around semi-major axis.
     r200            The virial radius specified in the simulation, kpc.
     mass2light      Optional. The mass to light ratio for non-ssp, luminous particles. Defaults to 1.
     blur            Optional. Struct of type `Blur` containing seeing information. If ommitted no blurring is used.
