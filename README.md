@@ -14,7 +14,7 @@ Once Julia is running successfully this package can be installed with the Julia 
 From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
 
 ```
-pkg> add https://github.com/kateharborne/SimSpin-Julia
+pkg> add https://github.com/kateharborne/SimSpin.jl
 ```
 
 Once the package has been added leave the REPL's Pkg mode by pressing `backspace` and run:
@@ -35,5 +35,5 @@ By varying the effects of observational seeing, the measurement radius, projecte
 
 ## Documentation
 
-- [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kateharborne.github.io/SimSpin-Julia/stable) &mdash; **Documentation in progress.**
-- [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kateharborne.github.io/SimSpin-Julia/dev) &mdash; **Development documentation.**
+- [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kateharborne.github.io/SimSpin.jl/stable) &mdash; **Documentation in progress.**
+- [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kateharborne.github.io/SimSpin.jl/dev) &mdash; **Development documentation.**
