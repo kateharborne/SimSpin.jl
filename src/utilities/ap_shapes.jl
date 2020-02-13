@@ -98,6 +98,9 @@ end
 Returns all particles that are within hexagonal aperature
 """
 function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
+
+    quart = sbin / 4
+    qsqrt3 = quart * sqrt(3)
     threshold = sbin * sbinsize
 
     trimmed = galaxy_data[findall(part -> abs(part.x) < threshold / 2, galaxy_data)]
@@ -106,7 +109,9 @@ function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, s
     z_obs = getfield.(getfield.(trimmed, :obs), :z_obs)
     x = getfield.(trimmed, :x)
 
-    dotprod = @. (2 * (sbin / 4) * sbinsize * (sbin * sqrt(3) / 4) * sbinsize) - ((sbin / 4) * sbinsize) * abs(z_obs) - ((sbin * sqrt(3) / 4) * sbinsize) * abs(x)
+    dotprod = @. (2 * quart * sbinsize * qsqrt3 * sbinsize) - (quart * sbinsize * abs(z_obs)) - (qsqrt3 * sbinsize * abs(x))
 
     trimmed = trimmed[dotprod .>= 0]
+
+    #TODO: probably uncessary. just multiply parts_in_cell by ap_region
 end
