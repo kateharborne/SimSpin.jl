@@ -15,12 +15,13 @@ function circular_ap(sbin::Int64)
 
     max_rad = (sbin / 2) - 0.5
 
-    x = abs.(-max_rad:max_rad)
-    y = x'
+    y = repeat((-max_rad:max_rad).^2, outer = [1, sbin])
+    x = y'
 
-    ap_region = y.*x
-    ap_region[ap_region .<= max_rad] .= 1
-    ap_region[ap_region .> max_rad] .= 0
+    ap_region = sqrt.(x + y)
+
+    ap_region[ap_region .<= max_rad + 0.5] .= 1
+    ap_region[ap_region .> max_rad + 0.5] .= 0
 
     return ap_region
 end
