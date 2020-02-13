@@ -17,8 +17,7 @@ Once installed, a simple procedure of four steps is required to take an observat
         > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
     ```
 
-3.  Construct an environment in which the observation is taken.
-This specifies the redshift of the galaxy, its inclination, the virial radius and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 kpc and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
+3.  Construct an environment in which the observation is taken. This specifies the redshift of the galaxy, its inclination, the virial radius and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 kpc and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
 
     ```
         > environment = SimSpin.Environment(0.05, 70, 200)
@@ -32,10 +31,10 @@ This specifies the redshift of the galaxy, its inclination, the virial radius an
 
 5.  Export the datacube to a FITS file for viewing. See [Data Export](@ref) for more details
 
-        ```
-            > SimSpin.sim_FITS(data_cube, observe, "SimSpin_Example_Observation.fits")
-        ```
-        
+    ```
+        > SimSpin.sim_FITS(data_cube, observe, "SimSpin_Example_Observation.fits")
+    ```
+
 ## Functions
 ```@docs
 build_datacube
