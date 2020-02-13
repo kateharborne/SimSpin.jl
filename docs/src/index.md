@@ -24,11 +24,17 @@ This specifies the redshift of the galaxy, its inclination, the virial radius an
         > environment = SimSpin.Environment(0.05, 70, 200)
     ```
 
-4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment.
+4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. This function also returns a summary of the observational properties used.
 
     ```
-        > datacube = SimSpin.build_datacube(sim_data, telescope, environment)
+        > datacube, observe = SimSpin.build_datacube(sim_data, telescope, environment)
     ```
+
+5.  Export the datacube to a FITS file for viewing. See [Data Export](@ref) for more details
+
+        ```
+            > SimSpin.sim_FITS(data_cube, observe, "SimSpin_Example_Observation.fits")
+        ```
 ## Functions
 ```@docs
 build_datacube
@@ -36,6 +42,7 @@ flux_grid
 ifu_cube
 obs_data_prep
 sim_data
+sim_FITS
 ```
 ## Constructors
 ### Telescope Constructors
@@ -120,3 +127,12 @@ If the file is set up in this way, the simulation data can easily be read into t
 ### References
 
 A. Pontzen, R Roskar, G. Stinson and R. Woods, (2013), "pynbody: N-Body/SPH analysis for python",  Astrophysics Source Code Library, record ascl:1305.002
+
+## Data Export
+
+Currently only FITS file exports are supported.
+
+### FITS Export
+```@docs
+sim_FITS
+```

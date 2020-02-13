@@ -5,7 +5,7 @@
 """
     build_datacube(galaxy_data, ifu, envir)
 
-Returns a simulated ifu datacube for input, `galaxy_data`, an array of `Particle`.
+Returns a simulated ifu datacube for input, `galaxy_data`, an array of `Particle` and a summary of observation properties used.
 The instrument to be used for observation is given in the `Telescope` class parameter
 and the environmental variables (redshift, inclination, seeing, etc) are given by the `Environment` class parameter.
 
@@ -13,6 +13,10 @@ Parameters:\n
     galaxy_data         Array of `Particle` describing galaxy
     ifu                 Struct of type `Telescope`
     envir               Struct of type `Environment`
+
+Returns:\n
+    data_cube           3D array of a simulated IFU datacube with spatial and velocity binned fluxes
+    observe             A struct of type `Observation` summarising the observational properties used.
 """
 function build_datacube(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,

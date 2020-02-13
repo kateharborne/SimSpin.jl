@@ -5,6 +5,7 @@
 module SimSpin
 
     export sim_data,
+            sim_FITS,
             sim_analysis,
             obs_data_prep,
             build_datacube,
@@ -32,6 +33,7 @@ module SimSpin
     include("types/telescope_types.jl")
 
     include("io/sim_data.jl")
+    include("io/sim_FITS.jl")
 
     include("celestial/cosdistAngScale.jl")
     include("celestial/cosdistTravelTime.jl")
