@@ -18,7 +18,8 @@ Parameters:\n
 """
 function sim_FITS(out_data::Array{Float64,3},
                     observe::Observation,
-                    out_file::String)
+                    out_file::String;
+                    obs_name::String="SimSpin datacube")
 
     if out_file[end-4:end] != ".fits"       #Append .fits to file name
         out_file = string(out_file, ".fits")
