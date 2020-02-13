@@ -10,15 +10,21 @@
 
     Filter to be created using `get_filter()`.
 """
-function assign_flux(particle::Galaxy_ssp, filter::Interpolations.FilledExtrapolation{}, redshift::Float64)
+function assign_flux(particle::Galaxy_ssp,
+                        filter::Interpolations.FilledExtrapolation{},
+                        redshift::Float64,
+                        lum_dist::Float64)
 
     spectra = part_spectra(particle)
-    flux = photom_lum(spectra, filter, redshift)
+    flux = photom_lum(spectra, filter, redshift, lum_dist)
 
     return flux
 end
 
-function assign_flux(particle::Galaxy_ssp, filter::Nothing, redshift::Float64)
+function assign_flux(particle::Galaxy_ssp,
+                    filter::Nothing,
+                    redshift::Float64,
+                    lumDist::Float64)
     error("IFU filter must be specified if Galaxy_ssp particles are used")
 end
 
@@ -27,7 +33,10 @@ end
 
     Constructs a flux profile using for a `Galaxy_lum` particle using a mass to flux conversion.
 """
-function assign_flux(particle::Galaxy_lum, filter::Union{Nothing, Interpolations.FilledExtrapolation{}}, redshiftCoef::Float64)
+function assign_flux(particle::Galaxy_lum,
+                        filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
+                        redshiftCoef::Float64,
+                        lumDist::Float64)
 
     flux = mass_to_flux(particle, redshiftCoef)
     return flux
@@ -38,7 +47,10 @@ end
 
     Assigns a flux profile of zero for a `Galaxy_dark` particle (ie dark matter or gas).
 """
-function assign_flux(particle::Galaxy_dark, filter::Union{Nothing, Interpolations.FilledExtrapolation{}}, redshift::Float64)
+function assign_flux(particle::Galaxy_dark,
+                    filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
+                    redshift::Float64,
+                    lumDist::Float64)
 
     flux = 0
     return flux

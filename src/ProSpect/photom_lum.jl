@@ -12,9 +12,10 @@ function photom_lum(wave::Array{Float64,1},
                     H0::Float64=67.8,
                     omegaM::Float64=0.308,
                     omegaL::Float64=1-omegaM,
-                    ref::String="Planck")
+                    ref::String="Planck",
+                    lum_dist::Float64=471.03)
 
-    wave::Array{Int64,1}, flux = Lum2Flux(wave, lum, z=z)
+    wave::Array{Int64,1}, flux = Lum2Flux(wave, lum, z, lum_dist)
     photom = jansky_calc(wave, flux, filter=filter)
     return photom
 end

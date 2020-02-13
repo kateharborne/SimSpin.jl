@@ -6,7 +6,7 @@
 function sftToAge(sft)
 
     Returns particle age from stellar formation time input.
-    Uses R package, celestial.
+    Uses julia implementation of R package, celestial.
 """
 function sftToAge(sft::Float64)
     ages = cosdistTravelTime((1 /sft) - 1)
@@ -18,7 +18,7 @@ end
 function angleSize(z)
 
     Returns angular galaxy size in kpc from redshift, z, input.
-    Uses R package, celestial.
+    Uses julia implementation of R package, celestial.
 """
 function angleSize(z::Float64)
 
@@ -28,12 +28,12 @@ function angleSize(z::Float64)
 end
 
 """
-function cosdistLumDist(z)
+function lumDist(z)
 
     Returns luminosity distance in Mpc from redshift, z, input.
     Uses julia implementation of R package, celestial.
 """
-function lumDist(z::Float64=0.1,
+function lumDist(;z::Float64=0.1,
                         H0::Float64=67.8,
                         omegaM::Float64=0.308,
                         omegaL::Float64=1-omegaM,
@@ -55,14 +55,16 @@ function photom_lum(spectra, filter, z)
 """
 function photom_lum(spectra::Array{Float64,1},
                     filter::Interpolations.FilledExtrapolation{},
-                    z::Float64)
+                    z::Float64,
+                    lum_dist::Float64)
 
     particle_flux = photom_lum(BC03lr["Wave"],
                                 spectra,
                                 filter,
                                 outtype="Janksy",
                                 z=z,
-                                ref="Planck")
+                                ref="Planck",
+                                lum_dist=lum_dist)
 
     return particle_flux
 end
