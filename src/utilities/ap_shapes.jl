@@ -84,16 +84,10 @@ function hexagonal_ap(sbin::Int64)
 
     len = length(x)
 
-    x_check = zeros(len)
-    x_check[x .< sbin/2] .= 1
-    y_check = zeros(len)'
-    y_check[y .< qsqrt3] .= 1
-
     ap_region = zeros(len, len)
     rr = @. (2 * quart * qsqrt3) - (quart * y) - (qsqrt3 * x)
 
     ap_region[rr .>= 0] .= 1
-    ap_region = ap_region .* (x_check * y_check)
 
     return ap_region
 end
