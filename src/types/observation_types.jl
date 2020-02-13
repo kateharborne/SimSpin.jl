@@ -19,6 +19,7 @@ Parameters:\n
     lsf_size        The Gaussian standard deviation of the line spread function in km/s.
     ang_size        The angular size given redshift z in kpc
     sbinsize        The spatial bin size in kpc per bin
+    mass2light      The mass to light ratio for luminous (non-ssp) particles.
 """
 struct Observation
     z::Float64
@@ -32,6 +33,7 @@ struct Observation
     lsf_size::Float64
     ang_size::Float64
     sbinsize::Float64
+    mass2light::Float64
 
     function Observation(z::Float64,
                         inc_deg::Real,
@@ -43,8 +45,9 @@ struct Observation
                         vseq::StepRangeLen,
                         lsf_size::Float64,
                         ang_size::Float64,
-                        sbinsize::Float64)
+                        sbinsize::Float64,
+                        mass2light::Float64)
 
-    new(z, inc_deg, r200, blur, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize)
+    new(z, inc_deg, r200, blur, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize, mass2light)
     end
 end

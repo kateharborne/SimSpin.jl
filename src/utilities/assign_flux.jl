@@ -13,7 +13,8 @@
 function assign_flux(particle::Galaxy_ssp,
                         filter::Interpolations.FilledExtrapolation{},
                         redshift::Float64,
-                        lum_dist::Float64)
+                        lum_dist::Float64,
+                        mass2light::Float64)
 
     spectra = part_spectra(particle)
     flux = photom_lum(spectra, filter, redshift, lum_dist)
@@ -24,7 +25,8 @@ end
 function assign_flux(particle::Galaxy_ssp,
                     filter::Nothing,
                     redshift::Float64,
-                    lumDist::Float64)
+                    lumDist::Float64,
+                    mass2light::Float64)
     error("IFU filter must be specified if Galaxy_ssp particles are used")
 end
 
@@ -36,9 +38,10 @@ end
 function assign_flux(particle::Galaxy_lum,
                         filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
                         redshiftCoef::Float64,
-                        lumDist::Float64)
+                        lumDist::Float64,
+                        mass2light::Float64)
 
-    flux = mass_to_flux(particle, redshiftCoef)
+    flux = mass_to_flux(particle, redshiftCoef, mass2light)
     return flux
 end
 
@@ -50,7 +53,8 @@ end
 function assign_flux(particle::Galaxy_dark,
                     filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
                     redshift::Float64,
-                    lumDist::Float64)
+                    lumDist::Float64,
+                    mass2light::Float64)
 
     flux = 0
     return flux

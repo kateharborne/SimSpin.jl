@@ -68,7 +68,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
         parts_in_cell[cell] = this
     end
 
-    observe = Observation(envir.z, envir.inc_deg, envir.r200, envir.blur, ifu.ap_region, ifu.sbin, vbin, vseq, ifu.lsf_size, ang_size, sbinsize)
+    observe = Observation(envir.z, envir.inc_deg, envir.r200, envir.blur, ifu.ap_region, ifu.sbin, vbin, vseq, ifu.lsf_size, ang_size, sbinsize, envir.mass2light)
 
     return  galaxy_data, parts_in_cell, observe
 end

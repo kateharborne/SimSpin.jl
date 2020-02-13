@@ -98,8 +98,7 @@ function part_spectra(particle::Galaxy_ssp)
     return part_spec
 end
 
-#TODO: m2l ratio needs user input
-function mass_to_flux(particle::Galaxy_lum, redshiftCoef::Float64; m2l::Float64=1.)
+function mass_to_flux(particle::Galaxy_lum, redshiftCoef::Float64, m2l::Float64)
 
     mass = particle.mass
     lum = mass * 1e10 / m2l      #Convert particle masses to cell luminosity
