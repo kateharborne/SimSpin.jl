@@ -18,7 +18,7 @@ Once installed, a simple procedure of four steps is required to take an observat
     ```
 
 3.  Construct an environment in which the observation is taken.
-This specifies the redshift of the galaxy, its inclination, the virial radius and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
+This specifies the redshift of the galaxy, its inclination, the virial radius and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 kpc and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
 
     ```
         > environment = SimSpin.Environment(0.05, 70, 200)
