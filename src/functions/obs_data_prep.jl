@@ -63,7 +63,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
 
     parts_in_cell = [Galaxy_particle[] for i = 1:(ifu.sbin^2)*vbin]
 
-    for cell in 1:length(parts_in_cell)
+    Threads.@threads for cell in 1:length(parts_in_cell)
         this = galaxy_data[findall(x->x==cell, bins)]
         parts_in_cell[cell] = this
     end
