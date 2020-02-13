@@ -3,7 +3,7 @@
 # Original author: Katherine Harborne
 
 """
-    Observation(z, inc_deg, r200, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize)
+    Observation(z, inc_deg, r200, blur, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize)
 
 Creates a `struct` containing all the parameters required for a mock observation of a simulated galaxy.
 
@@ -11,6 +11,7 @@ Parameters:\n
     z               The projected redshift at which the observation is made.
     inc_deg         The inclination at which to observe the galaxy in degrees.
     r200            The virial radius specified in the simulation, kpc.
+    blur            Struct of type `Blur`. Contains seeing information.
     ap_region       The aperture region mask used to remove flux outside of the specified aperture.
     sbin            The number of spatial bins in the aperture.
     vbin            The number of velocity bins in the flux grid.
@@ -23,6 +24,7 @@ struct Observation
     z::Float64
     inc_deg::Real
     r200::Real
+    blur::Union{Blur, Nothing}
     ap_region::Array{Float64}
     sbin::Int64
     vbin::Int64
@@ -34,6 +36,7 @@ struct Observation
     function Observation(z::Float64,
                         inc_deg::Real,
                         r200::Real,
+                        blur::Union{Blur, Nothing},
                         ap_region::Array{Float64, 2},
                         sbin::Int64,
                         vbin::Int64,
@@ -42,6 +45,6 @@ struct Observation
                         ang_size::Float64,
                         sbinsize::Float64)
 
-    new(z, inc_deg, r200, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize)
+    new(z, inc_deg, r200, blur, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize)
     end
 end
