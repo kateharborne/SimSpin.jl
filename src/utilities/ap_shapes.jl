@@ -103,10 +103,13 @@ Returns all particles that are within hexagonal aperature
 function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
     threshold = sbin * sbinsize
 
-    trimmed = galaxy_data[findall(part -> abs(part.x) < threshold / 2)]
-    trimmed = trimmed[findall(part -> abs(part.obs.z_obs) < threshold * sqrt(3) / 4)]
+    trimmed = galaxy_data[findall(part -> abs(part.x) < threshold / 2, galaxy_data)]
+    trimmed = trimmed[findall(part -> abs(part.obs.z_obs) < threshold * sqrt(3) / 4, trimmed)]
 
-    dotprod = (2 * (sbin / 4) * sbinsize * (sbin * sqrt(3) / 4) * sbinsize) - ((sbin / 4) * sbinsize) * abs(trimmed.obs.z_obs) .- ((sbin * sqrt(3) / 4) * sbinsize) * abs(trimmed.x)
+    z_obs = getfield.(getfield.(trimmed, :obs), :z_obs)
+    x = getfield.(trimmed, :x)
 
-    trimmed = trimmed[dotprod >= 0]
+    dotprod = @. (2 * (sbin / 4) * sbinsize * (sbin * sqrt(3) / 4) * sbinsize) - ((sbin / 4) * sbinsize) * abs(z_obs) - ((sbin * sqrt(3) / 4) * sbinsize) * abs(x)
+
+    trimmed = trimmed[dotprod .>= 0]
 end
