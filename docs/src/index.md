@@ -11,16 +11,16 @@ Once installed, a simple procedure of four steps is required to take an observat
         > telescope = SimSpin.SAMI()
     ```
 
-2.  Read in the simulation's particle data
-
-    ```
-        > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
-    ```
-
-3.  Construct an environment in which the observation is taken. This specifies the redshift of the galaxy, its inclination, the virial radius, the mass to light ratio and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 kpc, to mass to light ratio to be 1 and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
+2.  Construct an environment in which the observation is taken. This specifies the redshift of the galaxy, its inclination, the virial radius, the mass to light ratio and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 kpc, to mass to light ratio to be 1 and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
 
     ```
         > environment = SimSpin.Environment(0.05, 70, 200, 1.)
+    ```
+
+3.  Read in the simulation's particle data
+
+    ```
+        > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
     ```
 
 4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. This function also returns a summary of the observational properties used.
@@ -35,15 +35,24 @@ Once installed, a simple procedure of four steps is required to take an observat
         > SimSpin.sim_FITS(data_cube, observe, "SimSpin_Example_Observation.fits")
     ```
 
-## Functions
+!!! note
+    In the above procedure we read in our simulation data from file (Step 3) and immediately use it to build a kinematic datacube (Step 4). Although this is perfectly functional for a single observation, if taking more than one observation the [`build_datacube`](@ref) function must convert the particle data from the simulation reference frame to the galaxy's reference frame every time. The function [`sim_to_galaxy`](@ref) is provided to do this conversion so that preconverted data can be supplied to [`build_datacube`](@ref) instead. Run this command before passing `galaxy_data` to [`build_datacube`](@ref) for massively increased performance:
+
+        > galaxy_data = SimSpin.sim_to_galaxy(sim_data)
+
+
+!!! warning
+    Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many cores as available. To see how to allow SimSpin to use more cores see [Multi-Threading](@ref).
+
+## General Functions
 ```@docs
 build_datacube
 flux_grid
 ifu_cube
 obs_data_prep
-sim_data
-sim_FITS
+sim_to_galaxy
 ```
+
 ## Constructors
 ### Telescope Constructors
 
@@ -86,9 +95,18 @@ export JULIA_NUM_THREADS=x
 ```
 in a Terminal before the Julia REPL is started. This environment variable defaults to 1 if not set before the session has begun.
 
-## Data Input Format
+!!! warning
+    Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many cores as available.
 
-Here we outline the expected file format accepted by SimSpin.  If you would like to generate this file automatically, a short Python function has been written that uses the [pynbody](https://github.com/pynbody/pynbody) package to read in various simulation data types and generate a SimSpin compatible HDF5 file. See [create_SimSpinFile](https://github.com/kateharborne/create_SimSpinFile).
+## Data Import
+
+To read in a SimSpin HDF5 file as defined below the [`sim_data`](@ref) function must be used.
+
+```@docs
+sim_data
+```
+
+The expected file format accepted by SimSpin is outlined below.  If you would like to generate this file automatically, a short Python function has been written that uses the [pynbody](https://github.com/pynbody/pynbody) package to read in various simulation data types and generate a SimSpin compatible HDF5 file. See [create_SimSpinFile](https://github.com/kateharborne/create_SimSpinFile).
 
 If you would rather generate the SimSpin file independently, the expected file format is outlined below.
 

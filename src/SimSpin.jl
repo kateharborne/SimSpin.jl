@@ -7,6 +7,7 @@ module SimSpin
     export sim_data,
             sim_FITS,
             sim_analysis,
+            sim_to_galaxy,
             obs_data_prep,
             build_datacube,
             flux_grid,
