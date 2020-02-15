@@ -8,31 +8,31 @@ Once installed, a simple procedure of four steps is required to take an observat
 1.  Construct a `Telescope` object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [`SAMI`](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
 
     ```
-        > telescope = SimSpin.SAMI()
+        > telescope = SAMI()
     ```
 
 2.  Construct an environment in which the observation is taken. This specifies the redshift of the galaxy, its inclination, the virial radius, the mass to light ratio and the seeing conditions respectively. We will set redshift to be 0.05, inclination to be 70 degrees, virial radius to be 200 kpc, to mass to light ratio to be 1 and use no blurring. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
 
     ```
-        > environment = SimSpin.Environment(0.05, 70, 200, 1.)
+        > environment = Environment(0.05, 70, 200, 1.)
     ```
 
-3.  Read in the simulation's particle data
+3.  Read in a simulation's particle data. In this example we will use the example file imbedded in SimSpin. Usually you will need to pass [`sim_data`](@ref) the file path to your HDF5 data file. See [Data Import](@ref) for more details.
 
     ```
-        > sim_data = SimSpin.sim_data("path/to/SimSpin/example/SimSpin_example.hdf5")
+        > sim_data = sim_data()
     ```
 
-4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. This function also returns a summary of the observational properties used.
+4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. This function also returns a summary of the observational properties used. See [`build_datacube`](@ref) for more details.
 
     ```
-        > datacube, observe = SimSpin.build_datacube(sim_data, telescope, environment)
+        > datacube, observe = build_datacube(sim_data, telescope, environment)
     ```
 
 5.  Export the datacube to a FITS file for viewing. See [Data Export](@ref) for more details
 
     ```
-        > SimSpin.sim_FITS(data_cube, observe, "SimSpin_Example_Observation.fits")
+        > sim_FITS(datacube, observe, "SimSpin_Example_Observation.fits")
     ```
 
 !!! note
