@@ -29,7 +29,7 @@ After pre-compilation all user exported functions should be available in your Ju
 
 SimSpin - A package for the kinematic analysis of galaxy simulations
 
-The purpose of the Simspin package is to take a galaxy simulation and measure an the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package; from this cube, "observables" can be measured. Specifically, the observable spin parameter, ``\lambda_r``. This package, once installed, is fully documented and tested.
+The purpose of the Simspin package is to take a galaxy simulation and measure an the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package; from this cube, "observables" can be measured. Specifically, the observable spin parameter, &#955;<sub>R</sub>. This package, once installed, is fully documented and tested.
 
 By varying the effects of observational seeing, the measurement radius, projected inclination, projected distance and other telescope parameters we can begin to understand some of the inherent effects and limitations of real-world galaxy observations.
 
