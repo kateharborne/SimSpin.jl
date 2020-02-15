@@ -20,13 +20,13 @@ Once installed, a simple procedure of four steps is required to take an observat
 3.  Read in a simulation's particle data. In this example we will use the example file imbedded in SimSpin. Usually you will need to pass [`sim_data`](@ref) the file path to your HDF5 data file. See [Data Import](@ref) for more details.
 
     ```
-        > sim_data = sim_data()
+        > data = sim_data()
     ```
 
 4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. This function also returns a summary of the observational properties used. See [`build_datacube`](@ref) for more details.
 
     ```
-        > datacube, observe = build_datacube(sim_data, telescope, environment)
+        > datacube, observe = build_datacube(data, telescope, environment)
     ```
 
 5.  Export the datacube to a FITS file for viewing. See [Data Export](@ref) for more details
