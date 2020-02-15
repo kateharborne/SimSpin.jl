@@ -18,14 +18,14 @@ struct Environment
 
     z::Float64
     inc_deg::Real
-    mass2light::Float64
+    mass2light::Real
     r200::Real
     blur::Union{Blur, Nothing}
 
     function Environment(z::Float64,
                         inc_deg::Real,
                         r200::Real,
-                        mass2light::Float64,
+                        mass2light::Real,
                         blur::Blur)
 
         new(z, inc_deg, r200, mass2light, blur)
@@ -43,7 +43,7 @@ struct Environment
     function Environment(z::Float64,
                         inc_deg::Real,
                         r200::Real,
-                        mass2light::Float64)
+                        mass2light::Real)
 
         blur = nothing
         new(z, inc_deg, r200, mass2light, blur)
@@ -54,6 +54,8 @@ struct Environment
                         r200::Real)
         mass2light=1.
         blur = nothing
-        new(z, inc_deg, r200, blur)
+        new(z, inc_deg, r200, mass2light, blur)
+    end
+
     end
 end
