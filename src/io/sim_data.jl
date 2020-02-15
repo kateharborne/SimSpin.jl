@@ -116,7 +116,7 @@ end
 Returns particle data from SimSpin's example file.
 """
 function sim_data()
-    filename = joinpath(dirname(pathof(SimSpin)), "example", "SimSpin_example.hdf5")
+    filename = joinpath(dirname(pathof(SimSpin)), "..", "example", "SimSpin_example.hdf5")
 
     return sim_data(filename)
 end
