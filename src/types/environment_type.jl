@@ -18,8 +18,8 @@ struct Environment
 
     z::Float64
     inc_deg::Real
-    mass2light::Real
     r200::Real
+    mass2light::Real
     blur::Union{Blur, Nothing}
 
     function Environment(z::Float64,
