@@ -66,7 +66,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     used_cells = unique(bins)
     valid_cell = length(parts_in_cell)
 
-    #TODO: This can be done more efficiently surely
+    #TODO: Must be able to be more efficient...
     Threads.@threads for cell in used_cells
         if cell > 0 && cell <= valid_cell
             parts_in_cell[cell] = galaxy_data[findall(x->x==cell, bins)]
