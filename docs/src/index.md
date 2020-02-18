@@ -17,13 +17,13 @@ Once installed, a simple procedure of four steps is required to take an observat
         > environment = Environment(0.05, 70, 200, 1.)
     ```
 
-3.  Read in a simulation's particle data. In this example we will use the example file imbedded in SimSpin. Usually you will need to pass [`sim_data`](@ref) the file path to your HDF5 data file. See [Data Import](@ref) for more details.
+3.  Read in a simulation's particle data. In this example we will use the example file embedded in SimSpin. Usually you will need to pass [`sim_data`](@ref) the file path to your HDF5 data file. See [Data Import](@ref) for more details.
 
     ```
         > data = sim_data()
     ```
 
-4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. This function also returns a summary of the observational properties used. See [`build_datacube`](@ref) for more details.
+4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. It returns a mock-IFU datacube and a summary of the observational properties used. See [`build_datacube`](@ref) for more details.
 
     ```
         > datacube, observe = build_datacube(data, telescope, environment)
@@ -36,13 +36,15 @@ Once installed, a simple procedure of four steps is required to take an observat
     ```
 
 !!! note
-    In the above procedure we read in our simulation data from file (Step 3) and immediately use it to build a kinematic datacube (Step 4). Although this is perfectly functional for a single observation, if taking more than one observation the [`build_datacube`](@ref) function must convert the particle data from the simulation reference frame to the galaxy's reference frame every time. The function [`sim_to_galaxy`](@ref) is provided to do this conversion so that preconverted data can be supplied to [`build_datacube`](@ref) instead. Run this command before passing `galaxy_data` to [`build_datacube`](@ref) for massively increased performance:
-
-        > galaxy_data = SimSpin.sim_to_galaxy(sim_data)
-
+    The most efficient way to take multiple observations is to pass [`build_datacube`](@ref) an array of Environments. These can be created idividually or by passing the [Environment Constructor](@ref) an array of the values that you wish to observe. For example, to take an observation at redshifts 0.05, 0.1 and 0.15 each at an inclination of 70 degrees and 80 degrees using a constant  virial radius of 200 kpc there are two options:
+        ```
+            > environments = Environment([0.05 0.1 015], [70 80], 200)
+            > environments = Environment(0.05:0.05:0.15, 70:10:80, 200)
+        ```
+    Both options will return an array of environments which can then be used as the environment parameter in Step 4 above. This will then return an array of tuples, each one consisting of the datacube and the observational properties used. See [`build_datacube`](@ref) and [Environment Constructor](@ref) for more details.
 
 !!! warning
-    Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many cores as available. To see how to allow SimSpin to use more cores see [Multi-Threading](@ref).
+    Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many threads as available. To see how to allow SimSpin to use more threads see [Multi-Threading](@ref).
 
 ## General Functions
 ```@docs
@@ -96,7 +98,7 @@ export JULIA_NUM_THREADS=x
 in a Terminal before the Julia REPL is started. This environment variable defaults to 1 if not set before the session has begun.
 
 !!! warning
-    Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many cores as available.
+    Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many threads as available.
 
 ## Data Import
 
