@@ -26,7 +26,10 @@ function ifu_cube(flux_grid::Array{Float64, 3},
 
     sbin2 = observe.sbin^2
 
-    for (index, cell) in enumerate(parts_in_cell) # for each cell in cube
+    Threads.@threads for index in 1:length(parts_in_cell) # for each cell in cube
+
+        cell = parts_in_cell[index]
+        
         coord = [index % observe.sbin, index % (sbin2) ÷ observe.sbin + 1, index ÷ (sbin2) + 1]
         if(index % observe.sbin == 0 && index % (sbin2) == 0 )
             coord = [observe.sbin, observe.sbin, index ÷ (sbin2)]
