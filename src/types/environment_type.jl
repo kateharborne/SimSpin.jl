@@ -32,6 +32,33 @@ struct Environment
         new(z, inc_deg, r200, mass2light, blur)
     end
 
+    function Environment(z::Float64,
+                        inc_deg::Real,
+                        r200::Real,
+                        blur::Blur)
+        mass2light = 1.
+
+        new(z, inc_deg, r200, mass2light, blur)
+    end
+
+    function Environment(z::Float64,
+                        inc_deg::Real,
+                        r200::Real,
+                        mass2light::Real)
+        blur = nothing
+
+        new(z, inc_deg, r200, mass2light, blur)
+    end
+
+    function Environment(z::Float64,
+                        inc_deg::Real,
+                        r200::Real)
+        mass2light = 1.
+        blur = nothing
+        
+        new(z, inc_deg, r200, mass2light, blur)
+    end
+
     function Environment(z_array::Union{Float64, Array{Float64, 1}, AbstractRange{Float64}},
                         inc_deg_array::Union{Real, Array{Real, 1}, AbstractRange{Real}},
                         r200_array::Union{Real, Array{Real, 1}, AbstractRange{Real}},
