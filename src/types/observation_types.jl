@@ -33,7 +33,7 @@ struct Observation
     lsf_size::Float64
     ang_size::Float64
     sbinsize::Float64
-    mass2light::Float64
+    mass2light::Real
 
     function Observation(z::Float64,
                         inc_deg::Real,
@@ -46,7 +46,7 @@ struct Observation
                         lsf_size::Float64,
                         ang_size::Float64,
                         sbinsize::Float64,
-                        mass2light::Float64)
+                        mass2light::Real)
 
     new(z, inc_deg, r200, blur, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize, mass2light)
     end
