@@ -44,3 +44,27 @@ function sim_FITS(out_data::Array{Float64,3},
 
     close(file)
 end
+
+"""
+    sim_FITS(out_data; folder)
+
+Can be used to export multiple datacubes in different FITS files.
+
+Parameters:\n
+    out_data    Array of (datacube, observation) tuples. As output by [`build_datacube`](@ref) when taking multiple observations.
+    folder      Optional. The file path to where the output should be. Defaults to "~".
+"""
+function sim_FITS(out_data::Array{Tuple, 1}; folder::String="~")
+
+    len = length(out_data)
+
+    for tuple in out_data
+        cube = tuple[1]
+        obs = tuple[2]
+
+        filename = string("SimSpin_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_M2L", obs.mass2light, "_BLURFWHM", obs.blur.fwhm)
+        file = joinpath(folder, filename)
+
+        sim_FITS(cube, obs, file)
+    end
+end
