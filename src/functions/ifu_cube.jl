@@ -37,8 +37,9 @@ function ifu_cube(flux_grid::Array{Float64, 3},
         num_of_parts = length(cell) # number of particles in that cell
 
         if num_of_parts > 0  # if particles in that cell
+            cell_mass = sum(getfield.(cell, :mass))
+
             for particle in cell
-                cell_mass = sum(getfield.(cell, :mass))
                 cell_flux = flux_grid[coord[1], coord[2], coord[3]] * particle.mass / cell_mass
 
                 distribution = Normal(particle.obs.vy_obs, observe.lsf_size)  #Normal distribution of particle's vy_obs
