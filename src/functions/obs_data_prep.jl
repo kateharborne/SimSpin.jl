@@ -73,14 +73,9 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     deleteat!(galaxy_data, invalid)
 
     used_cells = unique(bins)
-    valid_cell = length(parts_in_cell)
+    parts_in_cell = [Galaxy_particle[] for i = 1:(ifu.sbin^2)*vbin]
 
-    #TODO: Must be able to be more efficient...
-    Threads.@threads for cell in used_cells
-        if cell > 0 && cell <= valid_cell
-            parts_in_cell[cell] = galaxy_data[findall(x->x==cell, bins)]
-        end
-    end
+    [parts_in_cell[cell] = galaxy_data[findall(x -> x == cell, bins)] for cell in used_cells]
 
     observe = Observation(envir.z, envir.inc_deg, envir.r200, envir.blur, ifu.ap_region, ifu.sbin, vbin, vseq, ifu.lsf_size, ang_size, sbinsize, envir.mass2light)
 
