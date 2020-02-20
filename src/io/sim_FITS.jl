@@ -51,7 +51,7 @@ end
 Can be used to export multiple datacubes in different FITS files.
 
 Parameters:\n
-    out_data    Array of (datacube, observation) tuples. As output by [`build_datacube`](@ref) when taking multiple observations.
+    out_data    Array of (datacube, observation) tuples. As output by `build_datacube()` when taking multiple observations.
     folder      Optional. The file path to where the output should be. Defaults to "~".
 """
 function sim_FITS(out_data::Array{Tuple, 1}; folder::String="~")

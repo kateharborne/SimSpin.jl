@@ -55,7 +55,7 @@ Parameters:\n
     envir               Array of `Environment` describing each observation to be taken.
 
 Returns:\n
-    datacubes   An array of tuples. Each tuple constists of a datacube [1] and an [Observation Construtor](@ref) [2].
+    datacubes   An array of tuples. Each tuple constists of a datacube [1] and an `Observation` [2].
 """
 function build_datacube(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,
