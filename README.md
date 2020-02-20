@@ -4,7 +4,7 @@
 
 This is repository for the pure Julia implementation of [Katherine Harborne's](https://github.com/kateharborne) astronomy package, SimSpin.
 
-To see the original R implementation see Kate's GitHub repo [here](https://github.com/kateharborne/SimSpin).
+Kate's original R implementation GitHub repo can be found [here](https://github.com/kateharborne/SimSpin).
 
 ## Installation
 
@@ -29,11 +29,11 @@ After pre-compilation all user exported functions should be available in your Ju
 
 SimSpin - A package for the kinematic analysis of galaxy simulations
 
-The purpose of the Simspin package is to take a galaxy simulation and measure an the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package; from this cube, "observables" can be measured. Specifically, the observable spin parameter, &#955;<sub>R</sub>. This package, once installed, is fully documented and tested.
+The purpose of the Simspin package is to take a galaxy simulation and measure the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package from which "observables" can be measured. Specifically, the observable spin parameter, &#955;<sub>R</sub>. This package is fully documented and currently undergoing testing.
 
 By varying the effects of observational seeing, the measurement radius, projected inclination, projected distance and other telescope parameters we can begin to understand some of the inherent effects and limitations of real-world galaxy observations.
 
 ## Documentation
 
-- [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kateharborne.github.io/SimSpin.jl/stable) &mdash; **Documentation in progress.**
+- [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kateharborne.github.io/SimSpin.jl/stable) &mdash; **Not currently released.**
 - [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kateharborne.github.io/SimSpin.jl/dev) &mdash; **Development documentation.**
