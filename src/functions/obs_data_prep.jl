@@ -58,10 +58,19 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     sbin_range = ifu.sbin * sbinsize / 2
     sseq = -sbin_range : sbinsize : sbin_range
 
-    bins = searchsortedlast.(Ref(sseq), x) + ifu.sbin .* searchsortedlast.(Ref(sseq), z_obs) +
-            ifu.sbin^2 .* searchsortedlast.(Ref(vseq), vy_obs) .- (ifu.sbin^2 + ifu.sbin)
+    x_coord = searchsortedlast.(Ref(sseq), x)
+    y_coord = searchsortedlast.(Ref(sseq), z_obs)
+    z_coord = searchsortedlast.(Ref(vseq), vy_obs)
 
-    parts_in_cell = [Galaxy_particle[] for i = 1:(ifu.sbin^2)*vbin]
+    x_invalid = findall(x->x==0, x_coord)
+    y_invalid = findall(y->y==0, y_coord)
+    z_invalid = findall(z->z==0, z_coord)
+    invalid = unique(vcat(x_invalid, y_invalid, z_invalid))
+
+    bins = x_coord + ifu.sbin * y_coord + ifu.sbin^2 * z_coord .- (ifu.sbin^2 + ifu.sbin)
+
+    deleteat!(bins, invalid)
+    deleteat!(galaxy_data, invalid)
 
     used_cells = unique(bins)
     valid_cell = length(parts_in_cell)
