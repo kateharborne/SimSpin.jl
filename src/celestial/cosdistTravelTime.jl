@@ -2,6 +2,8 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Aaron Robotham
 
+using QuadGK
+
 function cosdistTravelTime(z::Float64;
                         H0::Float64=100.,
                         omegaM::Float64=0.3,
@@ -9,7 +11,7 @@ function cosdistTravelTime(z::Float64;
                         omegaL::Float64=1-omegaM-omegaR,
                         w0::Float64 = -1.,
                         wprime::Float64 = 0.,
-                        ref::String = "")
+                        ref::Union{String, Nothing} = nothing)
 
     if (!all(isfinite(z)))
         error("Redshift must be finite and numeric.")
@@ -23,7 +25,7 @@ function cosdistTravelTime(z::Float64;
         error("All z must be > -1")
     end
 
-    if ref != ""
+    if !isnothing(ref)
         params = getcos(ref)
         H0 = params[2]
         omegaM = params[3]
@@ -33,7 +35,7 @@ function cosdistTravelTime(z::Float64;
 
     omegaK = 1 - omegaM - omegaL - omegaR
 
-    HT = (3.08568025e+19/(H0 * 31556926))/1e9
-    zAge = HT * quadgk(x -> e_inv(x, omegaM, omegaL, omegaR, omegaK, w0, wprime), 0, z)[1]
+    HT = (3.08568025e19/(H0 * 31556926))/1e9
+    zAge = HT * quadgk(x -> e_invz(x, omegaM, omegaL, omegaR, omegaK, w0, wprime), 0, z)[1]
     return zAge
 end

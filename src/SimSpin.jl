@@ -41,6 +41,7 @@ module SimSpin
     include("celestial/cosdistLumDist.jl")
     include("celestial/cosgrowRhoDE.jl")
     include("celestial/e_inv.jl")
+    include("celestial/e_invz.jl")
     include("celestial/getcos.jl")
 
     include("ProSpect/data/bc_data.jl")
