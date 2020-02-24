@@ -11,7 +11,7 @@ function cosdistLumDist(;z::Float64 = 1.,
                         omegaL::Float64=1-omegaM-omegaR,
                         w0::Float64 = -1.,
                         wprime::Float64 = 0.,
-                        ref::String = nothing)
+                        ref::Union{String, Nothing} = nothing)
 
     if (!all(isfinite(z)))
         error("Redshift must be finite and numeric.")

@@ -26,7 +26,7 @@ function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
 
     flux = zeros(Float64, length(parts_in_cell))
 
-    lum_dist = lumDist(z=observe.z)
+    lum_dist = lumDist(z=observe.z, ref="Planck")
     redshiftCoef = Lum2FluxFactor(observe.z, lum_dist)
 
     if !isnothing(filter)

@@ -27,7 +27,7 @@ function assign_flux(particle::Galaxy_ssp,
                     redshift::Float64,
                     lumDist::Float64,
                     mass2light::Float64)
-    error("IFU filter must be specified if Galaxy_ssp particles are used")
+    error("IFU filter must be specified if SSP particles are used")
 end
 
 """

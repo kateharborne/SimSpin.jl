@@ -37,7 +37,7 @@ function lumDist(;z::Float64=0.1,
                         H0::Float64=67.8,
                         omegaM::Float64=0.308,
                         omegaL::Float64=1-omegaM,
-                        ref::String="Planck")
+                        ref::Union{String, Nothing}="Planck")
 
     lum_dist = cosdistLumDist(z=z,
                                 H0=H0,

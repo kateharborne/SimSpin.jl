@@ -27,7 +27,7 @@ function jansky_calc(wave::Array{Int64,1},
     fluxnu = convert_wave2freq(wave, flux)
     totlumnu = bandpass(wave, fluxnu, filter)
 
-    return totlumnu * 1e23
+    return totlumnu * cgs_to_jansky
 end
 
 function bandpass(wave::Array{Int64,1},

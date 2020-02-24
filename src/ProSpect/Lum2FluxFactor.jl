@@ -6,7 +6,7 @@ function Lum2FluxFactor(;z::Float64=0.1,
                         H0::Float64=67.8,
                         omegaM::Float64=0.308,
                         omegaL::Float64=1-omegaM,
-                        ref::String="Planck")
+                        ref::Union{String, Nothing}=nothing)
 
 
     Dl_cm = lumDist(z, H0, omegaM, omegaL, ref) * mpc_to_cm
@@ -31,7 +31,7 @@ function Lum2Flux(wave::Array{Float64,1},
                     H0::Float64=67.8,
                     omegaM::Float64=0.308,
                     omegaL::Float64=1-omegaM,
-                    ref::String="Planck")
+                    ref::Union{String, Nothing}=nothing)
 
     Dl_cm = lumDist(z, H0, omegaM, omegaL, ref) * mpc_to_cm
     flux = lum * lsol_to_erg / (4 * π * Dl_cm^2) / (1 + z)
