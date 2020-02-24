@@ -10,8 +10,10 @@ Returns particle data wrt centre of galaxy in both spatial and velocity space in
 function sim_to_galaxy(sim_data::Array{Sim_particle, 1})
 
     galaxy_data = Array{Galaxy_particle, 1}(undef, length(sim_data))
-    centre = galaxy_centre(sim_data)
-    rot_mat = galaxy_orient(sim_data, centre)
+
+    lum_data = sim_data[findall(x -> typeof(x) != Galaxy_dark, sim_data)]   #get all luminous particles
+    centre = galaxy_centre(lum_data)                    #use luminous particles only to find centre
+    rot_mat = galaxy_orient(lum_data, centre)           #use luminous particles only to find rotation matrix
 
     Threads.@threads for index in eachindex(sim_data)
         new = galaxy_particle(sim_data[index], centre, rot_mat)

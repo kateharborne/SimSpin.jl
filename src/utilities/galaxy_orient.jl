@@ -19,7 +19,7 @@ function galaxy_orient(sim_data::Array{Sim_particle, 1}, centre::Array{Float64, 
     mass = getfield.(sim_data, :mass)
 
     # step 1: define the moment of inertia tensor
-    inertiaTensor = randn(3,3)
+    inertiaTensor = zeros(3,3)
     inertiaTensor[1,1] = sum(mass .* (y.^2 .+ z.^2))
     inertiaTensor[2,2] = sum(mass .* (x.^2 .+ z.^2))
     inertiaTensor[3,3] = sum(mass .* (x.^2 .+ y.^2))
@@ -32,7 +32,7 @@ function galaxy_orient(sim_data::Array{Sim_particle, 1}, centre::Array{Float64, 
 
     # step 2: find eigen vectors and reorder such that x is the major axis
     eigen_vec = eigvecs(inertiaTensor)
-    rot_mat = eigen_vec' .* [-1 -1 -1;1 1 1;-1 -1 -1]   # tranpose to get rotation matrix
+    rot_mat::Array{Float64, 2} = eigen_vec'  # tranpose to get rotation matrix
 
     return rot_mat
 end
