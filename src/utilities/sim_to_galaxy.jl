@@ -11,7 +11,7 @@ function sim_to_galaxy(sim_data::Array{Sim_particle, 1})
 
     galaxy_data = Array{Galaxy_particle, 1}(undef, length(sim_data))
 
-    lum_data = sim_data[findall(x -> typeof(x) != Galaxy_dark, sim_data)]   #get all luminous particles
+    lum_data = sim_data[findall(x -> typeof(x) != Sim_dark, sim_data)]   #get all luminous particles
     centre = galaxy_centre(lum_data)                    #use luminous particles only to find centre
     rot_mat = galaxy_orient(lum_data, centre)           #use luminous particles only to find rotation matrix
 
