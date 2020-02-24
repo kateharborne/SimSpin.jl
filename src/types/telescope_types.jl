@@ -75,7 +75,7 @@ end
     SAMI(;filter)
 
 Creates an IFU using parameters of the SAMI survey.
-Optional filters "r" or "g" can also be specified.
+Optional filters "r" or "g" can also be specified for use with SSP particles.
 """
 function SAMI(;filter::Union{String, Nothing} = nothing)
     return IFU(15,
@@ -88,10 +88,10 @@ function SAMI(;filter::Union{String, Nothing} = nothing)
 end
 
 """
-    MaNGA()
+    MaNGA(;filter)
 
 Creates an IFU using parameters of the MaNGA survey.
-Optional filters "r" or "g" can also be specified.
+Optional filters "r" or "g" can also be specified for use with SSP particles.
 """
 function MaNGA(;filter::Union{String, Nothing} = nothing)
     return IFU(22,
@@ -104,10 +104,10 @@ function MaNGA(;filter::Union{String, Nothing} = nothing)
 end
 
 """
-    CALIFA()
+    CALIFA(;filter)
 
 Creates an IFU using parameters of the CALIFA survey.
-Optional filters "r" or "g" can also be specified.
+Optional filters "r" or "g" can also be specified for use with SSP particles.
 """
 function CALIFA(;filter::Union{String, Nothing} = nothing)
     return IFU(30,
@@ -120,10 +120,10 @@ function CALIFA(;filter::Union{String, Nothing} = nothing)
 end
 
 """
-    Hector()
+    Hector(;filter)
 
 Creates an IFU using parameters of the CALIFA survey.
-Optional filters "r" or "g" can also be specified.
+Optional filters "r" or "g" can also be specified for use with SSP particles.
 """
 function Hector(;filter::Union{String, Nothing} = nothing)
     return IFU(30,

@@ -4,7 +4,7 @@
 
 For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin.jl).
 
-Once installed, a simple procedure of four steps is required to take an observation and generate a datacube:
+Once installed, only five steps are required to take an observation, generate a mock-IFU datacube and then export it to a FITS file:
 1.  Construct a `Telescope` object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [`SAMI`](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
 
     ```

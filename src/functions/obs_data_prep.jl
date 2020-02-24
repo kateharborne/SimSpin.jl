@@ -77,7 +77,18 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
 
     [parts_in_cell[cell] = galaxy_data[findall(x -> x == cell, bins)] for cell in used_cells]
 
-    observe = Observation(envir.z, envir.inc_deg, envir.r200, envir.blur, ifu.ap_region, ifu.sbin, vbin, vseq, ifu.lsf_size, ang_size, sbinsize, envir.mass2light)
+    observe = Observation(envir.z,
+                            envir.inc_deg,
+                            envir.r200,
+                            envir.blur,
+                            ifu.ap_region,
+                            ifu.sbin,
+                            vbin,
+                            vseq,
+                            ifu.lsf_size,
+                            ang_size,
+                            sbinsize,
+                            envir.mass2light)
 
     return  galaxy_data, parts_in_cell, observe
 end

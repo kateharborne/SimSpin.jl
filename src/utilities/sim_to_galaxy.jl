@@ -16,8 +16,7 @@ function sim_to_galaxy(sim_data::Array{Sim_particle, 1})
     rot_mat = galaxy_orient(lum_data, centre)           #use luminous particles only to find rotation matrix
 
     Threads.@threads for index in eachindex(sim_data)
-        new = galaxy_particle(sim_data[index], centre, rot_mat)
-        galaxy_data[index] = new
+        galaxy_data[index] = galaxy_particle(sim_data[index], centre, rot_mat)  #convert each particle from Sim_particle to Galaxy_particle
     end
 
     return galaxy_data
