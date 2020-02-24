@@ -24,7 +24,7 @@ function jansky_calc(wave::Array{Int64,1},
                         flux::Array{Float64,1};
                         filter::Interpolations.FilledExtrapolation{})
 
-    fluxnu = convert_wave2freq(flux, wave)
+    fluxnu = convert_wave2freq(wave, flux)
     totlumnu = bandpass(wave, fluxnu, filter)
 
     return totlumnu * 1e23
@@ -45,8 +45,8 @@ function bandpass(wave::Array{Int64,1},
 end
 
 
-function convert_wave2freq(wave::Array{Float64,1},
-                            flux_wave::Array{Int64,1};
+function convert_wave2freq(wave::Array{Int64,1},
+                            flux_wave::Array{Float64,1};
                             wavefac::Float64=1e-10)
 
     return (wavefac * flux_wave .* wave.^2) / c_to_mps
