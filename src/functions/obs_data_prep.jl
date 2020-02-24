@@ -65,7 +65,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     x_invalid = findall(x-> x == 0 || x == length(sseq), x_coord)   #find indexs for particles outside of seen range
     y_invalid = findall(y->y==0 || y == length(sseq), y_coord)
     z_invalid = findall(z->z==0 || z == length(vseq), z_coord)
-    invalid = unique(vcat(x_invalid, y_invalid, z_invalid))
+    invalid = sort(unique(vcat(x_invalid, y_invalid, z_invalid)))
 
     bins = x_coord + ifu.sbin * y_coord + ifu.sbin^2 * z_coord .- (ifu.sbin^2 + ifu.sbin)
 
