@@ -20,6 +20,22 @@ function photom_lum(wave::Array{Float64,1},
     return photom
 end
 
+function photom_lum(spectra::Array{Float64,1},
+                    filter::Interpolations.FilledExtrapolation{},
+                    z::Float64,
+                    lum_dist::Float64)
+
+    particle_flux = photom_lum(BC03lr["Wave"],
+                                spectra,
+                                filter,
+                                outtype="Janksy",
+                                z=z,
+                                ref="Planck",
+                                lum_dist=lum_dist)
+
+    return particle_flux
+end
+
 function jansky_calc(wave::Array{Int64,1},
                         flux::Array{Float64,1};
                         filter::Interpolations.FilledExtrapolation{})

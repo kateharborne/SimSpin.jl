@@ -63,7 +63,6 @@ module SimSpin
     include("utilities/galaxy_centre.jl")
     include("utilities/galaxy_orient.jl")
     include("utilities/particle_kinematics.jl")
-    include("utilities/r_functions.jl")
     include("utilities/shell_analysis.jl")
     include("utilities/sim_to_galaxy.jl")
 end

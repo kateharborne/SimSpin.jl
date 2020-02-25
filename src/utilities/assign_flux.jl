@@ -59,3 +59,47 @@ function assign_flux(particle::Galaxy_dark,
     flux = 0
     return flux
 end
+
+"""
+    part_spectra(particle)
+
+Returns spectra for input particle of type Galaxy_ssp.
+Julia implementation of R package, ProSpect.
+"""
+function part_spectra(particle::Galaxy_ssp)
+
+    metallicity = particle.metallicity
+    age = particle.age * 1e9
+    mass = particle.mass * 1e10
+
+    Z = interp_param([metallicity], BC03lr["Z"], log = true)
+    A = interp_param([age], BC03lr["Age"], log = true)
+
+    weights = Dict(     "hihi" => Z["weight_hi"][1] * A["weight_hi"][1],
+                        "hilo" => Z["weight_hi"][1] * A["weight_lo"][1],
+                        "lohi" => Z["weight_lo"][1] * A["weight_hi"][1],
+                        "lolo" => Z["weight_lo"][1] * A["weight_lo"][1])
+
+    part_spec = zeros(length(BC03lr["Wave"]))
+    part_spec = (   (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_hi"][1],:] * weights["hihi"]) +
+                    (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_lo"][1],:] * weights["hilo"]) +
+                    (BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_hi"][1],:] * weights["lohi"]) +
+                    (BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_lo"][1],:] * weights["lolo"])) * mass
+
+    return part_spec
+end
+
+"""
+    mass_to_flux(particle, redshiftCoef, m2l)
+
+Converted particle mass to a flux value in jansky using the provided mass to light ratio.
+"""
+function mass_to_flux(particle::Galaxy_lum, redshiftCoef::Float64, m2l::Float64)
+
+    mass = particle.mass
+    lum = mass * 1e10 / m2l      #Convert particle masses to cell luminosity
+
+    flux = lum * redshiftCoef * cgs_to_jansky
+
+    return flux
+end
