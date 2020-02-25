@@ -36,20 +36,11 @@ module SimSpin
     include("io/sim_data.jl")
     include("io/sim_FITS.jl")
 
-    include("celestial/cosdistAngScale.jl")
-    include("celestial/cosdistTravelTime.jl")
-    include("celestial/cosdistLumDist.jl")
-    include("celestial/cosgrowRhoDE.jl")
-    include("celestial/e_inv.jl")
-    include("celestial/e_invz.jl")
-    include("celestial/getcos.jl")
+    include("celestial/celestial.jl")
+    using .celestial
 
-    include("ProSpect/data/bc_data.jl")
-    include("ProSpect/data/constants.jl")
-    include("ProSpect/data/get_filter.jl")
-    include("ProSpect/Lum2FluxFactor.jl")
-    include("ProSpect/photom_lum.jl")
-    include("ProSpect/utilities.jl")
+    include("ProSpect/ProSpect.jl")
+    using .ProSpect
 
     include("functions/build_datacube.jl")
     include("functions/blur_cube.jl")

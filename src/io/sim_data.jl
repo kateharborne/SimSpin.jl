@@ -81,7 +81,7 @@ function sim_data(filename::String;
                     else
                         sft::Array{Float64, 1} = read(galaxy_file[string(type, "/StellarFormationTime")])
                         z_sft = ((1 ./ sft) .- 1)
-                        age_arr = cosdistTravelTime.(z_sft)     #convert stellar formation time to particle age
+                        age_arr = celestial.cosdistTravelTime.(z_sft)     #convert stellar formation time to particle age
                     end
 
                     met_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Metallicity")])

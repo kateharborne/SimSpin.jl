@@ -9,7 +9,7 @@ function Lum2FluxFactor(;z::Float64=0.1,
                         ref::Union{String, Nothing}=nothing)
 
 
-    Dl_cm = lumDist(z, H0, omegaM, omegaL, ref) * mpc_to_cm
+    Dl_cm = celestial.cosdistLumDist(z, H0, omegaM, omegaL, ref) * mpc_to_cm
     factor = lsol_to_erg / (4 * π * Dl_cm^2) / (1 + z)
 
     return factor
@@ -33,7 +33,7 @@ function Lum2Flux(wave::Array{Float64,1},
                     omegaL::Float64=1-omegaM,
                     ref::Union{String, Nothing}=nothing)
 
-    Dl_cm = lumDist(z, H0, omegaM, omegaL, ref) * mpc_to_cm
+    Dl_cm = celestial.cosdistLumDist(z, H0, omegaM, omegaL, ref) * mpc_to_cm
     flux = lum * lsol_to_erg / (4 * π * Dl_cm^2) / (1 + z)
     wave = wave * (1 + z)
 

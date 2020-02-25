@@ -2,6 +2,8 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Aaron Robotham
 
+using QuadGK
+
 function cosdistAngScale(z::Float64;
                         H0::Float64=100.,
                         omegaM::Float64=0.3,

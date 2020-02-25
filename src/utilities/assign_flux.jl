@@ -2,6 +2,8 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
+using Interpolations
+
 """
     assign_flux(particle, filter, redshift)
 
@@ -17,7 +19,7 @@ function assign_flux(particle::Galaxy_ssp,
                         mass2light::Float64)
 
     spectra = part_spectra(particle)
-    flux = photom_lum(spectra, filter, redshift, lum_dist)
+    flux = ProSpect.photom_lum(spectra, filter, redshift, lum_dist)
 
     return flux
 end
@@ -72,19 +74,19 @@ function part_spectra(particle::Galaxy_ssp)
     age = particle.age * 1e9
     mass = particle.mass * 1e10
 
-    Z = interp_param([metallicity], BC03lr["Z"], log = true)
-    A = interp_param([age], BC03lr["Age"], log = true)
+    Z = ProSpect.interp_param([metallicity], ProSpect.BC03lr["Z"], log = true)
+    A = ProSpect.interp_param([age], ProSpect.BC03lr["Age"], log = true)
 
     weights = Dict(     "hihi" => Z["weight_hi"][1] * A["weight_hi"][1],
                         "hilo" => Z["weight_hi"][1] * A["weight_lo"][1],
                         "lohi" => Z["weight_lo"][1] * A["weight_hi"][1],
                         "lolo" => Z["weight_lo"][1] * A["weight_lo"][1])
 
-    part_spec = zeros(length(BC03lr["Wave"]))
-    part_spec = (   (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_hi"][1],:] * weights["hihi"]) +
-                    (BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_lo"][1],:] * weights["hilo"]) +
-                    (BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_hi"][1],:] * weights["lohi"]) +
-                    (BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_lo"][1],:] * weights["lolo"])) * mass
+    part_spec = zeros(length(ProSpect.BC03lr["Wave"]))
+    part_spec = (   (ProSpect.BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_hi"][1],:] * weights["hihi"]) +
+                    (ProSpect.BC03lr["ZSpec"][Z["ID_hi"][1]][A["ID_lo"][1],:] * weights["hilo"]) +
+                    (ProSpect.BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_hi"][1],:] * weights["lohi"]) +
+                    (ProSpect.BC03lr["ZSpec"][Z["ID_lo"][1]][A["ID_lo"][1],:] * weights["lolo"])) * mass
 
     return part_spec
 end
@@ -99,7 +101,7 @@ function mass_to_flux(particle::Galaxy_lum, redshiftCoef::Float64, m2l::Float64)
     mass = particle.mass
     lum = mass * 1e10 / m2l      #Convert particle masses to cell luminosity
 
-    flux = lum * redshiftCoef * cgs_to_jansky
+    flux = lum * redshiftCoef * ProSpect.cgs_to_jansky
 
     return flux
 end

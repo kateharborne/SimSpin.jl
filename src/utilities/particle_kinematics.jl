@@ -68,9 +68,9 @@ function get_j(x::Float64, y::Float64, z::Float64,
                 vx::Float64, vy::Float64, vz::Float64,
                 mass::Float64)
 
-    jx = ((y * vz) - (z * vy)) * mass * pc_to_m
-    jy = ((z * vx) - (x * vz)) * mass * pc_to_m
-    jz = ((x * vy) - (y * vx)) * mass * pc_to_m
+    jx = ((y * vz) - (z * vy)) * mass * ProSpect.pc_to_m
+    jy = ((z * vx) - (x * vz)) * mass * ProSpect.pc_to_m
+    jz = ((x * vy) - (y * vx)) * mass * ProSpect.pc_to_m
 
     return jx, jy, jz
 end
