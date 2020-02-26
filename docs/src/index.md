@@ -39,7 +39,7 @@ Once installed, only five steps are required to take an observation, generate a 
     The most efficient way to take multiple observations is to pass [`build_datacube`](@ref) an array of Environments. These can be created individually or by passing the [Environment Constructor](@ref) an array of the values that you wish to observe. For example, to take an observation at redshifts 0.05, 0.1 and 0.15 each at an inclination of 70 degrees and 80 degrees using a constant virial radius of 200 kpc there are two options:
 
     ```
-        > environments = Environment([0.05 0.1 015], [70 80], 200)
+        > environments = Environment([0.05; 0.1; 015], [70; 80], 200)
         > environments = Environment(0.05:0.05:0.15, 70:10:80, 200)
     ```
 

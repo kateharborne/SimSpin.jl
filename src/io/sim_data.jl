@@ -122,7 +122,7 @@ end
     sim_data(;ptype::Vector{} = [],
                 ssp::Bool = false)
 
-Returns particle data from SimSpin's example file.
+if name filename is specified `sim_data` returns particle data from SimSpin's example file.
 
 Keyword arguments (optional):\n
     ptype       A vector of the particles types to be read in e.g. ptype = [1,3].
@@ -131,7 +131,7 @@ Keyword arguments (optional):\n
 """
 function sim_data(;ptype::Vector{} = [],
                     ssp::Bool = false)
-    filename = joinpath(dirname(pathof(SimSpin)), "..", "example", "SimSpin_example.hdf5")
+    filename = joinpath(dirname(pathof(SimSpin)), "..", "data", "SimSpin_example.hdf5")
 
     return sim_data(filename, ptype=ptype, ssp=ssp)
 end
