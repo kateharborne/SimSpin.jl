@@ -55,15 +55,15 @@ struct Environment
                         r200::Real)
         mass2light = 1.
         blur = nothing
-        
+
         new(z, inc_deg, r200, mass2light, blur)
     end
 
     function Environment(z_array::Union{Float64, Array{Float64, 1}, AbstractRange{Float64}},
-                        inc_deg_array::Union{Real, Array{Real, 1}, AbstractRange{Real}},
-                        r200_array::Union{Real, Array{Real, 1}, AbstractRange{Real}},
-                        mass2light_array::Union{Real, Array{Real, 1}, AbstractRange{Real}},
-                        blur_array::Union{Blur, Array{Blur, 1}, AbstractRange{Real}})
+                        inc_deg_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
+                        r200_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
+                        mass2light_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
+                        blur_array::Union{Blur, Array{Blur, 1}, AbstractRange{<:Real}})
         envir_array = Environment[]
 
         for z in z_array
@@ -83,8 +83,8 @@ struct Environment
     end
 
     function Environment(z_array::Union{Float64, Array{Float64, 1}, AbstractRange{Float64}},
-                        inc_deg_array::Union{Real, Array{Real, 1}, AbstractRange{<:Real}},
-                        r200_array::Union{Real, Array{Real, 1}, AbstractRange{<:Real}},
+                        inc_deg_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
+                        r200_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
                         blur_array::Union{Blur, Array{Blur, 1}})
         envir_array = Environment[]
 
@@ -105,9 +105,9 @@ struct Environment
     end
 
     function Environment(z_array::Union{Float64, Array{Float64, 1}, AbstractRange{Float64}},
-                        inc_deg_array::Union{Real, Array{Real, 1}, AbstractRange{<:Real}},
-                        r200_array::Union{Real, Array{Real, 1}, AbstractRange{<:Real}},
-                        mass2light_array::Union{Real, Array{Real, 1}, AbstractRange{<:Real}})
+                        inc_deg_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
+                        r200_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
+                        mass2light_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}})
         envir_array = Environment[]
 
         blur = nothing
@@ -127,8 +127,8 @@ struct Environment
     end
 
     function Environment(z_array::Union{Float64, Array{Float64, 1}, AbstractRange{Float64}},
-                        inc_deg_array::Union{Real, Array{Real, 1}, AbstractRange{<:Real}},
-                        r200_array::Union{Real, Array{Real, 1}, AbstractRange{<:Real}})
+                        inc_deg_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
+                        r200_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}})
         envir_array = Environment[]
 
         mass2light = 1.
