@@ -129,7 +129,7 @@ end
         particles_dm = sim_data(filename, ptype=[1])
 
         @test length(particles) == 311179
-        @test length(particles3) == 190516
+        @test length(particles_dm) == 190516
 
         @test_throws ErrorException sim_data(filename, ptype=[3])
     end
@@ -138,7 +138,7 @@ end
         filename = joinpath(dirname(pathof(SimSpin)), "..", "data", "SimSpin_SSP.hdf5")
         particles = sim_data(filename, ssp=true)
 
-        filt = rand("r", "g")
+        filt = rand(["r"; "g"])
         tele = SAMI(filter=filt)
 
         z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
@@ -166,7 +166,7 @@ end
         filename = joinpath(dirname(pathof(SimSpin)), "..", "data", "SimSpin_SSP.hdf5")
         particles = sim_data(filename, ssp=true)
 
-        filt = rand("r", "g")
+        filt = rand(["r"; "g"])
         tele = SAMI(filter=filt)
 
         z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
