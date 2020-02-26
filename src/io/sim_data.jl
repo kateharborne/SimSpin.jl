@@ -75,17 +75,24 @@ function sim_data(filename::String;
                         push!(sim_data, particle)
                     end
 
-                elseif(ssp && length(names(galaxy_file[type])) == 10)
-                    if(any(isequal.(names(galaxy_file[type]), "Age")))
+                elseif(ssp && length(names(galaxy_file[type])) > 7)
+                    if any(isequal.(names(galaxy_file[type]), "Age"))
                         age_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Age")])
-                    else
+                    elseif any(isequal.(names(galaxy_file[type]), "StellarFormationTime"))
                         sft::Array{Float64, 1} = read(galaxy_file[string(type, "/StellarFormationTime")])
                         z_sft = ((1 ./ sft) .- 1)
                         age_arr = celestial.cosdistTravelTime.(z_sft)     #convert stellar formation time to particle age
+                    else
+                        error("SSP particle data must include either particle ages or particle stellar formation time.")
                     end
 
                     met_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Metallicity")])
-                    init_mass_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/InitialMass")])
+
+                    if any(isequal.(names(galaxy_file[type]), "InitialMass"))
+                        init_mass_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/InitialMass")])
+                    else
+                        init_mass_arr = zeros(Float64, length(x_arr))
+                    end
 
                     for i = 1:length(x_arr)
                         particle = Sim_ssp(
@@ -100,7 +107,7 @@ function sim_data(filename::String;
                         push!(sim_data, particle)
                     end
 
-                elseif(ssp && length(names(galaxy_file[type])) != 10)
+                elseif(ssp && length(names(galaxy_file[type])) <= 7)
                     error("SSP requested, but no Age/Metallicity information contained within supplied file, ", filename, ". \n",
                             "Please set SSP=false, or provide additional particle information.")
 
@@ -112,12 +119,19 @@ function sim_data(filename::String;
 end
 
 """
-    sim_data()
+    sim_data(;ptype::Vector{} = [],
+                ssp::Bool = false)
 
 Returns particle data from SimSpin's example file.
+
+Keyword arguments (optional):\n
+    ptype       A vector of the particles types to be read in e.g. ptype = [1,3].
+                If omitted all particles types will be read.
+    ssp         Boolean value to use ssp particle information.
 """
-function sim_data()
+function sim_data(;ptype::Vector{} = [],
+                    ssp::Bool = false)
     filename = joinpath(dirname(pathof(SimSpin)), "..", "example", "SimSpin_example.hdf5")
 
-    return sim_data(filename)
+    return sim_data(filename, ptype=ptype, ssp=ssp)
 end

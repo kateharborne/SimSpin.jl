@@ -144,6 +144,22 @@ We use the same PartType definition as Gadget: PartTypeX where 0 - gas, 1 - dark
 >>> /PartType4/y
 >>> /PartType4/z
 ```
+Optionally SSP Star particles can also be defined with initial mass and stellar formation time:
+
+```
+> SimSpin_example.hdf5
+>> /PartType4
+>>> /PartType4/InitialMass
+>>> /PartType4/Mass
+>>> /PartType4/Metallicity
+>>> /PartType4/StellarFormationTime
+>>> /PartType4/vx        
+>>> /PartType4/vy
+>>> /PartType4/vz
+>>> /PartType4/x
+>>> /PartType4/y
+>>> /PartType4/z
+```
 If the file is set up in this way, the simulation data can easily be read into the SimSpin package.
 
 ### References
