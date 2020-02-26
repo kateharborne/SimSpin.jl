@@ -103,7 +103,7 @@ end
 
         aperture = repeat(tele.ap_region, outer=[1,1,observe.vbin])
         zero_indices = findall(x-> x == 0, aperture)
-        @test datacube[zero_indices] .== 0.0      #no data outside telescope aperture
+        @test all(datacube[zero_indices] .== 0.0)      #no data outside telescope aperture
 
         @test observe.z             == envir.z
         @test observe.inc_deg       == envir.inc_deg
