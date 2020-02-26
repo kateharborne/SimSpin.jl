@@ -120,6 +120,7 @@ end
 
         @test size(observe.vseq)[1] == observe.vbin + 1        #number of velocity bins matches bounds
     end
+end
 
 @testset "functions_with_SSP" begin
     @testset "sim_data" begin
