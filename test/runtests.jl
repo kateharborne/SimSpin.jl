@@ -132,6 +132,9 @@ end
         @test length(particles_dm) == 190516
 
         @test_throws ErrorException sim_data(filename, ptype=[3])
+
+        warning = (:warn, "SSP data is available for Star particles in this simulation file but has not been read in. If spectra is desired set ssp=true.")
+        @test_logs warning sim_data(filename, ssp=false)
     end
 
     @testset "obs_data_prep" begin

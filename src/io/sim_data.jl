@@ -75,6 +75,10 @@ function sim_data(filename::String;
                         push!(sim_data, particle)
                     end
 
+                    if type == "PartType4" && length(names(galaxy_file[type])) > 7
+                        @warn("SSP data is available for Star particles in this simulation file but has not been read in. If spectra is desired set ssp=true.")
+                    end
+
                 elseif(ssp && length(names(galaxy_file[type])) > 7)
                     if any(isequal.(names(galaxy_file[type]), "Age"))
                         age_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Age")])
