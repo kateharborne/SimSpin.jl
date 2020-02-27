@@ -35,5 +35,5 @@ By varying the effects of observational seeing, the measurement radius, projecte
 
 ## Documentation
 
-- [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kateharborne.github.io/SimSpin.jl/stable) &mdash; **Not currently released.**
+- [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kateharborne.github.io/SimSpin.jl/stable) &mdash; **Documentation for the most recent release.**
 - [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kateharborne.github.io/SimSpin.jl/dev) &mdash; **Development documentation.**
