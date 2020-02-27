@@ -4,6 +4,7 @@
 
 For the installation procedure of the SimSpin package please follow the installation instructions on the package's [*README*](https://github.com/kateharborne/SimSpin.jl).
 
+### Mock observables of an N-body simulation
 Once installed, only five steps are required to take an observation, generate a mock-IFU datacube and then export it to a FITS file:
 1.  Construct a `Telescope` object. This specifies the field of view to be used, the aperture shape, etc. In this example we will use the default [`SAMI`](@ref) telescope constructor. See [Telescope Constructors](@ref) for other default and customisable constructors.
 
@@ -44,6 +45,39 @@ Once installed, only five steps are required to take an observation, generate a 
     ```
 
     Both options will return an array of environments which can then be used as the environment parameter in Step 4 above. This will then return an array of tuples, each one consisting of the datacube and the observational properties used. See [`build_datacube`](@ref) and [Environment Constructor](@ref) for more details.
+
+### Mock observables of a hydro-dynamical simulation
+To use SimSpin with a hydro-dynamical simulation a similar process is followed with notable, minor differences:
+
+1.  Construct a `Telescope` object. We must specify a filter when using a hydro-dynamical simulation. See [Telescope Constructors](@ref) for more options.
+
+    ```
+        > telescope = SAMI(filter="g")
+    ```
+
+2.  Construct an environment in which the observation is taken. This is the same as for an n-body simulation but does not require a mass to light ratio. See [Environment Constructor](@ref) and [Blur Constructors](@ref) for more details.
+
+    ```
+        > environment = Environment(0.05, 70, 200)
+    ```
+
+3.  Read in a simulation's particle data. For hydro-dynamical simulations we must specify that we want SSP to be used. The default is to not use SSP data so if SSP is not actively set to true a hydro-dynamical simulation will still be observed but a mass to light ratio will be used instead of spectra. See [Data Import](@ref) for more details.
+
+    ```
+        > data = sim_data("your/filename.hdf5", ssp=true)
+    ```
+
+4.  Build the datacube as a combination of the galaxy particle data, a telescope and an environment. It returns a mock-IFU datacube and a summary of the observational properties used. See [`build_datacube`](@ref) for more details.
+
+    ```
+        > datacube, observe = build_datacube(data, telescope, environment)
+    ```
+
+5.  Export the datacube to a FITS file for viewing. See [Data Export](@ref) for more details
+
+    ```
+        > sim_FITS(datacube, observe, "SimSpin_Example_Observation.fits")
+    ```
 
 !!! warning
     Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many threads as available. To see how to allow SimSpin to use more threads see [Multi-Threading](@ref).
