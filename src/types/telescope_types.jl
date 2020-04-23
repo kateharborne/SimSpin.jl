@@ -5,7 +5,7 @@
 abstract type Telescope end
 
 """
-    IFU(fov, ap_shape, pixel_sscale, pixel_vscale, central_wvl, lsf_fwhm, filter)
+    IFU(fov, ap_shape, central_wvl, lsf_fwhm, pixel_sscale, pixel_vscale,  filter)
 
 Creates a customisable, mock IFU telescope which can be used to "observe" simulations.
 
