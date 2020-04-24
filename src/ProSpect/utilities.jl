@@ -47,8 +47,8 @@ function interp_param(x::Array{Float64,1},
     param_lo = params[ID_lo]
     param_hi = params[ID_hi]
 
-    ID_mode = ID_lo
-    ind_half= findall(x-> mod.(x, 1) > 0.5, temp)
+    ID_mode = copy(ID_lo)
+    ind_half = findall(x-> mod.(x, 1) > 0.5, temp)
     ID_mode[ind_half] .= ID_hi[ind_half]
 
     weight_hi = mod.(temp, 1)
