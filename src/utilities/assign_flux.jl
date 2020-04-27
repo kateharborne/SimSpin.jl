@@ -7,26 +7,28 @@ using Interpolations
 """
     assign_flux(particle, filter, redshift)
 
-    Constructs a flux profile using a julia implementation of `ProSpect`
+    Constructs a flux profile using a Julia implementation of `ProSpect`
     for a `Galaxy_ssp` particle when observed with specified filter and redshift.
 
     Filter to be created using `get_filter()`.
 """
 function assign_flux(particle::Galaxy_ssp,
                         filter::Interpolations.FilledExtrapolation{},
-                        redshift::Float64,
+                        z::Float64,
+                        redshiftCoef::Float64,
                         lum_dist::Float64,
                         mass2light::Float64)
 
     spectra = part_spectra(particle)
-    flux = ProSpect.photom_lum(spectra, filter, redshift, lum_dist)
+    flux = ProSpect.photom_lum(spectra, filter, z, lum_dist)
 
     return flux
 end
 
 function assign_flux(particle::Galaxy_ssp,
                     filter::Nothing,
-                    redshift::Float64,
+                    z::Float64,
+                    redshiftCoef::Float64,
                     lumDist::Float64,
                     mass2light::Float64)
     error("IFU filter must be specified if SSP particles are used")
@@ -39,6 +41,7 @@ end
 """
 function assign_flux(particle::Galaxy_lum,
                         filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
+                        z::Float64,
                         redshiftCoef::Float64,
                         lumDist::Float64,
                         mass2light::Float64)
@@ -54,7 +57,8 @@ end
 """
 function assign_flux(particle::Galaxy_dark,
                     filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
-                    redshift::Float64,
+                    z::Float64,
+                    redshiftCoef::Float64,
                     lumDist::Float64,
                     mass2light::Float64)
 
