@@ -15,7 +15,7 @@ function photom_lum(wave::Array{Float64,1},
                     ref::String="Planck",
                     lum_dist::Float64=471.03)
 
-    wave::Array{Int64,1}, flux = Lum2Flux(wave, lum, z, lum_dist)
+    wave::Array{Float64,1}, flux = Lum2Flux(wave, lum, z, lum_dist)
     photom = jansky_calc(wave, flux, filter=filter)
     return photom
 end
@@ -36,7 +36,7 @@ function photom_lum(spectra::Array{Float64,1},
     return particle_flux
 end
 
-function jansky_calc(wave::Array{Int64,1},
+function jansky_calc(wave::Array{Float64,1},
                         flux::Array{Float64,1};
                         filter::Interpolations.FilledExtrapolation{})
 
@@ -46,22 +46,27 @@ function jansky_calc(wave::Array{Int64,1},
     return totlumnu * cgs_to_jansky
 end
 
-function bandpass(wave::Array{Int64,1},
+function bandpass(wave::Array{Float64,1},
                     flux::Array{Float64,1},
                     filter::Interpolations.FilledExtrapolation{};
                     lum::Bool=true)
 
-    tempremap = filter.(wave)
+    response = filter.(wave)
+
+    freq = 1 ./ wave
+    freq_diff =abs.(qdiff(freq))
+
+    output = (response .* wave .* flux .* freq_diff) / sum(response .* wave .* freq_diff)
 
     if lum
-        return (sum(tempremap .* wave .* flux) / sum(tempremap .* wave))
+        return sum(output)
     else
-        return (tempremap .* wave .* flux / sum(tempremap .* wave))
+        return output
     end
 end
 
 
-function convert_wave2freq(wave::Array{Int64,1},
+function convert_wave2freq(wave::Array{Float64,1},
                             flux_wave::Array{Float64,1};
                             wavefac::Float64=1e-10)
 

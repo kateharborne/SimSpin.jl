@@ -66,3 +66,11 @@ function interp_param(x::Array{Float64,1},
         "flag"=>flag
     )
 end
+
+function qdiff(vect::Array{Float64, 1}, pad0=true)
+    if pad0
+        return vcat(0, vect[2:end] .- vect[1:(end-1)])
+    else
+        return vect[2:end].-vect[1:(end-1)]
+    end
+end
