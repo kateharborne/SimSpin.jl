@@ -91,7 +91,7 @@ Converted particle mass to a flux value in jansky using the provided mass to lig
 function mass_to_flux(particle::Galaxy_lum, redshift_coef::Float64, mass2light::Float64)
 
     mass = particle.mass
-    lum = mass * 1e10 / m2l      #Convert particle masses to cell luminosity
+    lum = mass * 1e10 / mass2light      #Convert particle mass to luminosity
 
     flux = lum * redshift_coef * ProSpect.cgs_to_jansky
 
