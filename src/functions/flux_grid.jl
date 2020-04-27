@@ -26,13 +26,6 @@ function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
 
     flux = zeros(Float64, length(parts_in_cell))
 
-    lum_dist = celestial.cosdistLumDist(z=observe.z,
-                                H0=67.8,
-                                omegaM=0.308,
-                                omegaL=1-0.308,
-                                ref="Planck")           #luminosity distance in Mpc
-    redshiftCoef = ProSpect.Lum2FluxFactor(observe.z, lum_dist)
-
     if !isnothing(filter)
         filter = ProSpect.get_filter(filter)
     end
@@ -40,7 +33,7 @@ function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
     Threads.@threads for index in axes(parts_in_cell, 1)
         cell_flux = 0.
         for particle in parts_in_cell[index]
-            cell_flux += assign_flux(particle, filter, observe.z, redshiftCoef, lum_dist, observe.mass2light)
+            cell_flux += assign_flux(particle, filter, observe)
         end
         flux[index] = cell_flux
     end

@@ -14,23 +14,17 @@ using Interpolations
 """
 function assign_flux(particle::Galaxy_ssp,
                         filter::Interpolations.FilledExtrapolation{},
-                        z::Float64,
-                        redshiftCoef::Float64,
-                        lum_dist::Float64,
-                        mass2light::Float64)
+                        obs::Observation)
 
     spectra = part_spectra(particle)
-    flux = ProSpect.photom_lum(spectra, filter, z, lum_dist)
+    flux = ProSpect.photom_lum(spectra, filter, obs.z, obs.lum_dist)
 
     return flux
 end
 
 function assign_flux(particle::Galaxy_ssp,
                     filter::Nothing,
-                    z::Float64,
-                    redshiftCoef::Float64,
-                    lumDist::Float64,
-                    mass2light::Float64)
+                    obs::Observation)
     error("IFU filter must be specified if SSP particles are used")
 end
 
@@ -41,12 +35,9 @@ end
 """
 function assign_flux(particle::Galaxy_lum,
                         filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
-                        z::Float64,
-                        redshiftCoef::Float64,
-                        lumDist::Float64,
-                        mass2light::Float64)
+                        obs::Observation)
 
-    flux = mass_to_flux(particle, redshiftCoef, mass2light)
+    flux = mass_to_flux(particle, obs.redshift_coef, obs.mass2light)
     return flux
 end
 
@@ -57,10 +48,7 @@ end
 """
 function assign_flux(particle::Galaxy_dark,
                     filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
-                    z::Float64,
-                    redshiftCoef::Float64,
-                    lumDist::Float64,
-                    mass2light::Float64)
+                    obs::Observation)
 
     flux = 0
     return flux
@@ -100,12 +88,12 @@ end
 
 Converted particle mass to a flux value in jansky using the provided mass to light ratio.
 """
-function mass_to_flux(particle::Galaxy_lum, redshiftCoef::Float64, m2l::Float64)
+function mass_to_flux(particle::Galaxy_lum, redshift_coef::Float64, mass2light::Float64)
 
     mass = particle.mass
     lum = mass * 1e10 / m2l      #Convert particle masses to cell luminosity
 
-    flux = lum * redshiftCoef * ProSpect.cgs_to_jansky
+    flux = lum * redshift_coef * ProSpect.cgs_to_jansky
 
     return flux
 end

@@ -21,8 +21,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,
                         envir::Environment)
 
-    ang_size    = celestial.cosdistAngScale(envir.z, ref="Planck")    # angular size given z, kpc
-    ap_size     = ang_size * ifu.fov                        # diameter size of the telescope, kpc
+    ap_size     = envir.ang_size * ifu.fov                        # diameter size of the telescope, kpc
     sbinsize    = ap_size / ifu.sbin                        # spatial bin size (kpc per bin)
 
     set_observables!.(galaxy_data, envir.inc_deg)     #set each particles mutable struct `Observables` for the given observation inclination
@@ -86,9 +85,11 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                             vbin,
                             vseq,
                             ifu.lsf_size,
-                            ang_size,
+                            envir.ang_size,
                             sbinsize,
-                            envir.mass2light)
+                            envir.mass2light,
+                            envir.lum_dist,
+                            envir.redshift_coef)
 
     return  galaxy_data, parts_in_cell, observe
 end

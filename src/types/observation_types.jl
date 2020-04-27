@@ -17,9 +17,11 @@ Parameters:\n
     vbin            The number of velocity bins in the flux grid.
     vseq            The bounds of each velocity bin in the flux grid.
     lsf_size        The Gaussian standard deviation of the line spread function in km/s.
-    ang_size        The angular size given redshift z in kpc
-    sbinsize        The spatial bin size in kpc per bin
+    ang_size        The angular size given redshift z in kpc.
+    sbinsize        The spatial bin size in kpc per bin.
     mass2light      The mass to light ratio for luminous (non-ssp) particles.
+    lum_dist        The luminosity distance in Mpc.
+    redshift_coef   The redshift coefficient.
 """
 struct Observation
     z::Float64
@@ -34,6 +36,8 @@ struct Observation
     ang_size::Float64
     sbinsize::Float64
     mass2light::Real
+    lum_dist::Real
+    redshift_coef::Real
 
     function Observation(z::Float64,
                         inc_deg::Real,
@@ -46,8 +50,23 @@ struct Observation
                         lsf_size::Float64,
                         ang_size::Float64,
                         sbinsize::Float64,
-                        mass2light::Real)
+                        mass2light::Real,
+                        lum_dist::Real,
+                        redshift_coef::Real)
 
-    new(z, inc_deg, r200, blur, ap_region, sbin, vbin, vseq, lsf_size, ang_size, sbinsize, mass2light)
+    new(z,
+        inc_deg,
+        r200,
+        blur,
+        ap_region,
+        sbin,
+        vbin,
+        vseq,
+        lsf_size,
+        ang_size,
+        sbinsize,
+        mass2light,
+        lum_dist,
+        redshift_coef)
     end
 end

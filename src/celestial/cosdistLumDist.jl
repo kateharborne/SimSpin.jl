@@ -4,7 +4,7 @@
 
 using QuadGK
 
-function cosdistLumDist(;z::Float64 = 1.,
+function cosdistLumDist(z::Float64;
                         H0::Float64=100.,
                         omegaM::Float64=0.3,
                         omegaR::Float64=0.,
