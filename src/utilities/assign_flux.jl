@@ -88,7 +88,7 @@ end
 
 Converted particle mass to a flux value in jansky using the provided mass to light ratio.
 """
-function mass_to_flux(particle::Galaxy_lum, redshift_coef::Float64, mass2light::Float64)
+function mass_to_flux(particle::Galaxy_lum, redshift_coef::Float64, mass2light::Real)
 
     mass = particle.mass
     lum = mass * 1e10 / mass2light      #Convert particle mass to luminosity
