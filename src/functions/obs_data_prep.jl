@@ -47,10 +47,9 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     z_obs = getfield.(getfield.(galaxy_data, :obs), :z_obs)
     vy_obs = getfield.(getfield.(galaxy_data, :obs), :vy_obs)
 
-    max_vy_obs = maximum(vy_obs)
-    min_vy_obs = minimum(vy_obs)
+    max_vy_obs = maximum(abs.(vy_obs))
 
-    vbin::Int64 = ceil((max_vy_obs - min_vy_obs) / ifu.vbinsize)    # number of velocity bins
+    vbin::Int64 = ceil((max_vy_obs*2) / ifu.vbinsize)    # number of velocity bins
     vbin_range = vbin * ifu.vbinsize / 2
     vseq = -vbin_range : ifu.vbinsize : vbin_range
 
