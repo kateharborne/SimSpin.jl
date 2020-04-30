@@ -30,6 +30,7 @@ struct Observation
     blur::Union{Blur, Nothing}
     ap_region::Array{Float64}
     sbin::Int64
+    sseq::StepRangeLen
     vbin::Int64
     vseq::StepRangeLen
     lsf_size::Float64
@@ -45,6 +46,7 @@ struct Observation
                         blur::Union{Blur, Nothing},
                         ap_region::Array{Float64, 2},
                         sbin::Int64,
+                        sseq::StepRangeLen,
                         vbin::Int64,
                         vseq::StepRangeLen,
                         lsf_size::Float64,
@@ -60,6 +62,7 @@ struct Observation
         blur,
         ap_region,
         sbin,
+        sseq,
         vbin,
         vseq,
         lsf_size,
