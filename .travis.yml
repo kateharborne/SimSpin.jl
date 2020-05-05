@@ -9,13 +9,14 @@ julia:
   - nightly
 
 jobs:
+  allow_failures:
+    - julia: nightly
+    
   include:
     - stage: "Test"
-      allow_failures:
-        - julia: nightly
       script:
         - julia --project --check-bounds=yes -e 'using Pkg; Pkg.build(; verbose = true); Pkg.test("SimSpin"; coverage=true)'
-        
+
     - stage: "Documentation"
       julia: 1
       os: linux
