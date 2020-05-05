@@ -1,15 +1,28 @@
 language: julia
 
+os:
+  - osx
+  - linux
+
+julia:
+  - 1
+  - nightly
+
+matrix:
+  allow_failures:
+    - julia: nightly
+
+script:
+  - julia --project --check-bounds=yes -e 'using Pkg; Pkg.build(; verbose = true); Pkg.test("SimSpin"; coverage=true)'
+
 jobs:
   include:
     - stage: "Documentation"
-      julia:
-        - nightly
-        - 1
+      julia: 1
       os: linux
       script:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd()));
                                                Pkg.instantiate();'
         - julia --project=docs/ docs/make.jl
-        - julia --project --check-bounds=yes -e 'using Pkg; Pkg.build(; verbose = true); Pkg.test("SimSpin"; coverage=true)'
+
       after_success: skip
