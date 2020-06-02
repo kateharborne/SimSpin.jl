@@ -46,6 +46,22 @@ function sim_FITS(out_data::Array{Float64,3},
 end
 
 """
+    sim_FITS(data_cube,
+                out_file)
+
+Outputs FITS file containing 3D, velocity binned datacube.
+
+Parameters:\n
+    data_cube   Tuple with simulated IFU datacube and Observation as output from `build_datacube()`.
+    out_file    String denoting path and name of FITS file to be output.
+"""
+function sim_FITS(out_data::Tuple{Array{Float64,3},Observation},
+                    out_file::String;
+                    obs_name::String="SimSpin datacube")
+    return sim_FITS(out_data[1], out_data[2], out_file, obs_name)
+end
+
+"""
     sim_FITS(out_data; folder)
 
 Can be used to export multiple datacubes in different FITS files.
