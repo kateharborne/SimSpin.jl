@@ -32,7 +32,7 @@ function galaxy_orient(sim_data::Array{Sim_particle, 1}, centre::Array{Float64, 
 
     # step 2: find eigen vectors and reorder such that x is the major axis
     eigen_vec = eigvecs(inertiaTensor)
-    rot_mat::Array{Float64, 2} = eigen_vec'  # tranpose to get rotation matrix
+    rot_mat::Array{Float64, 2} = transpose(eigen_vec)  # tranpose to get rotation matrix
 
     return rot_mat
 end
