@@ -34,15 +34,18 @@ function sim_FITS(out_data::Array{Float64,3},
                "PSFFWHM" blurfwhm "FWHM, arcsec";
                "SIMR200" observe.r200 "virial radius from sim, kpc"]
     keywords::Array{String,1} = headers[:, 1]
+    values::Array{Any,1} = headers[:, 2]
     comments::Array{String,1} = headers[:, 3]
 
     file = FITS(out_file, "w")
 
-    head_sim = FITSHeader(keywords, headers[:, 2], comments)
+    head_sim = FITSHeader(keywords, values, comments)
 
     write(file, out_data, header=head_sim, name=obs_name)
 
     close(file)
+
+    println("Completed output of ", out_file, ".")
 end
 
 """
@@ -58,27 +61,33 @@ Parameters:\n
 function sim_FITS(out_data::Tuple{Array{Float64,3},Observation},
                     out_file::String;
                     obs_name::String="SimSpin datacube")
-    return sim_FITS(out_data[1], out_data[2], out_file, obs_name)
+    return sim_FITS(out_data[1], out_data[2], out_file, obs_name=obs_name)
 end
 
 """
-    sim_FITS(out_data; folder)
+    sim_FITS(out_data;
+                folder = "~",
+                file_prefix = "SimSpin")
 
 Can be used to export multiple datacubes in different FITS files.
 
 Parameters:\n
     out_data    Array of (datacube, observation) tuples. As output by `build_datacube()` when taking multiple observations.
     folder      Optional. The file path to where the output should be. Defaults to "~".
+    file_prefix Optional. Prefix for the start of the .fits file's name.
 """
-function sim_FITS(out_data::Array{Tuple, 1}; folder::String="~")
-
-    len = length(out_data)
+function sim_FITS(out_data::Array{Tuple{Array{Float64,3},Observation}, 1}; folder::String="~", file_prefix::String="SimSpin")
 
     for tuple in out_data
         cube = tuple[1]
         obs = tuple[2]
 
-        filename = string("SimSpin_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_M2L", obs.mass2light, "_BLURFWHM", obs.blur.fwhm)
+        if isnothing(obs.mass2light)
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200)
+        else
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_M2L", obs.mass2light)
+        end
+
         file = joinpath(folder, filename)
 
         sim_FITS(cube, obs, file)
