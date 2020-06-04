@@ -58,8 +58,8 @@ Returns all particles that are within square aperature
 function square_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
     threshold = sbin * sbinsize / 2
 
-    trimmed = galaxy_data[findall(part -> abs(part.x) < threshold)]
-    trimmed = trimmed[findall(part -> (abs(part.obs.z_obs)) < threshold)]
+    trimmed = galaxy_data[findall(part -> abs(part.x) < threshold, galaxy_data)]
+    trimmed = trimmed[findall(part -> (abs(part.obs.z_obs)) < threshold, trimmed)]
     return trimmed
     #TODO: check if can be one line
 end
