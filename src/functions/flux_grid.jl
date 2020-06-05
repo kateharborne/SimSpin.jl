@@ -17,23 +17,18 @@ an SED is generated in each cell using ProSpect. Else, the luminosity in each ce
 Parameters:\n
     parts_in_cell       1D array of the particles corresponding to each element in the IFU data-cube.
     observe             Struct of type `Observation` containing all observation parameters.
-    filter              If ssp particles are supplied, the filter within which the SED is generated.
-                        Options include "r" and "g"  for SDSS-r and SDSS-g bands respectively.
+    filter_value        If ssp particles are supplied, the filter within which the SED is generated.
 """
 function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
                     observe::Observation,
-                    filter::Union{String, Nothing})
+                    filter_value::Union{FilterType, Nothing})
 
     flux = zeros(Float64, length(parts_in_cell))
-
-    if !isnothing(filter)
-        filter = ProSpect.get_filter(filter)
-    end
 
     Threads.@threads for index in axes(parts_in_cell, 1)
         cell_flux = 0.
         for particle in parts_in_cell[index]
-            cell_flux += assign_flux(particle, filter, observe)
+            cell_flux += assign_flux(particle, filter_value, observe)
         end
         flux[index] = cell_flux
     end

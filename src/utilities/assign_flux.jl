@@ -10,31 +10,31 @@ using Interpolations
     Constructs a flux profile using a Julia implementation of `ProSpect`
     for a `Galaxy_ssp` particle when observed with specified filter and redshift.
 
-    Filter to be created using `get_filter()`.
+    Filter to be created using `ProSpect.get_filter()`.
 """
 function assign_flux(particle::Galaxy_ssp,
-                        filter::Interpolations.FilledExtrapolation{},
+                        filter_value::FilterType,
                         obs::Observation)
 
     spectra = part_spectra(particle)
-    flux = ProSpect.photom_lum(spectra, filter, obs.z, obs.lum_dist)
+    flux = ProSpect.photom_lum(spectra, filter_value, obs.z, obs.lum_dist)
 
     return flux
 end
 
 function assign_flux(particle::Galaxy_ssp,
-                    filter::Nothing,
+                    filter_value::Nothing,
                     obs::Observation)
     error("IFU filter must be specified if SSP particles are used")
 end
 
 """
-    assign_flux(particle, filter, redshift)
+    assign_flux(particle, filter_value, redshift)
 
     Constructs a flux profile using for a `Galaxy_lum` particle using a mass to flux conversion.
 """
 function assign_flux(particle::Galaxy_lum,
-                        filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
+                        filter_value::Union{FilterType, Nothing},
                         obs::Observation)
 
     flux = mass_to_flux(particle, obs.redshift_coef, obs.mass2light)
@@ -42,12 +42,12 @@ function assign_flux(particle::Galaxy_lum,
 end
 
 """
-    assign_flux(particle, filter, redshift)
+    assign_flux(particle, filter_value, redshift)
 
     Assigns a flux profile of zero for a `Galaxy_dark` particle (ie dark matter or gas).
 """
 function assign_flux(particle::Galaxy_dark,
-                    filter::Union{Nothing, Interpolations.FilledExtrapolation{}},
+                    filter_value::Union{FilterType, Nothing},
                     obs::Observation)
 
     flux = 0

@@ -2,7 +2,12 @@
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
+using Interpolations
+
 abstract type Telescope end
+
+#define a type alias for a filter
+const FilterType = Interpolations.FilledExtrapolation{Float64,1,Interpolations.GriddedInterpolation{Float64,1,Float64,Gridded{Linear},Tuple{Array{Float64,1}}},Gridded{Linear},Int64}
 
 """
     IFU(fov, ap_shape, central_wvl, lsf_fwhm, pixel_sscale, pixel_vscale,  filter)
@@ -30,6 +35,7 @@ struct IFU <: Telescope
     sbin::Int64
     ap_region::Array{Float64, 2}
     filter::Union{String, Nothing}
+    filter_value::Union{FilterType, Nothing}
 
     function IFU(fov::Real,
                     ap_shape::String,
@@ -39,8 +45,13 @@ struct IFU <: Telescope
                     pixel_vscale::Float64,
                     filter::Union{String, Nothing})
 
-        if filter != "r" && filter != "g" && !isnothing(filter)
-            error("Please specify filter as either 'r' or 'g' or do not use.")
+
+        if isnothing(filter)
+            filter_value = nothing
+        elseif filter != "r" && filter != "g"
+            error("Currently supported filters are only either \"r\", \"g\" or, for use without SSP, simply left blank.")
+        else
+            filter_value = ProSpect.get_filter(filter)
         end
 
         vbinsize    = (pixel_vscale / central_wvl) * (3e8 / 1e3)                        # km/s per velocity bin
@@ -57,7 +68,7 @@ struct IFU <: Telescope
            error("Unsupported aperture shape specified.")
         end
 
-        new(fov, ap_shape, central_wvl, lsf_fwhm, lsf_size, pixel_sscale, pixel_vscale, vbinsize, sbin, ap_region, filter)
+        new(fov, ap_shape, central_wvl, lsf_fwhm, lsf_size, pixel_sscale, pixel_vscale, vbinsize, sbin, ap_region, filter, filter_value)
     end
 
     function IFU(fov::Real,

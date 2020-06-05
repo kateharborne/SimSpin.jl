@@ -24,7 +24,7 @@ function build_datacube(galaxy_data::Array{Galaxy_particle, 1},
 
     galaxy_data, parts_in_cell, observe = obs_data_prep(galaxy_data, ifu, envir)
 
-    fluxes = flux_grid(parts_in_cell, observe, ifu.filter)
+    fluxes = flux_grid(parts_in_cell, observe, ifu.filter_value)
     datacube = ifu_cube(fluxes, parts_in_cell, observe)
 
     if isnothing(observe.blur)    #No spatial blurring
