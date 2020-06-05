@@ -87,8 +87,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                             ifu.lsf_size,
                             envir.ang_size,
                             sbinsize,
-                            envir.disc_mass2light,
-                            envir.bulge_mass2light,
+                            envir.mass2light,
                             envir.lum_dist,
                             envir.redshift_coef)
 

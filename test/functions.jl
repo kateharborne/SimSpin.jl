@@ -25,21 +25,20 @@ using SimSpin, Test, Random
 
         galaxy_data, parts_in_cell, observe = obs_data_prep(particles, tele, envir)
 
-        @test size(galaxy_data)[1]          == sum(first.(size.(parts_in_cell)))     #output particle array has same number of particles as datacube cells
-        @test size(parts_in_cell)[1]        == tele.sbin * tele.sbin * observe.vbin   #number of cells in datacube
+        @test size(galaxy_data)[1]  == sum(first.(size.(parts_in_cell)))     #output particle array has same number of particles as datacube cells
+        @test size(parts_in_cell)[1]== tele.sbin * tele.sbin * observe.vbin   #number of cells in datacube
 
-        @test observe.z                     == envir.z
-        @test observe.inc_deg               == envir.inc_deg
-        @test observe.r200                  == envir.r200
-        @test observe.blur                  == envir.blur
-        @test observe.disc_mass2light       == envir.disc_mass2light
-        @test observe.bulge_mass2light      == envir.bulge_mass2light
+        @test observe.z             == envir.z
+        @test observe.inc_deg       == envir.inc_deg
+        @test observe.r200          == envir.r200
+        @test observe.blur          == envir.blur
+        @test observe.mass2light    == envir.mass2light
 
-        @test observe.ap_region             == tele.ap_region
-        @test observe.sbin                  == tele.sbin
-        @test observe.lsf_size              == tele.lsf_size
+        @test observe.ap_region     == tele.ap_region
+            @test observe.sbin      == tele.sbin
+        @test observe.lsf_size      == tele.lsf_size
 
-        @test size(observe.vseq)[1]         == observe.vbin + 1        #number of velocity bins matches bounds
+        @test size(observe.vseq)[1] == observe.vbin + 1        #number of velocity bins matches bounds
     end
 
     @testset "build_datacube" begin
@@ -57,17 +56,16 @@ using SimSpin, Test, Random
         zero_indices = findall(x-> x == 0, aperture)
         @test all(datacube[zero_indices] .== 0.0)      #no data outside telescope aperture
 
-        @test observe.z                     == envir.z
-        @test observe.inc_deg               == envir.inc_deg
-        @test observe.r200                  == envir.r200
-        @test observe.blur                  == envir.blur
-        @test observe.disc_mass2light       == envir.disc_mass2light
-        @test observe.bulge_mass2light      == envir.bulge_mass2light
+        @test observe.z             == envir.z
+        @test observe.inc_deg       == envir.inc_deg
+        @test observe.r200          == envir.r200
+        @test observe.blur          == envir.blur
+        @test observe.mass2light    == envir.mass2light
 
-        @test observe.ap_region             == tele.ap_region
-        @test observe.sbin                  == tele.sbin
-        @test observe.lsf_size              == tele.lsf_size
+        @test observe.ap_region     == tele.ap_region
+        @test observe.sbin          == tele.sbin
+        @test observe.lsf_size      == tele.lsf_size
 
-        @test size(observe.vseq)[1]         == observe.vbin + 1        #number of velocity bins matches bounds
+        @test size(observe.vseq)[1]== observe.vbin + 1        #number of velocity bins matches bounds
     end
 end

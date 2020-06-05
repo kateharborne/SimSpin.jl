@@ -19,8 +19,7 @@ Parameters:\n
     lsf_size            The Gaussian standard deviation of the line spread function in km/s.
     ang_size            The angular size given redshift z in kpc.
     sbinsize            The spatial bin size in kpc per bin.
-    disc_mass2light     The mass to light ratio for disk particles.
-    bulge_mass2light    The mass to light ratio for bulge particles.
+    mass2light          The mass to light ratio for particles.
     lum_dist            The luminosity distance in Mpc.
     redshift_coef       The redshift coefficient.
 """
@@ -37,8 +36,7 @@ struct Observation
     lsf_size::Float64
     ang_size::Float64
     sbinsize::Float64
-    disc_mass2light::Real
-    bulge_mass2light::Real
+    mass2light::Union{Real, Tuple{Real, Real}}
     lum_dist::Real
     redshift_coef::Real
 
@@ -54,8 +52,7 @@ struct Observation
                         lsf_size::Float64,
                         ang_size::Float64,
                         sbinsize::Float64,
-                        disc_mass2light::Real,
-                        bulge_mass2light,
+                        mass2light::Union{Real, Tuple{Real, Real}},
                         lum_dist::Real,
                         redshift_coef::Real)
 
@@ -71,8 +68,7 @@ struct Observation
         lsf_size,
         ang_size,
         sbinsize,
-        disc_mass2light,
-        bulge_mass2light,
+        mass2light,
         lum_dist,
         redshift_coef)
     end

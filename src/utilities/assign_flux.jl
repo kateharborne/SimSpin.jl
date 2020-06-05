@@ -37,7 +37,7 @@ function assign_flux(particle::Galaxy_lum,
                         filter_value::Union{FilterType, Nothing},
                         obs::Observation)
 
-    flux = mass_to_flux(particle, obs.redshift_coef, obs.disc_mass2light, obs.bulge_mass2light)
+    flux = mass_to_flux(particle, obs.redshift_coef, obs.mass2light)
     return flux
 end
 
@@ -88,17 +88,29 @@ end
 
 Converted particle mass to a flux value in jansky using the provided mass to light ratio.
 """
-function mass_to_flux(particle::Galaxy_lum, redshift_coef::Float64, disc_mass2light::Real, bulge_mass2light::Real)
+function mass_to_flux(particle::Galaxy_lum, redshift_coef::Float64, mass2light::Tuple{Real, Real})
 
     mass = particle.mass
 
-    if particle.type == "Disc"
-        lum = mass * 1e10 / disc_mass2light
-    elseif particle.type == "Bulge"    #Convert particle mass to luminosity
-        lum = mass * 1e10 / bulge_mass2light
+    if particle.type == "Disc"               #Convert particle mass to luminosity
+        lum = mass * 1e10 / mass2light[1]
+    elseif particle.type == "Bulge"
+        lum = mass * 1e10 / mass2light[2]
     else
-        error("Particle type is not supported. Galaxy_lum particles should be either bulge or disk.")
+        error("Mass-to-light ratio is specified as a tuple with two distinct values but this particle is neither a disk nor a bulge particle.
+                Use a ::Real mass-to-light ratio argument when constructing your Environment for use with non-SSP star particles.")
     end
+
+    flux = lum * redshift_coef * ProSpect.cgs_to_jansky
+
+    return flux
+end
+
+function mass_to_flux(particle::Galaxy_lum, redshift_coef::Float64, mass2light::Real)
+
+    mass = particle.mass
+
+    lum = mass * 1e10 / mass2light    #Convert particle mass to luminosity
 
     flux = lum * redshift_coef * ProSpect.cgs_to_jansky
 

@@ -11,8 +11,7 @@ using SimSpin, Test, Random
     m2l = 1.
     environment = Environment(z, inc_deg, r200)
 
-    @test environment.disc_mass2light == m2l
-    @test environment.bulge_mass2light == m2l
+    @test environment.mass2light == m2l
     @test isnothing(environment.blur)
 
     environment = Environment(z, inc_deg, r200, gauss_blur)
@@ -22,27 +21,24 @@ using SimSpin, Test, Random
     @test !isnothing(environment.blur)
 
     z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
-    m2l = 1.3;
+    m2l = 1.3
     environment = Environment(z, inc_deg, r200, m2l)
 
-    @test environment.disc_mass2light == m2l
-    @test environment.bulge_mass2light == m2l
+    @test environment.mass2light == m2l
 
     z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
     m2l = (1.3, 2.5)
     environment = Environment(z, inc_deg, r200, m2l)
 
-    @test environment.disc_mass2light == m2l[1]
-    @test environment.bulge_mass2light == m2l[2]
+    @test environment.mass2light[1] == m2l[1]
+    @test environment.mass2light[2] == m2l[2]
 
     z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
     m2l = [(1.3, 2.5), (1., 1.)]
     environment = Environment(z, inc_deg, r200, m2l)
 
-    @test environment[1].disc_mass2light == m2l[1][1]
-    @test environment[1].bulge_mass2light == m2l[1][2]
-    @test environment[2].disc_mass2light == m2l[2][1]
-    @test environment[2].bulge_mass2light == m2l[2][2]
+    @test environment[1].mass2light == m2l[1]
+    @test environment[2].mass2light == m2l[2]
 
     zlength = rand(1:10)
     zmax = z * zlength
