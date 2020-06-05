@@ -50,12 +50,14 @@ using SimSpin, Test, Random
         filename = joinpath(dirname(pathof(SimSpin)), "..", "data", "SimSpin_SSP.hdf5")
         particles = sim_data(filename, ssp=true)
 
-        filt = rand(["r"; "g"])
-        tele = SAMI(filter=filt)
-
         z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200)
 
+        tele_no_filt = SAMI()
+        @test_throws Exception build_datacube(particles, tele_no_filt, envir)
+
+        filt = rand(["r"; "g"])
+        tele = SAMI(filter=filt)
         datacube, observe = build_datacube(particles, tele, envir)
 
         @test size(datacube) == (tele.sbin, tele.sbin, observe.vbin)
