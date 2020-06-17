@@ -39,6 +39,9 @@ module SimSpin
     include("celestial/celestial.jl")
     using .celestial
 
+    include("ProFit/ProFit.jl")
+    using .ProFit
+
     include("ProSpect/ProSpect.jl")
     using .ProSpect
 
