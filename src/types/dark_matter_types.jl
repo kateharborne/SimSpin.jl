@@ -1,3 +1,7 @@
+# Date created: 10/01/2020
+# Julia Conversion: Gerry Gralton
+# Original author: Katherine Harborne
+
 abstract type Dark_matter end
 
 """

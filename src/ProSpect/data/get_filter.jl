@@ -1,3 +1,7 @@
+# Date created: 2020
+# Julia Conversion: Gerry Gralton
+# Original author: Aaron Robotham
+
 using Interpolations
 using DelimitedFiles
 
