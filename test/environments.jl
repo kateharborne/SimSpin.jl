@@ -4,7 +4,7 @@
 using SimSpin, Test, Random
 
 @testset "environments" begin
-    gauss_blur=Gaussian_blur(sigma=1.)
+    gauss_blur=Gaussian_blur(σ=1.)
     moffat_blur=Moffat_blur(1.5, α=1.)
 
     z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
