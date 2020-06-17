@@ -1,4 +1,4 @@
-# Date created: 12/01/2019
+# Date created: 12/01/2020
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
@@ -29,7 +29,7 @@ function ifu_cube(flux_grid::Array{Float64, 3},
     Threads.@threads for index in 1:length(parts_in_cell) # for each cell in cube
 
         cell = parts_in_cell[index]
-        
+
         coord = [index % observe.sbin, index % (sbin2) ÷ observe.sbin + 1, index ÷ (sbin2) + 1]
         if(index % observe.sbin == 0 && index % (sbin2) == 0 )
             coord = [observe.sbin, observe.sbin, index ÷ (sbin2)]

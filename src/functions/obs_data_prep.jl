@@ -1,4 +1,4 @@
-# Date created: 10/01/2019
+# Date created: 10/01/2020
 # Julia Conversion: Gerry Gralton
 # Original author: Katherine Harborne
 
@@ -21,7 +21,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,
                         envir::Environment)
 
-    ap_size     = envir.ang_size * ifu.fov                        # diameter size of the telescope, kpc
+    ap_size     = envir.ang_size * ifu.fov                  # diameter size of the telescope, kpc
     sbinsize    = ap_size / ifu.sbin                        # spatial bin size (kpc per bin)
 
     set_observables!.(galaxy_data, envir.inc_deg)           #set each particles mutable struct `Observables` for the given observation inclination
