@@ -24,7 +24,11 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     ap_size     = envir.ang_size * ifu.fov                        # diameter size of the telescope, kpc
     sbinsize    = ap_size / ifu.sbin                        # spatial bin size (kpc per bin)
 
-    set_observables!.(galaxy_data, envir.inc_deg)     #set each particles mutable struct `Observables` for the given observation inclination
+    set_observables!.(galaxy_data, envir.inc_deg)           #set each particles mutable struct `Observables` for the given observation inclination
+
+    if !isnothing(envir.blur)
+        scale_lsf(envir.blur, envir.ang_size, sbinsize)     #Calculate scaled width of line-spread-function for blurring.
+    end
 
     deleteat!(galaxy_data, findall(part -> typeof(part) == Galaxy_dark, galaxy_data)) #remove all non-luminous/dark particles
     if(length(galaxy_data) == 0)
