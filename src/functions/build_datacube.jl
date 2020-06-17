@@ -30,7 +30,7 @@ function build_datacube(galaxy_data::Array{Galaxy_particle, 1},
     if isnothing(observe.blur)    #No spatial blurring
         return datacube, observe
     else                        #Blur image
-        blur_imgs = blur_cube(data_cube, observe)
+        blur_imgs = blur_cube(datacube, observe)
         return blur_imgs, observe
     end
 end
