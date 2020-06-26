@@ -114,9 +114,13 @@ struct Environment
                         inc_deg_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
                         r200_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
                         mass2light_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
-                        blur_array::Union{Blur, Array{Blur, 1}, AbstractRange{<:Real}})
+                        blur_array::Union{Blur, Array{<:Blur, 1}})
 
         envir_array = Environment[]
+
+        if typeof(blur_array) <: Blur
+            blur_array = [blur_array]
+        end
 
         for z in z_array
             lum_dist = celestial.cosdistLumDist(z, ref="Planck")
@@ -141,9 +145,13 @@ struct Environment
                         inc_deg_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
                         r200_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
                         mass2light_array::Union{Tuple{Real, Real}, Array{<:Tuple, 1}},
-                        blur_array::Union{Blur, Array{Blur, 1}, AbstractRange{<:Real}})
+                        blur_array::Union{Blur, Array{<:Blur, 1}})
 
         envir_array = Environment[]
+
+        if typeof(blur_array) <: Blur
+            blur_array = [blur_array]
+        end
         m2l_is_array = isa(mass2light_array, Array{<:Tuple, 1})
 
         for z in z_array
@@ -174,10 +182,13 @@ struct Environment
     function Environment(z_array::Union{Float64, Array{Float64, 1}, AbstractRange{Float64}},
                         inc_deg_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
                         r200_array::Union{Real, Array{<:Real, 1}, AbstractRange{<:Real}},
-                        blur_array::Union{Blur, Array{Blur, 1}})
+                        blur_array::Union{Blur, Array{<:Blur, 1}})
 
         envir_array = Environment[]
 
+        if typeof(blur_array) <: Blur
+            blur_array = [blur_array]
+        end
         mass2light = 1.
 
         for z in z_array
