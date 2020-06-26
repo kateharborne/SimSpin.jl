@@ -82,10 +82,14 @@ function sim_FITS(out_data::Array{Tuple{Array{Float64,3},Observation}, 1}; folde
         cube = tuple[1]
         obs = tuple[2]
 
-        if isnothing(obs.mass2light)
+        if isnothing(obs.mass2light) && isnothing(obs.blur)
             filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200)
-        else
+        elseif !isnothing(obs.mass2light) && isnothing(obs.blur)
             filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_M2L", obs.mass2light)
+        elseif isnothing(obs.mass2light) && !isnothing(obs.blur)
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_BLURFWHM", obs.blur.fwhm)
+        else
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_M2L", obs.mass2light, "_BLURFWHM", obs.blur.fwhm)
         end
 
         file = joinpath(folder, filename)
