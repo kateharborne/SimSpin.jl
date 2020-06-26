@@ -30,12 +30,11 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
         scale_lsf(envir.blur, envir.ang_size, sbinsize)     #Calculate scaled width of line-spread-function for blurring.
     end
 
-    deleteat!(galaxy_data, findall(part -> typeof(part) == Galaxy_dark, galaxy_data)) #remove all non-luminous/dark particles
-    if(length(galaxy_data) == 0)
+    filter!(x -> typeof(x) != Galaxy_dark, galaxy_data)     # Remove all non-luminous/dark particles
         error("There are no particles representing luminous matter in this simulation (i.e. no stars, bulge or disc particles).")
     end
 
-    deleteat!(galaxy_data, findall(part -> part.r >= envir.r200, galaxy_data))  # remove particles beyond r200
+    filter!(x -> x.r <= envir.r200, galaxy_data)            # Remove particles beyond r200
 
     if (ifu.ap_shape == "circular")                    # remove particles outside aperture
       galaxy_data  = circular_ap_cut(galaxy_data, ap_size)
