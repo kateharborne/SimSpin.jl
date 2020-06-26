@@ -12,7 +12,7 @@ module SimSpin
             flux_grid,
             ifu_cube,
             Gaussian_blur,
-            NFW,
+            Moffat_blur,
             IFU,
             SAMI,
             MaNGA,
