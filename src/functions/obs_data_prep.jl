@@ -21,22 +21,23 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,
                         envir::Environment)
 
-    ap_size     = envir.ang_size * ifu.fov                  # diameter size of the telescope, kpc
-    sbinsize    = ap_size / ifu.sbin                        # spatial bin size (kpc per bin)
+    ap_size     = envir.ang_size * ifu.fov                  # Diameter size of the telescope, kpc
+    sbinsize    = ap_size / ifu.sbin                        # Spatial bin size (kpc per bin)
 
-    set_observables!.(galaxy_data, envir.inc_deg)           #set each particles mutable struct `Observables` for the given observation inclination
+    set_observables!.(galaxy_data, envir.inc_deg)           # Set each particles mutable struct `Observables` for the given observation inclination
 
     if !isnothing(envir.blur)
-        scale_lsf(envir.blur, envir.ang_size, sbinsize)     #Calculate scaled width of line-spread-function for blurring.
+        scale_lsf(envir.blur, envir.ang_size, sbinsize)     # Calculate scaled width of line-spread-function for blurring.
     end
 
     filter!(x -> typeof(x) != Galaxy_dark, galaxy_data)     # Remove all non-luminous/dark particles
+    if(length(galaxy_data) == 0)                            # Check that there are still some particles left
         error("There are no particles representing luminous matter in this simulation (i.e. no stars, bulge or disc particles).")
     end
 
     filter!(x -> x.r <= envir.r200, galaxy_data)            # Remove particles beyond r200
 
-    if (ifu.ap_shape == "circular")                    # remove particles outside aperture
+    if (ifu.ap_shape == "circular")                         # Remove particles outside aperture
       galaxy_data  = circular_ap_cut(galaxy_data, ap_size)
 
     elseif (ifu.ap_shape == "square")
@@ -54,16 +55,16 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
 
     vbin::Int64 = ceil((max_vy_obs*2) / ifu.vbinsize)    # number of velocity bins
     vbin_range = vbin * ifu.vbinsize / 2
-    vseq = -vbin_range : ifu.vbinsize : vbin_range
+    vseq = -vbin_range : ifu.vbinsize : vbin_range      # Set up velocity bins
 
     sbin_range = ifu.sbin * sbinsize / 2
-    sseq = -sbin_range : sbinsize : sbin_range
+    sseq = -sbin_range : sbinsize : sbin_range          # Set up spatial bins
 
-    x_coord = searchsortedlast.(Ref(sseq), x)
-    y_coord = searchsortedlast.(Ref(sseq), z_obs)
-    z_coord = searchsortedlast.(Ref(vseq), vy_obs)
+    x_coord = searchsortedlast.(Ref(sseq), x)           # Find the bin in the x dimension that each particle sits in
+    y_coord = searchsortedlast.(Ref(sseq), z_obs)       # Find the bin in the y dimension that each particle sits in
+    z_coord = searchsortedlast.(Ref(vseq), vy_obs)      # Find the bin in the z dimension that each particle sits in
 
-    x_invalid = findall(x-> x == 0 || x == length(sseq), x_coord)   #find indexs for particles outside of seen range
+    x_invalid = findall(x-> x == 0 || x == length(sseq), x_coord)   # Find particles in bins outside of seen range
     y_invalid = findall(y->y==0 || y == length(sseq), y_coord)
     z_invalid = findall(z->z==0 || z == length(vseq), z_coord)
     invalid = sort(unique(vcat(x_invalid, y_invalid, z_invalid)))
