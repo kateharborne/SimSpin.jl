@@ -9,6 +9,7 @@ using SimSpin, Test, Random
 
     z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
     m2l = 1.
+    m2l_tup = (1.2, 1.5)
     environment = Environment(z, inc_deg, r200)
 
     @test environment.mass2light == m2l
@@ -19,6 +20,10 @@ using SimSpin, Test, Random
 
     environment = Environment(z, inc_deg, r200, m2l, gauss_blur)
     @test !isnothing(environment.blur)
+
+    environment = Environment(z, inc_deg, r200, m2l_tup, gauss_blur)
+    @test !isnothing(environment.blur)
+    @test length(environment.mass2light) == 2
 
     z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
     m2l = 1.3
