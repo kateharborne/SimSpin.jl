@@ -12,8 +12,6 @@ module SimSpin
             flux_grid,
             ifu_cube,
             Gaussian_blur,
-            Moffat_blur,
-            Hernquist,
             NFW,
             IFU,
             SAMI,
@@ -23,7 +21,6 @@ module SimSpin
             Environment
 
     include("types/blur_types.jl")
-    include("types/dark_matter_types.jl")
     include("types/environment_type.jl")
     include("types/particle_types.jl")
     include("types/Galaxy_particle.jl")

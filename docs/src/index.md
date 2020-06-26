@@ -117,12 +117,6 @@ Gaussian_blur
 Moffat_blur
 ```
 
-### Dark Matter Constructors
-```@docs
-Hernquist
-NFW
-```
-
 ## Multi-Threading
 
 The SimSpin package has multi-threading enabled in some critical functions.
