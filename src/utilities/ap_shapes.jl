@@ -33,8 +33,9 @@ Returns all particles that are within circular aperature of radius ap_size.
 """
 function circular_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, ap_size::Float64)
 
-    trimmed = galaxy_data[findall(part -> part.obs.r_obs < ap_size/2, galaxy_data)]
-    return trimmed
+    rad = ap_size/2
+    filter!(part -> part.obs.r_obs < ap_size/2, galaxy_data)
+    return galaxy_data
 end
 
 """
@@ -58,10 +59,8 @@ Returns all particles that are within square aperature
 function square_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
     threshold = sbin * sbinsize / 2
 
-    trimmed = galaxy_data[findall(part -> abs(part.x) < threshold, galaxy_data)]
-    trimmed = trimmed[findall(part -> (abs(part.obs.z_obs)) < threshold, trimmed)]
-    return trimmed
-    #TODO: check if can be one line
+    filter!(part -> abs(part.x) < theshold && abs(part.obs.z_obs) < threshold, galaxy_data)
+    return galaxy_data
 end
 
 
@@ -102,14 +101,19 @@ function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, s
     quart = sbin / 4
     qsqrt3 = quart * sqrt(3)
     threshold = sbin * sbinsize
+    half_theshold = threshold / 2
+    vert_threshold = threshold * sqrt(3) / 4
 
-    trimmed = galaxy_data[findall(part -> abs(part.x) < threshold / 2, galaxy_data)]
-    trimmed = trimmed[findall(part -> abs(part.obs.z_obs) < threshold * sqrt(3) / 4, trimmed)]
+    abs_z_obs = abs.(getfield.(getfield.(trimmed, :obs), :z_obs))
+    abs_x = abs.(getfield.(trimmed, :x))
 
-    z_obs = getfield.(getfield.(trimmed, :obs), :z_obs)
-    x = getfield.(trimmed, :x)
+    indexs = abs_x .< half_threshold && abs_z_obs .< vert_threshold
 
-    dotprod = @. (2 * quart * sbinsize * qsqrt3 * sbinsize) - (quart * sbinsize * abs(z_obs)) - (qsqrt3 * sbinsize * abs(x))
+    trimmed = galaxy_data[indexs]
+    trimmed_abs_x = abs_x[indexs]
+    trimmed_abs_z_obs = abs_z_obs[indexs]
+
+    dotprod = @. (2 * quart * sbinsize * qsqrt3 * sbinsize) - (quart * sbinsize * trimmed_abs_z_obs) - (qsqrt3 * sbinsize * trimmed_abs_x)
 
     trimmed = trimmed[dotprod .>= 0]
 
