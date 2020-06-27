@@ -46,7 +46,7 @@ using SimSpin, Test, Random
     @test environment[2].mass2light == m2l_arr_tup[2]
 
     z = rand(0.1:0.1:1.2)
-    zlength = rand(2:10)
+    zlength = rand(2.:10.)
     zmax = z * zlength
     inc_deg_arr = [30; 45; 60]
 
