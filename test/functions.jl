@@ -123,4 +123,20 @@ using SimSpin, Test, Random
 
         @test size(observe.vseq)[1]== observe.vbin + 1        #number of velocity bins matches bounds
     end
+
+    @testset "build_datacube_with_environment_array" begin
+        particles = sim_data()
+        tele = IFU(12,"hexagonal", 2300, 2.63, 0.2, 1.25)
+
+        z = [rand(), rand(), rand()]; inc_deg = rand(0:90); r200 = rand(100:200); m2l = (1.2, 0.8);
+        blur = [Moffat_blur(rand() *2 + 3, fwhm=rand() + 1),
+                Moffat_blur(rand() *2 + 3, α=rand() + 1), 
+                Gaussian_blur(σ = rand() * 3)];
+        envirs = Environment(z, inc_deg, r200, m2l, blur)
+        @test length(envirs) == length(z) * length(blur)
+
+        data_array = build_datacube(particles, tele, envirs)
+
+        @test length(data_array) == length(envirs)
+    end
 end
