@@ -3,8 +3,12 @@
 
 using SimSpin, Test, Random
 
-include("telescopes.jl")
+# Constructors
+include("blurs.jl")
 include("environments.jl")
+include("telescopes.jl")
+
+# User functions
 include("functions.jl")
 include("functions_ssp.jl")
 
