@@ -13,7 +13,7 @@ end
 
 Create a struct containing seeing information.
 
-Keyword arguments (at least one must be specified, sigma is prioritised):\n
+Keyword arguments (only one may be specified):\n
     sigma       The standard deviation of the point spread function
     fwhm        The full width half max of the point spread function
 """
@@ -22,17 +22,20 @@ struct Gaussian_blur <: Blur
     fwhm::Float64
     scaled_fwhm::Scaled_lsf
 
-    function Gaussian_blur(;σ::Float64=-1.,
-                            fwhm::Float64=-1.)
+    function Gaussian_blur(;σ::Float64 = -1.,
+                            fwhm::Float64 = -1.)
 
-        if σ < 0 && fwhm < 0
+        if σ <= 0 && fwhm <= 0
             error("Please specify standard deviation, σ, or full width half max, fwhm, as a positive float.")
-        elseif σ > 0
+        elseif σ > 0 && fwhm > 0 && !isapprox(σ * 2.355, fwhm, rtol=0.01)
+            error("Please specify either standard deviation, σ, or full width half max, fwhm, not both.")
+        elseif fwhm > 0 && σ <= 0
+            σ = fwhm / (2 * sqrt(2 * log(2)))
+            new(σ, fwhm, Scaled_lsf(0.))
+        elseif σ > 0 && fwhm <= 0
             fwhm = σ * 2 * sqrt(2 * log(2))
             new(σ, fwhm, Scaled_lsf(0.))
-        else
-            σ = fwhm / 2 * sqrt(2 * log(2))
-            new(σ, fwhm, Scaled_lsf(0.))
+
         end
     end
 end
@@ -57,17 +60,19 @@ struct Moffat_blur <: Blur
     scaled_α::Scaled_lsf
 
     function Moffat_blur(β::Float64;
-                            α::Union{Float64, Nothing} = nothing,
-                            fwhm::Union{Float64, Nothing} = nothing)
+                            α::Float64 = -1.,
+                            fwhm::Float64 = -1.)
 
-        if isnothing(α) && !isnothing(fwhm)
+        if α <= 0 && fwhm <= 0
+            error("Please specify either core width, α, or full width half max, fwhm, as a positive float.")
+        elseif α > 0 && fwhm > 0 && !isapprox(fwhm, α * 2 * sqrt(2^(1/β) - 1), rtol = 0.01)
+            error("Please specify either core width, α, or full width half max, fwhm, not both.")
+        elseif α <= 0 && fwhm > 0
             α = fwhm / (2 * sqrt(2^(1/β) - 1))
             new(β, α, fwhm, Scaled_lsf(0.))
-        elseif !isnothing(α)
+        elseif α > 0
             fwhm = α * 2 * sqrt(2^(1/β) - 1)
             new(β, α, fwhm, Scaled_lsf(0.))
-        else
-            error("Please specify either core width, α, or full width half max, fwhm.")
         end
     end
 end
