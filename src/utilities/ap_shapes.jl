@@ -59,7 +59,7 @@ Returns all particles that are within square aperature
 function square_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
     threshold = sbin * sbinsize / 2
 
-    filter!(part -> abs(part.x) < theshold && abs(part.obs.z_obs) < threshold, galaxy_data)
+    filter!(part -> abs(part.x) < threshold && abs(part.obs.z_obs) < threshold, galaxy_data)
     return galaxy_data
 end
 
@@ -101,13 +101,13 @@ function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, s
     quart = sbin / 4
     qsqrt3 = quart * sqrt(3)
     threshold = sbin * sbinsize
-    half_theshold = threshold / 2
+    half_threshold = threshold / 2
     vert_threshold = threshold * sqrt(3) / 4
 
-    abs_z_obs = abs.(getfield.(getfield.(trimmed, :obs), :z_obs))
-    abs_x = abs.(getfield.(trimmed, :x))
+    abs_z_obs = abs.(getfield.(getfield.(galaxy_data, :obs), :z_obs))
+    abs_x = abs.(getfield.(galaxy_data, :x))
 
-    indexs = abs_x .< half_threshold && abs_z_obs .< vert_threshold
+    indexs = findall(ind -> abs_x[ind] < half_threshold && abs_z_obs[ind] .< vert_threshold, 1:length(galaxy_data))
 
     trimmed = galaxy_data[indexs]
     trimmed_abs_x = abs_x[indexs]
@@ -116,6 +116,6 @@ function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, s
     dotprod = @. (2 * quart * sbinsize * qsqrt3 * sbinsize) - (quart * sbinsize * trimmed_abs_z_obs) - (qsqrt3 * sbinsize * trimmed_abs_x)
 
     trimmed = trimmed[dotprod .>= 0]
-
+    return trimmed
     #TODO: probably uncessary. just multiply parts_in_cell by ap_region
 end
