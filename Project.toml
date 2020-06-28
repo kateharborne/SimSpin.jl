@@ -1,7 +1,7 @@
 name = "SimSpin"
 uuid = "ec6baca6-10c1-11ea-19b5-f7da994b81a8"
 authors = ["Katherine Harborne <katherine.harborne@icrar.org>", "Gerry Gralton <gerrygralton@gmail.com>"]
-version = "1.1.0"
+version = "1.1.4"
 
 [deps]
 Blosc = "a74b3585-a348-5f62-a45c-50e91977d574"
