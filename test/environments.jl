@@ -47,7 +47,7 @@ using SimSpin, Test, Random
 
     z = rand(0.1:0.1:1.2)
     zlength = rand(2.:10.)
-    zmax = z * zlength
+    zmax = round(z * zlength, digits=2)
     inc_deg_arr = [30; 45; 60]
 
     environment_arr = Environment(z:z:zmax, inc_deg_arr, r200)
