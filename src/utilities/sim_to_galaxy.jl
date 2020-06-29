@@ -30,7 +30,7 @@ function sim_to_galaxy(sim_data::Array{Sim_particle, 1}; centre::Array{Float64, 
     return galaxy_data
 end
 
-function sim_to_galaxy(galaxy_data::Array{Galaxy_particle, 1})
+function sim_to_galaxy(galaxy_data::Array{Galaxy_particle, 1}; centre::Array{Float64, 1} = Float64[])
 
     @warn("This galaxy was already in the galaxy reference frame.")
     return galaxy_data
