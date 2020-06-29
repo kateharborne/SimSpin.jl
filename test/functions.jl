@@ -16,6 +16,32 @@ using SimSpin, Test, Random
         @test_throws ErrorException sim_data(ssp=true)
     end
 
+    @testset "sim_to_galaxy" begin
+        particles = sim_data()
+        particles_galaxy = sim_to_galaxy(particles)
+        @test particles_galaxy != particles
+
+        warning = (:warn, "This galaxy was already in the galaxy reference frame.")
+        @test_logs warning sim_to_galaxy(particles_galaxy)
+
+        centre = [(rand() + 1) * rand(-100.:10.:100),
+                    (rand() + 1) * rand(-100.:10.:100),
+                    (rand() + 1) * rand(-100.:10.:100)]
+        vel_centre = [(rand() + 1) * rand(-100.:10.:100),
+                        (rand() + 1) * rand(-100.:10.:100),
+                        (rand() + 1) * rand(-100.:10.:100)]
+        tot_centre = vcat(centre, vel_centre)
+        @test_logs warning sim_to_galaxy(particles_galaxy, centre=centre)
+        @test_logs warning sim_to_galaxy(particles_galaxy, centre=tot_centre)
+
+        particles_centre = sim_to_galaxy(particles, centre=centre)
+        @test particles_centre != particles_galaxy
+
+        particles_tot_centre = sim_to_galaxy(particles, centre=vel_centre)
+        @test particles_tot_centre != particles_galaxy
+        @test particles_tot_centre != particles_centre
+    end
+
     @testset "obs_data_prep" begin
         particles = sim_data()
         tele = SAMI()
@@ -130,7 +156,7 @@ using SimSpin, Test, Random
 
         z = [rand(), rand(), rand()]; inc_deg = rand(0:90); r200 = rand(100:200); m2l = (1.2, 0.8);
         blur = [Moffat_blur(rand() *2 + 3, fwhm=rand() + 1),
-                Moffat_blur(rand() *2 + 3, α=rand() + 1), 
+                Moffat_blur(rand() *2 + 3, α=rand() + 1),
                 Gaussian_blur(σ = rand() * 3)];
         envirs = Environment(z, inc_deg, r200, m2l, blur)
         @test length(envirs) == length(z) * length(blur)
