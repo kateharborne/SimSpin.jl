@@ -40,6 +40,8 @@ using SimSpin, Test, Random
         particles_tot_centre = sim_to_galaxy(particles, centre=vel_centre)
         @test particles_tot_centre != particles_galaxy
         @test particles_tot_centre != particles_centre
+
+        @test_throws ErrorException sim_to_galaxy(particles, centre=vel_centre[1:end-1])
     end
 
     @testset "obs_data_prep" begin
