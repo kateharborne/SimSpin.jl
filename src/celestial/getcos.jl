@@ -23,8 +23,7 @@ function getcos(ref::String)
     row = findall(x -> x == ref, data[1][:,1])
 
     if length(row) == 0
-        println(ref)
-        error("Reference is not supported")
+        error(string(ref, "reference is not supported."))
     end
 
     return data[1][row,:]  #Ref, H0, omegaM, omegaL, omegaR, sigma8
