@@ -28,6 +28,11 @@ using SimSpin, Test, Random
         @test sum(tele.ap_region) == 1140.
     end
 
+    @testset "Unsupported IFUs" begin
+        @test_throws ErrorException IFU(8,"hexagonal", 7000, 2.63, 0.2, 1.25, "non_standard")
+        @test_throws ErrorException IFU(8,"non_standard", 7000, 2.63, 0.2, 1.25, "r")
+    end
+
     @testset "SAMI" begin
         tele = SAMI()
 
