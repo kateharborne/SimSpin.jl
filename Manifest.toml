@@ -59,9 +59,9 @@ version = "0.2.1"
 
 [[ColorTypes]]
 deps = ["FixedPointNumbers", "Random"]
-git-tree-sha1 = "27eb374570946a02aa184ef5b403dabaa7380693"
+git-tree-sha1 = "cd19496d8943326b752d1712afd6ab79c7514d28"
 uuid = "3da002f7-5984-5a60-b8a6-cbb66c0b333f"
-version = "0.10.4"
+version = "0.10.5"
 
 [[ColorVectorSpace]]
 deps = ["ColorTypes", "Colors", "FixedPointNumbers", "LinearAlgebra", "SpecialFunctions", "Statistics", "StatsBase"]
@@ -71,9 +71,9 @@ version = "0.8.5"
 
 [[Colors]]
 deps = ["ColorTypes", "FixedPointNumbers", "InteractiveUtils", "Reexport"]
-git-tree-sha1 = "1e9bba7984e78aa8cdeea7f9f7cc984ad4e4b1c7"
+git-tree-sha1 = "5639e44833cfcf78c6a73fbceb4da75611d312cd"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
-version = "0.12.2"
+version = "0.12.3"
 
 [[Combinatorics]]
 git-tree-sha1 = "08c8b6831dc00bfea825826be0bc8336fc369860"
@@ -139,9 +139,9 @@ version = "0.8.2"
 
 [[Documenter]]
 deps = ["Base64", "Dates", "DocStringExtensions", "InteractiveUtils", "JSON", "LibGit2", "Logging", "Markdown", "REPL", "Test", "Unicode"]
-git-tree-sha1 = "395fa1554c69735802bba37d9e7d9586fd44326c"
+git-tree-sha1 = "f3464968c65fc78846dad1c038c474a2c39bbb23"
 uuid = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-version = "0.24.11"
+version = "0.25.0"
 
 [[EllipsisNotation]]
 git-tree-sha1 = "65dad386e877850e6fce4fc77f60fe75a468ce9d"
