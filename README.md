@@ -26,8 +26,7 @@ Once the package has been added leave the REPL's Pkg mode by pressing `backspace
 After pre-compilation all user exported functions should be available in your Julia REPL.
 
 ## SimSpin
-
-SimSpin - A package for the kinematic analysis of galaxy simulations
+#### A package for the kinematic analysis of galaxy simulations
 
 The purpose of the Simspin package is to take a galaxy simulation and measure the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package from which "observables" can be measured. Specifically, the observable spin parameter, &#955;<sub>R</sub>. This package is fully documented and currently undergoing testing.
 
