@@ -168,9 +168,9 @@ version = "3.3.9+5"
 
 [[FITSIO]]
 deps = ["BinaryProvider", "Libdl", "Printf"]
-git-tree-sha1 = "6624bd0cdd03aa82df34d3eac56ab77ff696472e"
+git-tree-sha1 = "20f5bc5ecb87c26dbc85473ef7ba0e96ec5428e3"
 uuid = "525bcba6-941b-5504-bd06-fd0dc1a4d2eb"
-version = "0.14.0"
+version = "0.15.0"
 
 [[FillArrays]]
 deps = ["LinearAlgebra", "Random", "SparseArrays"]
@@ -380,9 +380,9 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[QuadGK]]
 deps = ["DataStructures", "LinearAlgebra"]
-git-tree-sha1 = "dc84e810393cfc6294248c9032a9cdacc14a3db4"
+git-tree-sha1 = "0ab8a09d4478ebeb99a706ecbf8634a65077ccdc"
 uuid = "1fd47b50-473d-5c70-9696-f719f8f3bcdc"
-version = "2.3.1"
+version = "2.4.0"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets"]
