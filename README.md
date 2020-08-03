@@ -4,7 +4,7 @@
 
 This is repository for the pure Julia implementation of [Katherine Harborne's](https://github.com/kateharborne) astronomy package, SimSpin.
 
-Kate's original R implementation GitHub repo can be found [here](https://github.com/kateharborne/SimSpin).
+The GitHub repo for Kate's original R implementation can be found [here](https://github.com/kateharborne/SimSpin).
 
 ## Installation
 
@@ -14,7 +14,7 @@ Once Julia is running successfully this package can be installed with the Julia 
 From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
 
 ```
-pkg> add https://github.com/kateharborne/SimSpin.jl
+pkg> add SimSpin.jl
 ```
 
 Once the package has been added leave the REPL's Pkg mode by pressing `backspace` and run:
@@ -28,7 +28,7 @@ After pre-compilation all user exported functions should be available in your Ju
 ## SimSpin
 #### A package for the kinematic analysis of galaxy simulations
 
-The purpose of the Simspin package is to take a galaxy simulation and measure the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package from which "observables" can be measured. This package is fully documented, published with the Astronomical Society of Australia and registered on the Julia Registry.
+The purpose of the SimSpin package is to take a galaxy simulation and measure the kinematics of that model as if it had been observed using an IFU. A kinematic data cube can be produced using the functions in this package from which "observables" can be measured. This package is fully documented, published with the Astronomical Society of Australia and registered on the Julia Registry.
 
 By varying the effects of observational seeing, the measurement radius, projected inclination, projected distance and other telescope parameters we can begin to understand some of the inherent effects and limitations of real-world galaxy observations.
 
