@@ -85,13 +85,13 @@ function sim_FITS(out_data::Array{Tuple{Array{Float64,3},Observation}, 1}; folde
         obs = tuple[2]
 
         if isnothing(obs.mass2light) && isnothing(obs.blur)
-            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200)
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R", obs.r200)
         elseif !isnothing(obs.mass2light) && isnothing(obs.blur)
-            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_M2L", obs.mass2light)
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R", obs.r200, "_M2L", obs.mass2light)
         elseif isnothing(obs.mass2light) && !isnothing(obs.blur)
-            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_BLURFWHM", obs.blur.fwhm)
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R", obs.r200, "_BLURFWHM", obs.blur.fwhm)
         else
-            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R200", obs.r200, "_M2L", obs.mass2light, "_BLURFWHM", obs.blur.fwhm)
+            filename = string(file_prefix, "_z", obs.z, "_INC", obs.inc_deg, "_R", obs.r200, "_M2L", obs.mass2light, "_BLURFWHM", obs.blur.fwhm)
         end
 
         file = joinpath(folder, filename)
