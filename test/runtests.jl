@@ -11,5 +11,6 @@ include("telescopes.jl")
 # User functions
 include("functions.jl")
 include("functions_ssp.jl")
+include("output.jl")
 
 nothing
