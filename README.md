@@ -14,7 +14,7 @@ Once Julia is running successfully this package can be installed with the Julia 
 From the Julia REPL, type `]` to enter the Pkg REPL mode and run:
 
 ```
-pkg> add SimSpin.jl
+pkg> add SimSpin
 ```
 
 Once the package has been added leave the REPL's Pkg mode by pressing `backspace` and run:
