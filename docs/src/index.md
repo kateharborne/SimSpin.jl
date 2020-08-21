@@ -120,15 +120,10 @@ Moffat_blur
 ## Multi-Threading
 
 The SimSpin package has multi-threading enabled in some critical functions.
-To use SimSpin with `x` threads (where x is the integer number of threads desired) you must call
-
-```
-export JULIA_NUM_THREADS=x
-```
-in a Terminal before the Julia REPL is started. This environment variable defaults to 1 if not set before the session has begun.
+To use SimSpin with more than one thread the only thing you need to do is start Julia with the desired number of threads. Instructions on how to do this can be found [here](https://docs.julialang.org/en/v1/manual/multi-threading/#Starting-Julia-with-multiple-threads-1).
 
 !!! warning
-    Do not multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many threads as available.
+    Do not manually multithread any SimSpin functions as a user. Each observation is already multithreaded and will run on as many threads as available.
 
 ## Data Import
 
