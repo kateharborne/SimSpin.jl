@@ -32,7 +32,7 @@ function sim_data(filename::String;
                 "PartType4" => "Star")
 
     h5open(filename, "r") do galaxy_file
-        ppart = names(galaxy_file)
+        ppart = keys(galaxy_file)
 
         if(isempty(ptype)) ptype = ppart
         else ptype = string.("PartType", ptype)
@@ -75,14 +75,14 @@ function sim_data(filename::String;
                         push!(sim_data, particle)
                     end
 
-                    if type == "PartType4" && length(names(galaxy_file[type])) > 7
+                    if type == "PartType4" && length(keys(galaxy_file[type])) > 7
                         @warn("SSP data is available for Star particles in this simulation file but has not been read in. If spectra is desired set ssp=true.")
                     end
 
-                elseif(ssp && length(names(galaxy_file[type])) > 7)
-                    if any(isequal.(names(galaxy_file[type]), "Age"))
+                elseif(ssp && length(keys(galaxy_file[type])) > 7)
+                    if any(isequal.(keys(galaxy_file[type]), "Age"))
                         age_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Age")])
-                    elseif any(isequal.(names(galaxy_file[type]), "StellarFormationTime"))
+                    elseif any(isequal.(keys(galaxy_file[type]), "StellarFormationTime"))
                         sft::Array{Float64, 1} = read(galaxy_file[string(type, "/StellarFormationTime")])
                         z_sft = ((1 ./ sft) .- 1)
                         age_arr = celestial.cosdistTravelTime.(z_sft)     #convert stellar formation time to particle age
@@ -92,7 +92,7 @@ function sim_data(filename::String;
 
                     met_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/Metallicity")])
 
-                    if any(isequal.(names(galaxy_file[type]), "InitialMass"))
+                    if any(isequal.(keys(galaxy_file[type]), "InitialMass"))
                         init_mass_arr::Array{Float64, 1} = read(galaxy_file[string(type, "/InitialMass")])
                     else
                         init_mass_arr = zeros(Float64, length(x_arr))
@@ -111,7 +111,7 @@ function sim_data(filename::String;
                         push!(sim_data, particle)
                     end
 
-                elseif(ssp && length(names(galaxy_file[type])) <= 7)
+                elseif(ssp && length(keys(galaxy_file[type])) <= 7)
                     error("SSP requested, but no Age/Metallicity information contained within supplied file, ", filename, ". \n",
                             "Please set SSP=false, or provide additional particle information.")
 
