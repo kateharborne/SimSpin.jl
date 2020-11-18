@@ -47,6 +47,8 @@ function sersic_construct(nser::Real, re::Real, bn::Real)
 end
 
 function sersic_scale(nser::Real, re::Real, mag::Real, bn::Real)
+    #TODO: remove SpecialFunctions dependency
+    
     lumtot = re^2 * 2 * π * nser *(exp(bn)/(bn^(2*nser)))*SpecialFunctions.gamma(2*nser)
     magtot = -2.5 * log10(lumtot)
     factor = 1/(10^(0.4 * (mag - magtot)))
