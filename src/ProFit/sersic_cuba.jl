@@ -15,8 +15,8 @@ Integrates a sersic function over each pixel.
 """
 function sersic_cuba(nser::Real, re::Real, mag::Real, psf_dim::Int64)
 
-    gamma = Gamma(nser * 2)
-    bn  = quantile(gamma, 0.5)
+    gamma_dist = Distributions.Gamma(nser * 2)
+    bn  = quantile(gamma_dist, 0.5)
 
     ind::Int64 = floor(psf_dim/2)
     kernel = zeros(Float64, psf_dim, psf_dim)
@@ -47,7 +47,9 @@ function sersic_construct(nser::Real, re::Real, bn::Real)
 end
 
 function sersic_scale(nser::Real, re::Real, mag::Real, bn::Real)
-    lumtot = re^2 * 2 * π * nser *(exp(bn)/(bn^(2*nser)))*gamma(2*nser)
+    #TODO: remove SpecialFunctions dependency
+    
+    lumtot = re^2 * 2 * π * nser *(exp(bn)/(bn^(2*nser)))*SpecialFunctions.gamma(2*nser)
     magtot = -2.5 * log10(lumtot)
     factor = 1/(10^(0.4 * (mag - magtot)))
     return factor
