@@ -35,7 +35,6 @@ function galaxy_orient(sim_data::Array{Sim_particle, 1}, centre::Array{Float64, 
 
     rot_mat = I + v_x + (1/(1+c)) * (v_x * v_x) # rotation matrix via Rodrigues Rotation Formula:
                                                 # wikipedia.org/wiki/Rodrigues'_rotation_formula
-    println(rot_mat)
     return rot_mat
 end
 
