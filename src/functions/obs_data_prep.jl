@@ -37,31 +37,28 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
 
     filter!(x -> x.r <= envir.r200, galaxy_data)            # Remove particles beyond r200
 
-    if (ifu.ap_shape == "circular")                         # Remove particles outside aperture
-      galaxy_data  = circular_ap_cut(galaxy_data, ap_size)
-
-    elseif (ifu.ap_shape == "square")
-        galaxy_data = square_ap_cut(galaxy_data, ifu.sbin, sbinsize)
-
-    elseif (ifu.ap_shape == "hexagonal")
-        galaxy_data = hexagonal_ap_cut(galaxy_data, ifu.sbin, sbinsize)
-    end
-
     x = getfield.(galaxy_data, :x)
     z_obs = getfield.(getfield.(galaxy_data, :obs), :z_obs)
+
+    sbin_range = ifu.sbin * sbinsize / 2
+    sseq = -sbin_range : sbinsize : sbin_range              # Set up spatial bins
+
+    x_coord = searchsortedlast.(Ref(sseq), x)               # Find the bin in the x dimension that each particle sits in
+    y_coord = searchsortedlast.(Ref(sseq), z_obs)           # Find the bin in the y dimension that each particle sits in
+                                                            # Remove particles outside aperture
+    ap_valid = findall(in.(CartesianIndex.(x_coord, y_coord), Ref(findall(!iszero, ifu.ap_region))))
+    galaxy_data = galaxy_data[ap_valid]
+    x_coord = x_coord[ap_valid]
+    y_coord = y_coord[ap_valid]
+
     vy_obs = getfield.(getfield.(galaxy_data, :obs), :vy_obs)
-
     max_vy_obs = maximum(abs.(vy_obs))
-
     vbin::Int64 = ceil((max_vy_obs*2) / ifu.vbinsize)    # number of velocity bins
+    if vbin <= 2; vbin = 3; end
+
     vbin_range = vbin * ifu.vbinsize / 2
     vseq = -vbin_range : ifu.vbinsize : vbin_range      # Set up velocity bins
 
-    sbin_range = ifu.sbin * sbinsize / 2
-    sseq = -sbin_range : sbinsize : sbin_range          # Set up spatial bins
-
-    x_coord = searchsortedlast.(Ref(sseq), x)           # Find the bin in the x dimension that each particle sits in
-    y_coord = searchsortedlast.(Ref(sseq), z_obs)       # Find the bin in the y dimension that each particle sits in
     z_coord = searchsortedlast.(Ref(vseq), vy_obs)      # Find the bin in the z dimension that each particle sits in
 
     x_invalid = findall(x-> x == 0 || x == length(sseq), x_coord)   # Find particles in bins outside of seen range
