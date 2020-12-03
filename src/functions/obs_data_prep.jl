@@ -21,6 +21,13 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
                         ifu::Telescope,
                         envir::Environment)
 
+    filter!(x -> typeof(x) != Galaxy_dark, galaxy_data)     # Remove all non-luminous/dark particles
+    filter!(x -> x.r <= envir.r200, galaxy_data)            # Remove particles beyond r200
+
+    if(length(galaxy_data) == 0)                            # Check that there are still some particles left
+        error("There are no particles representing luminous matter in this simulation (i.e. no stars, bulge or disc particles).")
+    end
+
     ap_size     = envir.ang_size * ifu.fov                  # Diameter size of the telescope, kpc
     sbinsize    = ap_size / ifu.sbin                        # Spatial bin size (kpc per bin)
 
@@ -29,13 +36,6 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     if !isnothing(envir.blur)
         scale_lsf(envir.blur, envir.ang_size, sbinsize)     # Calculate scaled width of line-spread-function for blurring.
     end
-
-    filter!(x -> typeof(x) != Galaxy_dark, galaxy_data)     # Remove all non-luminous/dark particles
-    if(length(galaxy_data) == 0)                            # Check that there are still some particles left
-        error("There are no particles representing luminous matter in this simulation (i.e. no stars, bulge or disc particles).")
-    end
-
-    filter!(x -> x.r <= envir.r200, galaxy_data)            # Remove particles beyond r200
 
     x = getfield.(galaxy_data, :x)
     z_obs = getfield.(getfield.(galaxy_data, :obs), :z_obs)
