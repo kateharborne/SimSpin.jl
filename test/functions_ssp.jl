@@ -28,7 +28,7 @@ using SimSpin, Test, Random
         envir = Environment(z, inc_deg, r200)
 
         particles = sim_data(filename, ptype=[0,1], ssp=true)
-        @test_throws ArgumentError obs_data_prep(particles, tele, envir)
+        @test_throws ErrorException obs_data_prep(particles, tele, envir)
 
         particles = sim_data(filename, ssp=true)
         galaxy_data, parts_in_cell, observe = obs_data_prep(particles, tele, envir)
