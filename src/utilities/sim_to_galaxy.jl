@@ -13,6 +13,10 @@ function sim_to_galaxy(sim_data::Array{Sim_particle, 1}; centre::Array{Float64, 
     galaxy_data = Array{Galaxy_particle, 1}(undef, length(sim_data))
 
     lum_data = sim_data[findall(x -> typeof(x) != Sim_dark, sim_data)]   #get all luminous particles
+    if(length(lum_data) == 0)                            # Check that there are still some particles left
+        error("There are no particles representing luminous matter in this simulation (i.e. no stars, bulge or disc particles).")
+    end
+
     if isempty(centre)
         centre = galaxy_centre(lum_data)                    #use luminous particles only to find centre
     elseif length(centre) == 3
