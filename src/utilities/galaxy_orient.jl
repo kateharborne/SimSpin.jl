@@ -28,13 +28,12 @@ function galaxy_orient(sim_data::Array{Sim_particle, 1}, centre::Array{Float64, 
     c = J_norm[3]                   # cos(angle)
     s = sqrt(sum(v.^2))             # sin(angle)
 
-    id = I(3)
-    v_x =  [0. v[3] -v[2];          # skew-symmetric cross product
-            -v[3] 0. v[1];
-            v[2] -v[1] 0.]
+    v_x =  [0. -v[3] v[2];          # skew-symmetric cross product
+            v[3] 0. -v[1];
+            -v[2] v[1] 0.]
 
-    rot_mat = I + v_x + (1/(1+c)) * (v_x * v_x) # rotation matrix via Rodrigues Rotation Formula:
-                                                # wikipedia.org/wiki/Rodrigues'_rotation_formula
+    rot_mat = I(3) + v_x + (1/(1+c)) * (v_x * v_x) # rotation matrix via Rodrigues Rotation Formula:
+    println(rot_mat)                                            # wikipedia.org/wiki/Rodrigues'_rotation_formula
     return rot_mat
 end
 
