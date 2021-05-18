@@ -1,6 +1,6 @@
 # SimSpin.jl
 
-[![Build Status](https://travis-ci.com/kateharborne/SimSpin.jl.svg?branch=master)](https://travis-ci.com/kateharborne/SimSpin.jl) [![Coverage Status](https://coveralls.io/repos/github/kateharborne/SimSpin.jl/badge.svg?branch=master)](https://coveralls.io/github/kateharborne/SimSpin.jl?branch=master)
+[![Build Status](https://github.com/kateharborne/SimSpin.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/kateharborne/SimSpin.jl/actions) [![Coverage Status](https://coveralls.io/repos/github/kateharborne/SimSpin.jl/badge.svg?branch=master)](https://coveralls.io/github/kateharborne/SimSpin.jl?branch=master)
 
 This is repository for the pure Julia implementation of [Katherine Harborne's](https://github.com/kateharborne) astronomy package, SimSpin.
 
