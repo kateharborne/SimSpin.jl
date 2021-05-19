@@ -1,6 +1,6 @@
 name = "SimSpin"
 uuid = "ec6baca6-10c1-11ea-19b5-f7da994b81a8"
-authors = ["Katherine Harborne <katherine.harborne@icrar.org>", "Gerry Gralton <gerrygralton@gmail.com>"]
+authors = ["Katherine Harborne <katherine.harborne@icrar.org>", "Gerry Gralton <gerry.gralton@uwa.edu.au>"]
 version = "1.0.2"
 
 [deps]
@@ -20,7 +20,7 @@ SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
 
 [compat]
-Compat = "3.12.0"
+Compat = "3.33.0"
 Distributions = "0.23.4 - 0.24"
 Documenter = "0.24.11, 0.25"
 FITSIO = "0.14.0 - 0.16"
@@ -30,5 +30,5 @@ ImageFiltering = "0.6.13"
 Interpolations = "0.12.10 - 0.13"
 OffsetArrays = "1.1.0"
 QuadGK = "2.3.1"
-SpecialFunctions = "0.10.3 - 1.2"
-julia = "^1"
+SpecialFunctions = "1.0.0 - 1.4.0"
+julia = "1.4.0 - 1.6.1"
