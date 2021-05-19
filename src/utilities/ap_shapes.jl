@@ -27,18 +27,6 @@ function circular_ap(sbin::Int64)
 end
 
 """
-    circular_ap_cut(galaxy_data, ap_size)
-
-Returns all particles that are within circular aperature of radius ap_size.
-"""
-function circular_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, ap_size::Float64)
-
-    rad = ap_size/2
-    filter!(part -> part.obs.r_obs < ap_size/2, galaxy_data)
-    return galaxy_data
-end
-
-"""
     square_ap(sbin)
 
 Returns Array of size sbin * sbin
@@ -50,19 +38,6 @@ function square_ap(sbin::Int64)
     ap_region = ones(sbin, sbin)
     return ap_region
 end
-
-"""
-    square_ap_cut(galaxy_data, sbin, sbinsize)
-
-Returns all particles that are within square aperature
-"""
-function square_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
-    threshold = sbin * sbinsize / 2
-
-    filter!(part -> abs(part.x) < threshold && abs(part.obs.z_obs) < threshold, galaxy_data)
-    return galaxy_data
-end
-
 
 """
     hexagonal_ap(sbin)
@@ -89,33 +64,4 @@ function hexagonal_ap(sbin::Int64)
     ap_region[rr .>= 0] .= 1
 
     return ap_region
-end
-
-"""
-    hexagonal_ap_cut(galaxy_data, sbin, sbinsize)
-
-Returns all particles that are within hexagonal aperature
-"""
-function hexagonal_ap_cut(galaxy_data::Array{Galaxy_particle, 1}, sbin::Int64, sbinsize::Float64)
-
-    quart = sbin / 4
-    qsqrt3 = quart * sqrt(3)
-    threshold = sbin * sbinsize
-    half_threshold = threshold / 2
-    vert_threshold = threshold * sqrt(3) / 4
-
-    abs_z_obs = abs.(getfield.(getfield.(galaxy_data, :obs), :z_obs))
-    abs_x = abs.(getfield.(galaxy_data, :x))
-
-    indexs = findall(ind -> abs_x[ind] < half_threshold && abs_z_obs[ind] .< vert_threshold, 1:length(galaxy_data))
-
-    trimmed = galaxy_data[indexs]
-    trimmed_abs_x = abs_x[indexs]
-    trimmed_abs_z_obs = abs_z_obs[indexs]
-
-    dotprod = @. (2 * quart * sbinsize * qsqrt3 * sbinsize) - (quart * sbinsize * trimmed_abs_z_obs) - (qsqrt3 * sbinsize * trimmed_abs_x)
-
-    trimmed = trimmed[dotprod .>= 0]
-    return trimmed
-    #TODO: probably uncessary. just multiply parts_in_cell by ap_region
 end

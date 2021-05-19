@@ -20,7 +20,6 @@ using SimSpin, Test, Random
 
     @testset "obs_data_prep" begin
         filename = joinpath(dirname(pathof(SimSpin)), "..", "data", "SimSpin_SSP.hdf5")
-        particles = sim_data(filename, ssp=true)
 
         filt = rand(["r"; "g"])
         tele = SAMI(filter=filt)
@@ -28,10 +27,19 @@ using SimSpin, Test, Random
         z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200)
 
+        particles = sim_data(filename, ptype=[0,1], ssp=true)
+        @test_throws ErrorException sim_to_galaxy(particles)
+
+        particles = sim_data(filename, ssp=true)
+        galaxy_particles = sim_to_galaxy(particles)
+        particle = findfirst(x-> typeof(x) == SimSpin.Galaxy_dark, galaxy_particles)
+        # Check that no luminous particles triggers an error
+        @test_throws ErrorException obs_data_prep(SimSpin.Galaxy_particle[galaxy_particles[particle]], tele, envir)
+
         galaxy_data, parts_in_cell, observe = obs_data_prep(particles, tele, envir)
 
-        @test size(galaxy_data)[1]  == sum(first.(size.(parts_in_cell)))     #output particle array has same number of particles as datacube cells
-        @test size(parts_in_cell)[1]== tele.sbin * tele.sbin * observe.vbin   #number of cells in datacube
+        @test size(galaxy_data)[1]  == sum(first.(size.(parts_in_cell)))        # output particle array has same number of particles as datacube cells
+        @test size(parts_in_cell)[1]== tele.sbin * tele.sbin * observe.vbin     # number of cells in datacube
 
         @test observe.z             == envir.z
         @test observe.inc_deg       == envir.inc_deg
@@ -59,8 +67,8 @@ using SimSpin, Test, Random
 
         galaxy_data, parts_in_cell, observe = obs_data_prep(particles, tele, envir)
 
-        @test size(galaxy_data)[1]  == sum(first.(size.(parts_in_cell)))     #output particle array has same number of particles as datacube cells
-        @test size(parts_in_cell)[1]== tele.sbin * tele.sbin * observe.vbin   #number of cells in datacube
+        @test size(galaxy_data)[1]  == sum(first.(size.(parts_in_cell)))        # output particle array has same number of particles as datacube cells
+        @test size(parts_in_cell)[1]== tele.sbin * tele.sbin * observe.vbin     # number of cells in datacube
 
         @test observe.z             == envir.z
         @test observe.inc_deg       == envir.inc_deg
