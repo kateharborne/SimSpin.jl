@@ -34,7 +34,7 @@ function obs_data_prep(galaxy_data::Array{Galaxy_particle, 1},
     set_observables!.(galaxy_data, envir.inc_deg)           # Set each particles mutable struct `Observables` for the given observation inclination
 
     if !isnothing(envir.blur)
-        scale_lsf(envir.blur, envir.ang_size, sbinsize)     # Calculate scaled width of line-spread-function for blurring.
+        scale_lsf!(envir.blur, envir.ang_size, sbinsize)     # Calculate scaled width of line-spread-function for blurring.
     end
 
     x = getfield.(galaxy_data, :x)

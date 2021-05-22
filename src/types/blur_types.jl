@@ -77,10 +77,10 @@ struct Moffat_blur <: Blur
     end
 end
 
-function scale_lsf(blur::Gaussian_blur, ang_size::Float64, sbinsize::Float64)
+function scale_lsf!(blur::Gaussian_blur, ang_size::Float64, sbinsize::Float64)
     blur.scaled_fwhm.scaled_lsf = blur.fwhm * ang_size / sbinsize
 end
 
-function scale_lsf(blur::Moffat_blur, ang_size::Float64, sbinsize::Float64)
+function scale_lsf!(blur::Moffat_blur, ang_size::Float64, sbinsize::Float64)
     blur.scaled_α.scaled_lsf = blur.α * ang_size / sbinsize
 end
