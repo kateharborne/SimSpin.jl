@@ -45,30 +45,37 @@ using SimSpin, Test, Random
     @test environment[1].mass2light == m2l_arr_tup[1]
     @test environment[2].mass2light == m2l_arr_tup[2]
 
+    z = -0.1
+    @test_throws ErrorException Environment(z, inc_deg, r200)
+
     z = rand(0.1:0.1:1.2)
     zlength = rand(2.:10.)
     zmax = round(z * zlength, digits=2)
+    z_arr = z:z:zmax
+
     inc_deg_arr = [30; 45; 60]
 
-    environment_arr = Environment(z:z:zmax, inc_deg_arr, r200)
+    environment_arr = Environment(z_arr, inc_deg_arr, r200)
     @test length(environment_arr) == zlength * length(inc_deg_arr)
 
-    environment_arr_m2l= Environment(z:z:zmax, inc_deg_arr, r200, m2l_arr_tup)
+    environment_arr_m2l= Environment(z_arr, inc_deg_arr, r200, m2l_arr_tup)
     @test length(environment_arr_m2l) == 2 * length(environment_arr)
 
     m2l_arr = [1.5, 2.5, 1.]
-    environment_arr = Environment(z:z:zmax, inc_deg_arr, r200, m2l_arr, gauss_blur)
+    environment_arr = Environment(z_arr, inc_deg_arr, r200, m2l_arr, gauss_blur)
     @test length(environment_arr) == zlength * length(inc_deg_arr) * length(m2l_arr)
 
-    environment_arr = Environment(z:z:zmax, inc_deg_arr, r200, m2l_arr)
+    environment_arr = Environment(z_arr, inc_deg_arr, r200, m2l_arr)
     @test length(environment_arr) == zlength * length(inc_deg_arr) * length(m2l_arr)
 
-    environment_arr = Environment(z:z:zmax, inc_deg_arr, r200, m2l_arr_tup, gauss_blur)
+    environment_arr = Environment(z_arr, inc_deg_arr, r200, m2l_arr_tup, gauss_blur)
     @test length(environment_arr) == zlength * length(inc_deg_arr) * length(m2l_arr_tup)
 
     blur_array = [moffat_blur, gauss_blur]
-    environment_arr = Environment(z:z:zmax, inc_deg_arr, r200, blur_array)
+    environment_arr = Environment(z_arr, inc_deg_arr, r200, blur_array)
     @test length(environment_arr) == zlength * length(inc_deg_arr) * length(blur_array)
 
-
+    z_arr = collect(z_arr)
+    z_arr[2] = 0.
+    @test_throws ErrorException Environment(z_arr, inc_deg_arr, r200)
 end
