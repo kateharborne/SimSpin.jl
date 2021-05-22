@@ -24,7 +24,7 @@ using SimSpin, Test, Random
         filt = rand(["r"; "g"])
         tele = SAMI(filter=filt)
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200)
 
         particles = sim_data(filename, ptype=[0,1], ssp=true)
@@ -62,7 +62,7 @@ using SimSpin, Test, Random
         tele = IFU(8,"square", 7000, 2.63, 0.2, 1.25, filter)
         blur = Gaussian_blur(σ = rand() + 2)
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200, blur)
 
         galaxy_data, parts_in_cell, observe = obs_data_prep(particles, tele, envir)
@@ -87,7 +87,7 @@ using SimSpin, Test, Random
         filename = joinpath(dirname(pathof(SimSpin)), "..", "data", "SimSpin_SSP.hdf5")
         particles = sim_data(filename, ssp=true)
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200)
 
         tele_no_filt = SAMI()
@@ -123,7 +123,7 @@ using SimSpin, Test, Random
         filter = rand(["r"; "g"])
         tele = IFU(8,"hexagonal", 7000, 2.63, 0.2, 1.25, filter)
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200); m2l = (rand() + 1, rand() * 0.5 + 0.5);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200); m2l = (rand() + 1, rand() * 0.5 + 0.5);
         blur = Moffat_blur(rand() * 3 + 2, fwhm=rand() * 3 + 1);
         envir = Environment(z, inc_deg, r200, m2l, blur)
 
@@ -155,7 +155,7 @@ using SimSpin, Test, Random
         filter = rand(["r"; "g"])
         tele = IFU(12,"hexagonal", 2300, 2.63, 0.2, 1.25, filter)
 
-        z = [rand(), rand(), rand()]; inc_deg = rand(0:90); r200 = rand(100:200); m2l = (rand() * 0.2 + 0.4, rand() + 1);
+        z = [rand(), rand(), rand()] .+ 0.1; inc_deg = rand(0:90); r200 = rand(100:200); m2l = (rand() * 0.2 + 0.4, rand() + 1);
         blur = [Moffat_blur(rand() *2 + 3, fwhm=rand() + 1),
                 Moffat_blur(rand() *2 + 3, α=rand() + 1),
                 Gaussian_blur(σ = rand() * 3)];

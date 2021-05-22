@@ -8,7 +8,7 @@ using FITSIO
     particles = sim_data()
     tele = SAMI()
 
-    z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+    z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
     envir = Environment(z, inc_deg, r200)
 
     datacube, observe = build_datacube(particles, tele, envir)
@@ -26,7 +26,7 @@ using FITSIO
     @test read_data == datacube
 
     #Test output function with array of build_datacube outputs
-    z_arr = rand(Float64, 4)
+    z_arr = rand(Float64, 4)  .+ 0.1
     envir_arr = Environment(z_arr, inc_deg, r200)
     datacube_arr = build_datacube(particles, tele, envir_arr)
 
