@@ -48,7 +48,7 @@ using SimSpin, Test, Random
         particles = sim_data()
         tele = SAMI()
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200)
 
         galaxy_data, parts_in_cell, observe = obs_data_prep(particles, tele, envir)
@@ -74,7 +74,7 @@ using SimSpin, Test, Random
         tele = IFU(8,"square", 7000, 2.63, 0.2, 1.25)
         blur = Gaussian_blur(fwhm=0.5)
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200, blur)
 
         galaxy_data, parts_in_cell, observe = obs_data_prep(particles, tele, envir)
@@ -99,7 +99,7 @@ using SimSpin, Test, Random
         particles = sim_data()
         tele = SAMI()
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
         envir = Environment(z, inc_deg, r200)
 
         datacube, observe = build_datacube(particles, tele, envir)
@@ -127,7 +127,7 @@ using SimSpin, Test, Random
         particles = sim_data()
         tele = IFU(8,"hexagonal", 7000, 2.63, 0.2, 1.25)
 
-        z = rand(); inc_deg = rand(0:90); r200 = rand(100:200);
+        z = rand() + 0.1; inc_deg = rand(0:90); r200 = rand(100:200);
         m2l = (1.2, 0.8); blur = Moffat_blur(5., fwhm=1.5);
         envir = Environment(z, inc_deg, r200, m2l, blur)
 
@@ -156,7 +156,7 @@ using SimSpin, Test, Random
         particles = sim_data()
         tele = IFU(12,"hexagonal", 2300, 2.63, 0.2, 1.25)
 
-        z = [rand(), rand(), rand()]; inc_deg = rand(0:90); r200 = rand(100:200); m2l = (1.2, 0.8);
+        z = [rand(), rand(), rand()] .+ 0.1; inc_deg = rand(0:90); r200 = rand(100:200); m2l = (1.2, 0.8);
         blur = [Moffat_blur(rand() *2 + 3, fwhm=rand() + 1),
                 Moffat_blur(rand() *2 + 3, α=rand() + 1),
                 Gaussian_blur(σ = rand() * 3)];
