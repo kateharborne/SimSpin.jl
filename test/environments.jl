@@ -76,6 +76,9 @@ using SimSpin, Test, Random
     @test length(environment_arr) == zlength * length(inc_deg_arr) * length(blur_array)
 
     z_arr = collect(z_arr)
+    environment_arr = Environment(z_arr, inc_deg_arr, r200, blur_array)
+    @test length(environment_arr) == zlength * length(inc_deg_arr) * length(blur_array)
+    
     z_arr[2] = 0.
     @test_throws ErrorException Environment(z_arr, inc_deg_arr, r200)
 end
