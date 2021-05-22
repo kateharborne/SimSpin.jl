@@ -123,15 +123,11 @@ struct Environment
         end
 
         for z in z_array
-            lum_dist = celestial.cosdistLumDist(z, ref="Planck")
-            ang_size = celestial.cosdistAngScale(z, ref="Planck")
-            redshift_coef = ProSpect.Lum2FluxFactor(z, lum_dist)
             for inc_deg in inc_deg_array
                 for r200 in r200_array
                     for mass2light in mass2light_array
                         for blur in blur_array
-                            envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                            push!(envir_array, envir)
+                            push!(envir_array, Environment(z, inc_deg, r200, mass2light, blur))
                         end
                     end
                 end
@@ -155,21 +151,16 @@ struct Environment
         m2l_is_array = isa(mass2light_array, Array{<:Tuple, 1})
 
         for z in z_array
-            lum_dist = celestial.cosdistLumDist(z, ref="Planck")
-            ang_size = celestial.cosdistAngScale(z, ref="Planck")
-            redshift_coef = ProSpect.Lum2FluxFactor(z, lum_dist)
             for inc_deg in inc_deg_array
                 for r200 in r200_array
                     for blur in blur_array
                         if m2l_is_array
                             for mass2light in mass2light_array
-                                envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                                push!(envir_array, envir)
+                                push!(envir_array, Environment(z, inc_deg, r200, mass2light, blur))
                             end
                         else
                             mass2light = mass2light_array
-                            envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                            push!(envir_array, envir)
+                            push!(envir_array, Environment(z, inc_deg, r200, mass2light, blur))
                         end
                     end
                 end
@@ -198,8 +189,7 @@ struct Environment
             for inc_deg in inc_deg_array
                 for r200 in r200_array
                     for blur in blur_array
-                        envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                        push!(envir_array, envir)
+                        push!(envir_array, Environment(z, inc_deg, r200, mass2light, blur))
                     end
                 end
             end
@@ -215,17 +205,11 @@ struct Environment
 
         envir_array = Environment[]
 
-        blur = nothing
-
         for z in z_array
-            lum_dist = celestial.cosdistLumDist(z, ref="Planck")
-            ang_size = celestial.cosdistAngScale(z, ref="Planck")
-            redshift_coef = ProSpect.Lum2FluxFactor(z, lum_dist)
             for inc_deg in inc_deg_array
                 for r200 in r200_array
                     for mass2light in mass2light_array
-                        envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                        push!(envir_array, envir)
+                        push!(envir_array, Environment(z, inc_deg, r200, mass2light))
                     end
                 end
             end
@@ -241,24 +225,18 @@ struct Environment
 
         envir_array = Environment[]
 
-        blur = nothing
         m2l_is_array = isa(mass2light_array, Array{<:Tuple, 1})
 
         for z in z_array
-            lum_dist = celestial.cosdistLumDist(z, ref="Planck")
-            ang_size = celestial.cosdistAngScale(z, ref="Planck")
-            redshift_coef = ProSpect.Lum2FluxFactor(z, lum_dist)
             for inc_deg in inc_deg_array
                 for r200 in r200_array
                     if m2l_is_array
                         for mass2light in mass2light_array
-                            envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                            push!(envir_array, envir)
+                            push!(envir_array, Environment(z, inc_deg, r200, mass2light))
                         end
                     else
                         mass2light = mass2light_array
-                        envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                        push!(envir_array, envir)
+                        push!(envir_array, Environment(z, inc_deg, r200, mass2light))
                     end
                 end
             end
@@ -273,17 +251,10 @@ struct Environment
 
         envir_array = Environment[]
 
-        mass2light = 1.
-        blur = nothing
-
         for z in z_array
-            lum_dist = celestial.cosdistLumDist(z, ref="Planck")
-            ang_size = celestial.cosdistAngScale(z, ref="Planck")
-            redshift_coef = ProSpect.Lum2FluxFactor(z, lum_dist)
             for inc_deg in inc_deg_array
                 for r200 in r200_array
-                    envir = new(z, inc_deg, r200, mass2light, blur, lum_dist, ang_size, redshift_coef)
-                    push!(envir_array, envir)
+                    push!(envir_array, Environment(z, inc_deg, r200))
                 end
             end
         end
