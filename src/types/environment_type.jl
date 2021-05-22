@@ -31,6 +31,9 @@ struct Environment
                         r200::Real,
                         mass2light::Tuple{Real, Real},
                         blur::Blur)
+        if !(z > 0.)
+            error("Redshift, z, must be greater than zero.")
+        end
 
         lum_dist = celestial.cosdistLumDist(z, ref="Planck")
         ang_size = celestial.cosdistAngScale(z, ref="Planck")
@@ -44,6 +47,9 @@ struct Environment
                         r200::Real,
                         mass2light::Tuple{Real, Real},
                         blur::Nothing)
+        if !(z > 0.)
+            error("Redshift, z, must be greater than zero.")
+        end
 
         lum_dist = celestial.cosdistLumDist(z, ref="Planck")
         ang_size = celestial.cosdistAngScale(z, ref="Planck")
@@ -57,6 +63,9 @@ struct Environment
                         r200::Real,
                         mass2light::Real,
                         blur::Blur)
+        if !(z > 0.)
+            error("Redshift, z, must be greater than zero.")
+        end
 
         lum_dist = celestial.cosdistLumDist(z, ref="Planck")
         ang_size = celestial.cosdistAngScale(z, ref="Planck")
@@ -70,6 +79,9 @@ struct Environment
                         r200::Real,
                         mass2light::Real,
                         blur::Nothing)
+        if !(z > 0.)
+            error("Redshift, z, must be greater than zero.")
+        end
 
         lum_dist = celestial.cosdistLumDist(z, ref="Planck")
         ang_size = celestial.cosdistAngScale(z, ref="Planck")
