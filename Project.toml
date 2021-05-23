@@ -1,7 +1,7 @@
 name = "SimSpin"
 uuid = "ec6baca6-10c1-11ea-19b5-f7da994b81a8"
 authors = ["Katherine Harborne <katherine.harborne@icrar.org>", "Gerry Gralton <gerry.gralton@uwa.edu.au>"]
-version = "1.0.2"
+version = "1.0.3"
 
 [deps]
 Compat = "34da2185-b29b-5c13-b0c7-acf172513d20"
