@@ -1,3 +1,5 @@
+<img align="left" src="https://raw.githubusercontent.com/kateharborne/SimSpin.jl/master/docs/src/assets/logo.png" width="200" height="200"  style="padding-left:10px" /> 
+
 # SimSpin.jl
 
 [![Build Status](https://github.com/kateharborne/SimSpin.jl/actions/workflows/CI.yml/badge.svg)](https://github.com/kateharborne/SimSpin.jl/actions) [![codecov](https://codecov.io/gh/kateharborne/SimSpin.jl/branch/master/graph/badge.svg?token=2T1BDWZYSV)](https://codecov.io/gh/kateharborne/SimSpin.jl)
