@@ -115,6 +115,22 @@ function MaNGA(;filter::Union{String, Nothing} = nothing)
 end
 
 """
+    MUSE(;filter)
+
+Creates an IFU using parameters of the MUSE survey.
+Optional filters "r" or "g" can also be specified for use with SSP particles.
+"""
+function MUSE(;filter::Union{String, Nothing} = nothing)
+    return IFU(15,
+                "square",
+                6975,
+                2.63,
+                0.2,
+                1.25,
+                filter)
+end
+
+"""
     CALIFA(;filter)
 
 Creates an IFU using parameters of the CALIFA survey.
