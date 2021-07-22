@@ -55,6 +55,17 @@ using SimSpin, Test, Random
         @test tele.lsf_size ≈ 72.06 atol=0.01
     end
 
+    @testset "MUSE" begin
+        tele = MUSE()
+
+        @test tele.sbin == 75                                   #number of spatial bins
+        @test size(tele.ap_region) == (tele.sbin, tele.sbin)    #aperture is same size as sbin
+        @test sum(tele.ap_region) == tele.sbin^2
+
+        @test tele.vbinsize ≈ 53.76 atol=0.01
+        @test tele.lsf_size ≈ 48.04 atol=0.01
+    end
+
     @testset "CALIFA" begin
         tele = CALIFA()
 
