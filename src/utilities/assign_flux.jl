@@ -13,7 +13,7 @@ using Interpolations
     Filter to be created using `ProSpect.get_filter()`.
 """
 function assign_flux(particle::Galaxy_ssp,
-                        filter_value::FilterType,
+                        filter_value::Interpolations.FilledExtrapolation,
                         obs::Observation)
 
     spectra = part_spectra(particle)
@@ -34,7 +34,7 @@ end
     Constructs a flux profile using for a `Galaxy_lum` particle using a mass to flux conversion.
 """
 function assign_flux(particle::Galaxy_lum,
-                        filter_value::Union{FilterType, Nothing},
+                        filter_value::Union{Interpolations.FilledExtrapolation, Nothing},
                         obs::Observation)
 
     flux = mass_to_flux(particle, obs.redshift_coef, obs.mass2light)
@@ -47,7 +47,7 @@ end
     Assigns a flux profile of zero for a `Galaxy_dark` particle (ie dark matter or gas).
 """
 function assign_flux(particle::Galaxy_dark,
-                    filter_value::Union{FilterType, Nothing},
+                    filter_value::Union{Interpolations.FilledExtrapolation, Nothing},
                     obs::Observation)
 
     flux = 0

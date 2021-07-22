@@ -6,9 +6,6 @@ using Interpolations
 
 abstract type Telescope end
 
-#define a type alias for a filter
-const FilterType = Interpolations.FilledExtrapolation{Float64,1,Interpolations.GriddedInterpolation{Float64,1,Float64,Gridded{Linear},Tuple{Array{Float64,1}}},Gridded{Linear},Int64}
-
 """
     IFU(fov, ap_shape, central_wvl, lsf_fwhm, pixel_sscale, pixel_vscale,  filter)
 
@@ -35,7 +32,7 @@ struct IFU <: Telescope
     sbin::Int64
     ap_region::Array{Float64, 2}
     filter::Union{String, Nothing}
-    filter_value::Union{FilterType, Nothing}
+    filter_value::Union{Interpolations.FilledExtrapolation, Nothing}
 
     function IFU(fov::Real,
                     ap_shape::String,

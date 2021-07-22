@@ -21,7 +21,7 @@ Parameters:\n
 """
 function flux_grid(parts_in_cell::Array{Array{Galaxy_particle, 1}, 1},
                     observe::Observation,
-                    filter_value::Union{FilterType, Nothing})
+                    filter_value::Union{Interpolations.FilledExtrapolation, Nothing})
 
     flux = zeros(Float64, length(parts_in_cell))
 
