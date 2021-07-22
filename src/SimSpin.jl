@@ -16,6 +16,7 @@ module SimSpin
             IFU,
             SAMI,
             MaNGA,
+            MUSE,
             CALIFA,
             Hector,
             Environment
