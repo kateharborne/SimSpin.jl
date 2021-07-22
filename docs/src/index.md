@@ -102,6 +102,7 @@ Currently `SAMI`, `MaNGA`, `CALIFA` and `Hector` are supported.
 IFU
 SAMI
 MaNGA
+MUSE
 CALIFA
 Hector
 ```
